@@ -2,30 +2,7 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const navigation = [
-  {
-    title: "صفحه‌اصلی",
-    route: "/",
-  },
-  {
-    title: "فروشگاه",
-    route: "/shop",
-  },
-  {
-    title: "مطالب",
-    route: "/blogs",
-  },
-  {
-    title: "درباره‌ ما",
-    route: "/about-us",
-  },
-  {
-    title: "راهنما",
-    route: "/guide",
-  },
-];
-
+import { navigation } from "@/app/features/home/constants";
 const NavigationMenu = () => {
   const pathname = usePathname();
 
