@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Navbar = () => {
   return (
-    <div className="fixed inset-x-0 top-0 h-20 md:h-[110px] shadow-md rounded-2xl bg-background">
+    <div className="fixed inset-x-0 top-0 h-20 md:h-[110px] shadow-md rounded-2xl bg-background z-50">
       <nav className="max-w-screen-xl mx-auto px-4 xl:px-0 h-full flex items-center justify-between">
         <div
           id="button-group"

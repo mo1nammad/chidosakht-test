@@ -1,47 +1,44 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
     <div className="bg-background h-[757px]">
       {/* hero section */}
-      <section className="flex items-center justify-between max-w-screen-xl mx-auto pt-6">
-        <div className="relative w-1/2 h-[600px] overflow-hidden">
+      <section className="flex flex-col xl:flex-row items-center justify-between max-w-screen-xl mx-auto px-8 pt-6">
+        <div className="relative w-fit h-[600px] overflow-hidden hidden md:block">
           <div
-            className="relative w-full h-full"
+            className="relative size-[600px]"
             style={{
               backgroundColor: "#2563EB",
               background:
                 "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(to right, #ffffff 1px, #2563EB 1px)",
               backgroundSize: "40px 40px",
-              opacity: 0.6,
+              opacity: 1,
             }}
           >
             <div
               className="absolute inset-0"
               style={{
                 background:
-                  "radial-gradient(circle closest-corner at center, transparent 60px, #ffffff 260px)",
+                  "radial-gradient(closest-side, #ffffff80 140px, #ffffff99 150px , #ffffff 240px)",
               }}
             />
-          </div>{" "}
+          </div>
           <Image
             alt="hero section image"
             width={448}
             height={450}
             src={"/home/Fanavaran 1.png"}
-            className="absolute top-20 left-24"
+            className="absolute top-20 left-[70px]"
           />
         </div>
 
-        <div className="flex flex-col">
-          <div
-            className="flex flex-col justify-center gap-y-8 max-w-[540px]"
-            dir="rtl"
-          >
-            <h1 className="text-4xl font-vazir-semibold">
+        <div className="flex flex-col mt-16 md:mt-0">
+          <div className="flex flex-col justify-center gap-y-14 sm:gap-y-8 max-w-[540px] text-center xl:text-right">
+            <h1 className="text-4xl font-vazir-semibold leading-snug">
               آجربه‌آجر تا خانه رویاییتان را از ما بخواهید
             </h1>
             <div className="max-w-[540px] text-muted-foreground">
@@ -62,12 +59,17 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="space-x-7 self-end mt-8">
-            <Button asChild>
+          <div className="w-full sm:w-auto space-x-0 sm:space-x-7 self-center xl:self-end mt-8 flex gap-y-6 flex-col items-center justify-items-center sm:block">
+            <Button size="lg" className="w-full sm:w-auto" asChild>
               <Link href={"#"}>مشاهده نمونه کارها</Link>
             </Button>
 
-            <Button asChild variant="outline">
+            <Button
+              size="lg"
+              className="w-full sm:w-auto"
+              asChild
+              variant="outline"
+            >
               <Link href={"#"}>مشاهده خدمات</Link>
             </Button>
           </div>
