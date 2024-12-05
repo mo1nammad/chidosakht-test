@@ -8,7 +8,7 @@ export default function RootLayout({
   return (
     <section>
       <Navbar />
-      <div className="mt-20 md:mt-[110px]">{children}</div>
+      <main className="mt-20 md:mt-[110px]">{children}</main>
     </section>
   );
 }
