@@ -55,10 +55,14 @@ const Navbar = () => {
         <div id="menu" className="hidden items-center xl:flex">
           <NavigationMenu />
         </div>
-        <div id="logo" className="md:flex items-center gap-x-3 hidden">
+        <Link
+          href="/"
+          id="logo"
+          className="md:flex items-center gap-x-3 hidden"
+        >
           <span className="text-2xl font-yekan-semibold">Chidosakht</span>
           <Image src="/logo.svg" width={71} height={56} alt="logo" />
-        </div>
+        </Link>
       </nav>
     </div>
   );

@@ -13,29 +13,22 @@ export default function Home() {
         <section className="flex flex-col xl:flex-row items-center justify-between pt-6">
           <div className="relative w-fit h-[600px] overflow-hidden hidden md:block">
             <div
-              className="relative size-[600px]"
+              className="relative size-[600px] z-10"
               style={{
-                backgroundColor: "#2563EB",
                 background:
-                  "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(to right, #ffffff 1px, #2563EB 1px)",
+                  "linear-gradient(#ffffff 1.7000000000000002px,transparent 1.7000000000000002px), linear-gradient(to right,#ffffff 1.7000000000000002px, #00000000 1.7000000000000002px)",
+                backgroundColor: "#00000000",
                 backgroundSize: "40px 40px",
-                opacity: 1,
+                opacity: 0.8,
               }}
-            >
-              <div
-                className="absolute inset-0 size-[610px]"
-                style={{
-                  background:
-                    "radial-gradient(closest-side, #ffffff80 140px, #ffffff99 150px , #ffffff 230px)",
-                }}
-              />
-            </div>
+            ></div>{" "}
+            <div className="size-[350px] bg-primary/60 absolute top-28 left-32 rounded-full blur-2xl"></div>
             <Image
               alt="hero section image"
               width={448}
               height={450}
               src={"/home/Fanavaran 1.png"}
-              className="absolute top-20 left-[70px]"
+              className="absolute top-20 left-[70px] z-20"
             />
           </div>
 
@@ -46,19 +39,11 @@ export default function Home() {
               </h1>
               <div className="max-w-[540px] text-muted-foreground">
                 <p className="leading-7">
-                  در چیدوساخت ما با دقت و عشق خانه‌های رویایی شما را می‌سازیم.
-                </p>
-                <p className="leading-7">
-                  هر آجر نماد تعهد ما به کیفیت و نوآوری است.
-                </p>
-                <p className="leading-7">
-                  تیم ما از مهندسان و معماران مجرب در هر مرحله از طراحی تا ساخت
-                  در کنار شماست و با استفاده از بهترین مواد و تکنیک‌ها،
-                  پروژه‌های ما نه تنها زیبا، بلکه مستحکم و پایدار هستند.
-                </p>
-                <p className="leading-7">
-                  بیایید با هم، آجر به آجر، خانه‌ای بسازیم که مکانی برای خاطرات
-                  شیرین شما باشد. چیدوساخت، جایی که رویاها شکل می‌گیرند!
+                  در چیدوساخت، رویاهای مسکونی شما را با مهارت و اشتیاق به واقعیت
+                  تبدیل می‌کنیم. با ترکیبی از تخصص، نوآوری و مصالح برتر،
+                  خانه‌هایی می‌سازیم که نه تنها چشم‌نواز، بلکه ماندگار هستند با
+                  چیدوساخت، خانه‌ای بسازید که هر گوشه‌اش داستانی از زندگی شما را
+                  روایت کند.
                 </p>
               </div>
             </div>
@@ -104,7 +89,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row items-center justify-center gap-x-16 mt-14 mx-auto">
+          <div className="flex flex-col flex-col-reverse md:flex-row items-center justify-center gap-x-16 mt-14 mx-auto">
             {/* left part */}
             <div className="flex flex-col gap-y-8">
               <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
