@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { servicesData } from "@/app/features/home/constants";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { ServicesSlider } from "../features/home/components/services-slider";
 
 export default function Home() {
   return (
@@ -77,7 +78,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="pb-8">
+        <section className="pb-8 mt-16">
           <div className="flex flex-row-reverse">
             <div className="w-fit relative">
               <h1 className="text-2xl font-vazir-semibold after:absolute after:inset-x-0 after:-bottom-1 after:w-full after:h-[0.5px] after:bg-primary after:drop-shadow-[0_3px_4px_rgba(20,34,189,1)]">
@@ -87,67 +88,11 @@ export default function Home() {
           </div>
 
           {/* TODO Slider */}
-          <div className="flex items-center justify-center gap-x-7 mt-8">
-            <Card className="w-fit h-fit drop-shadow-md border-none">
-              <CardContent className="mt-2 px-2 py-0">
-                <Image
-                  src="/home/Luxury-house-design-Top-10-tips-to-add-luxury-to-your-house-FEATURE-compressed 1.png"
-                  width={250}
-                  height={150}
-                  alt="slider image"
-                  className="rounded-xl"
-                />
-                <h6 className="text-center py-4">بازسازی بنا</h6>
-              </CardContent>
-            </Card>
-            <Card className="w-fit h-fit drop-shadow-md border-none">
-              <CardContent className="mt-2 px-2 py-0">
-                <Image
-                  src="/home/Luxury-house-design-Top-10-tips-to-add-luxury-to-your-house-FEATURE-compressed 1.png"
-                  width={250}
-                  height={150}
-                  alt="slider image"
-                  className="rounded-xl"
-                />
-                <h6 className="text-center py-4">بازسازی بنا</h6>
-              </CardContent>
-            </Card>
-            <Card className="w-fit h-fit drop-shadow-md border-none">
-              <CardContent className="mt-2 px-2 py-0">
-                <Image
-                  src="/home/Luxury-house-design-Top-10-tips-to-add-luxury-to-your-house-FEATURE-compressed 1.png"
-                  width={250}
-                  height={150}
-                  alt="slider image"
-                  className="rounded-xl"
-                />
-                <h6 className="text-center py-4">بازسازی بنا</h6>
-              </CardContent>
-            </Card>
-            <Card className="w-fit h-fit drop-shadow-md border-none">
-              <CardContent className="mt-2 px-2 py-0">
-                <Image
-                  src="/home/Luxury-house-design-Top-10-tips-to-add-luxury-to-your-house-FEATURE-compressed 1.png"
-                  width={250}
-                  height={150}
-                  alt="slider image"
-                  className="rounded-xl"
-                />
-                <h6 className="text-center py-4">بازسازی بنا</h6>
-              </CardContent>
-            </Card>
-            <Card className="w-fit h-fit drop-shadow-md border-none">
-              <CardContent className="mt-2 px-2 py-0">
-                <Image
-                  src="/home/Luxury-house-design-Top-10-tips-to-add-luxury-to-your-house-FEATURE-compressed 1.png"
-                  width={250}
-                  height={150}
-                  alt="slider image"
-                  className="rounded-xl"
-                />
-                <h6 className="text-center py-4">بازسازی بنا</h6>
-              </CardContent>
-            </Card>
+          <div
+            id="services-swiper"
+            className="mt-8 relative w-[calc(100%-40px)] mx-auto sm:w-full"
+          >
+            <ServicesSlider data={servicesData} />
           </div>
         </section>
       </div>

@@ -10,19 +10,19 @@
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 235 81% 41%;
+    --primary: 223 83% 53%;
     --primary-foreground: 0 0% 100%;
     --tertiary: 207 100% 63%;
     --tertiary-foreground: 0 0% 100%;
-    --secondary: 33 96% 47%;
+    --secondary: 214 95% 93%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 0 0% 94%;
-    --accent-foreground: 240 5.9% 10%;
+    --muted: 0 0% 97%;
+    --muted-foreground: 221 5% 40%;
+    --accent: 216 33% 94%;
+    --accent-foreground: 221 5% 15%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
+    --border: 221 30% 82%;
     --input: 240 5.9% 90%;
     --ring: 240 10% 3.9%;
     --chart-1: 12 76% 61%;
@@ -68,3 +68,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+#services-swiper .swiper {
+  padding: 10px 10px !important;
+}
+
+/* #services-swiper .swiper-wrapper {
+} */
+
+/* #services-swiper .swiper-slide {
+  width: fit-content !important;
+} */

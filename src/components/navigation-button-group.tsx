@@ -2,14 +2,12 @@
 
 import Link from "next/link";
 import { Headset, LogIn, Smartphone } from "lucide-react";
-import { useMediaQuery } from "react-responsive";
 
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "./ui/button";
 import HamburgerMenu from "./hamburger-menu";
 
 const NavigationButtonGroup = () => {
-  const isMobile = useMediaQuery({ maxWidth: 768 });
   return (
     <>
       <HamburgerMenu classname="flex xl:hidden" />
@@ -30,7 +28,7 @@ const NavigationButtonGroup = () => {
           className={cn(
             buttonVariants({
               variant: "outline",
-              size: isMobile ? "sm" : "default",
+
               className: "sm:inline-flex hidden",
             })
           )}
@@ -39,7 +37,7 @@ const NavigationButtonGroup = () => {
           <span>ورود | ثبت‌نام</span>
         </Link>
 
-        <Button variant={"primary"} size={isMobile ? "sm" : "default"}>
+        <Button variant={"primary"}>
           <Headset className="!size-5" />
           <span className="font-vazir-semibold">مشاوره‌رایگان</span>
         </Button>
