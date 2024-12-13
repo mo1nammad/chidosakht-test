@@ -11,8 +11,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        "vazir-regular": ["var(--font-vazir-reqular)"],
-        "vazir-semibold": ["var(--font-vazir-semibold)"],
+        "yekan-regular": ["var(--font-yekan-reqular)"],
+        "yekan-semibold": ["var(--font-yekan-semibold)"],
+        "yekan-black": ["var(--font-yekan-black)"],
       },
       colors: {
         background: "hsl(var(--background))",

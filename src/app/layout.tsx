@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-import { vazirRegular, vazirSemiBold } from "./fonts/font-webhook";
+import {
+  yekanBakhRegular,
+  yekanBakhSemiBold,
+  yekanBakhBlack,
+} from "./fonts/font-webhook";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${vazirRegular.variable} ${vazirSemiBold.variable} antialiased font-vazir-regular`}
+        className={`${yekanBakhRegular.variable} ${yekanBakhSemiBold.variable} ${yekanBakhBlack.variable} antialiased font-yekan-regular`}
       >
         {children}
       </body>

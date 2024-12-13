@@ -32,7 +32,7 @@ const HamburgerMenu = ({ classname }: Props) => {
               id="logo"
               className="flex flex-row-reverse justify-end items-center gap-x-3 my-3"
             >
-              <SheetTitle className="text-lg font-vazir-semibold">
+              <SheetTitle className="text-lg font-yekan-semibold">
                 Chidosakht
               </SheetTitle>
               <Image src="/logo.svg" width={51} height={6} alt="logo" />

@@ -1,26 +1,26 @@
 import localFont from "next/font/local";
 
-export const vazirThin = localFont({
-  src: "./Vazirmatn-FD-Thin.woff2",
-  variable: "--font-vazir-thin",
+export const yekanBakhThin = localFont({
+  src: "./YekanBakhFaNum-Thin.otf",
+  variable: "--font-yekan-thin",
 });
 
-export const vazirRegular = localFont({
-  src: "./Vazirmatn-FD-Regular.woff2",
-  variable: "--font-vazir-reqular",
+export const yekanBakhRegular = localFont({
+  src: "./YekanBakhFaNum-Regular.otf",
+  variable: "--font-yekan-reqular",
 });
 
-export const vazirSemiBold = localFont({
-  src: "./Vazirmatn-FD-SemiBold.woff2",
-  variable: "--font-vazir-semibold",
+export const yekanBakhSemiBold = localFont({
+  src: "./YekanBakhFaNum-SemiBold.otf",
+  variable: "--font-yekan-semibold",
 });
 
-export const vazirBold = localFont({
-  src: "./Vazirmatn-FD-Bold.woff2",
-  variable: "--font-vazir-bold",
+export const yekanBakhBold = localFont({
+  src: "./YekanBakhFaNum-Bold.otf",
+  variable: "--font-yekan-bold",
 });
 
-export const vazirBlack = localFont({
-  src: "./Vazirmatn-FD-Black.woff2",
-  variable: "--font-vazir-black",
+export const yekanBakhBlack = localFont({
+  src: "./YekanBakhFaNum-Black.otf",
+  variable: "--font-yekan-black",
 });

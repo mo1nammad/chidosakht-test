@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,6 +11,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type ServicesSliderProps = {
   data: {
@@ -19,11 +20,13 @@ type ServicesSliderProps = {
   }[];
 };
 export const ServicesSlider = ({ data }: ServicesSliderProps) => {
+  const [isSwiperLoaded, setIsSwiperLoaded] = useState(false);
+
   const nextBtnRef = useRef<HTMLButtonElement>(null);
   const prevBtnRef = useRef<HTMLButtonElement>(null);
 
   return (
-    <>
+    <div className={cn(isSwiperLoaded ? "block" : "hidden")}>
       {/* custom next and prev buttons */}
       <Button
         ref={prevBtnRef}
@@ -57,6 +60,7 @@ export const ServicesSlider = ({ data }: ServicesSliderProps) => {
             swiper.params.navigation.nextEl = nextBtnRef.current;
           }
         }}
+        onSwiper={() => setIsSwiperLoaded(true)}
         breakpoints={{
           1024: {
             slidesPerView: data.length,
@@ -77,6 +81,6 @@ export const ServicesSlider = ({ data }: ServicesSliderProps) => {
           </SwiperSlide>
         ))}
       </Swiper>
-    </>
+    </div>
   );
 };
