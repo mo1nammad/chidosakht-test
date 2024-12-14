@@ -30,7 +30,7 @@ const Navbar = () => {
               </div>
             </div>
 
-            <div className="md:space-x-8 space-x-5">
+            <div className="md:space-x-6 space-x-5">
               <Link
                 href="/sign-up"
                 className={cn(

@@ -1,9 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { servicesData } from "@/app/features/home/constants";
+import { servicesData } from "@/app/features/navigation/constants";
 import { Button } from "@/components/ui/button";
-import { ServicesSlider } from "../features/home/components/services-slider";
+import { ServicesSlider } from "@/app/features/navigation/components/services-slider";
+import { Title } from "@/app/features/navigation/components/title";
+
+import { MoveLeft } from "lucide-react";
 
 export default function Home() {
   return (
@@ -63,15 +66,10 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="pb-8 mt-16">
-          <div className="flex flex-row-reverse">
-            <div className="w-fit relative">
-              <h1 className="text-2xl font-yekan-semibold after:absolute after:inset-x-0 after:-bottom-1 after:w-full after:h-[0.5px] after:bg-primary after:drop-shadow-[0_3px_4px_rgba(20,34,189,1)]">
-                خدمات <span className="text-primary">چیدوساخت</span>
-              </h1>
-            </div>
-          </div>
-
+        <section className="pb-8 mt-10">
+          <Title>
+            خدمات <span className="text-primary">چیدوساخت</span>
+          </Title>
           <div
             id="services-swiper"
             className="mt-8 relative w-[calc(100%-40px)] mx-auto sm:w-full"
@@ -83,40 +81,40 @@ export default function Home() {
         <section className="py-20">
           <div className="flex items-center justify-center">
             <div className="w-fit relative">
-              <h1 className="text-4xl font-yekan-semibold after:absolute after:inset-x-0 after:-bottom-2 after:w-full after:h-[0.5px] after:bg-primary after:drop-shadow-[0_3px_4px_rgba(20,34,189,1)]">
+              <h1 className="text-3xl font-yekan-semibold after:absolute after:inset-x-0 after:-bottom-2 after:w-full after:h-[0.5px] after:bg-primary after:drop-shadow-[0_3px_4px_rgba(20,34,189,1)]">
                 مراحل انجام پروژه
               </h1>
             </div>
           </div>
 
-          <div className="flex flex-col flex-col-reverse md:flex-row items-center justify-center gap-x-16 mt-14 mx-auto">
+          <div className="grid grid-cols-1 gap-8 lg:gap-0 lg:grid-cols-3 lg:grid-rows-2 mt-14 mx-auto">
             {/* left part */}
-            <div className="flex flex-col gap-y-8">
-              <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
-                <h1 className="w-52 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
-                  بهره برداری
-                </h1>
-                <p className="max-w-[357px] text-center md:text-right text-sm leading-7">
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                  استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
-                  سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                  استلورم ایپسوم متن ساختگی
-                </p>
-              </div>
-              <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
-                <h1 className="w-52 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
-                  اجرا
-                </h1>
-                <p className="max-w-[357px] text-center md:text-right text-sm leading-7">
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                  استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
-                  سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                  استلورم ایپسوم متن ساختگی
-                </p>
-              </div>
+
+            <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
+              <h1 className="w-52 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
+                بهره برداری
+              </h1>
+              <p className="max-w-[357px] text-center md:text-right text-sm leading-7">
+                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
+                سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
+                ایپسوم متن ساختگی
+              </p>
             </div>
+            <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
+              <h1 className="w-52 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
+                اجرا
+              </h1>
+              <p className="max-w-[357px] text-center md:text-right text- leading-7">
+                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
+                سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
+                ایپسوم متن ساختگی
+              </p>
+            </div>
+
             {/* image */}
-            <div className="relative">
+            <div className="relative row-span-2 col-start-2 row-start-1 content-center justify-items-center hidden lg:block">
               <Image
                 src={"/home/marahelImage.png"}
                 width={266}
@@ -126,32 +124,94 @@ export default function Home() {
               />
             </div>
             {/* right part */}
-            <div className="flex flex-col gap-y-8">
-              <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
-                <h1 className="w-52 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
-                  تعریف پروژه
-                </h1>
-                <p className="max-w-[357px] text-center md:text-right text-sm leading-7">
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                  استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
-                  سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                  استلورم ایپسوم متن ساختگی
-                </p>
-              </div>
-              <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
-                <h1 className="w-52 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
-                  طراحی
-                </h1>
-                <p className="max-w-[357px] text-center md:text-right text-sm leading-7">
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                  استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
-                  سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                  استلورم ایپسوم متن ساختگی
-                </p>
-              </div>
+
+            <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
+              <h1 className="w-52 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
+                تعریف پروژه
+              </h1>
+              <p className="max-w-[357px] text-center md:text-right text-sm leading-7">
+                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
+                سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
+                ایپسوم متن ساختگی
+              </p>
+            </div>
+            <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
+              <h1 className="w-52 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
+                طراحی
+              </h1>
+              <p className="max-w-[357px] text-center md:text-right text-sm leading-7">
+                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
+                سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
+                ایپسوم متن ساختگی
+              </p>
             </div>
           </div>
         </section>
+
+        {/* about us */}
+
+        <section className="w-full bg-muted h-fit rounded-[40px] flex flex-row-reverse justify-between py-12 px-6 lg:px-24 overflow-hidden">
+          <div className="flex flex-col items-end gap-y-6 lg:gap-y-10 lg:max-w-[450px] text-right">
+            <Title textClassname="text-2xl lg:text-3xl">درباره ما</Title>
+            <div>
+              <p className="text-sm lg:text-base">
+                شرکت چیدوساخت، با بیش از 17 سال تجربه در صنعت ساختمان، افتخار
+                دارد خدمات جامع و تخصصی خود را در حوزه‌های مختلف ساخت و ساز به
+                مشتریان ارائه دهد
+              </p>
+              <p>
+                {" "}
+                ما که پیش‌تر با نام فناوران سازه شناخته می‌شدیم، اکنون با نام
+                چیدوساخت، آماده‌ایم تا تجربیات ارزشمند خود را در خدمت پروژه‌های
+                مسکونی، اداری و تجاری قرار دهیم.
+              </p>
+            </div>
+            <div className="flex items-center gap-x-2 bg-primary w-fit text-white p-1.5 rounded-xl">
+              <Button
+                asChild
+                size="icon"
+                className="px-5 py-4 bg-white transition-none hover:opacity-100 hover:bg-gray-100"
+              >
+                <Link href="/about-us">
+                  <MoveLeft className="!size-5 text-foreground" />
+                </Link>
+              </Button>
+              <span className="text-sm lg:text-base">مشاهده پروژه ها</span>
+            </div>
+          </div>
+          <div className="hidden lg:grid grid-cols-2 grid-rows-3 w-[400px] gap-x-4 gap-y-3 h-[273px]">
+            <div className="row-span-3 rounded-2xl overflow-hidden">
+              <Image
+                src="/home/about-us-sec-image.png"
+                width={190}
+                height={273}
+                alt="about us"
+                className="size-full object-cover"
+              />
+            </div>
+            <div className="row-span-2 rounded-2xl overflow-hidden">
+              <Image
+                src="/home/istockphoto-1393537665-612x612 1.png"
+                width={185}
+                height={156}
+                alt="about us"
+                className="size-full object-cover"
+              />
+            </div>
+            <div className="rounded-2xl overflow-hidden">
+              <Image
+                src="/home/Three-Points-Blvd_061-2 1.png"
+                width={185}
+                height={156}
+                alt="about us"
+                className="size-full object-cover"
+              />
+            </div>
+          </div>
+        </section>
+        <section className="mt-20 w-full h-1"> </section>
       </div>
     </div>
   );
