@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { servicesData } from "@/app/features/navigation/constants";
+import { servicesData } from "@/app/features/navigation/home/constants";
 import { Button } from "@/components/ui/button";
-import { ServicesSlider } from "@/app/features/navigation/components/services-slider";
-import { Title } from "@/app/features/navigation/components/title";
+import { ServicesSlider } from "@/app/features/navigation/home/components/services-slider";
+import { Title } from "@/app/features/navigation/home/components/title";
 
-import { MoveLeft } from "lucide-react";
+import { ChevronLeft, MoveLeft } from "lucide-react";
+import { FilterProjectSection } from "../features/navigation/home/components/filter-projects";
 
 export default function Home() {
   return (
@@ -156,12 +157,12 @@ export default function Home() {
           <div className="flex flex-col items-end gap-y-6 lg:gap-y-10 lg:max-w-[450px] text-right">
             <Title textClassname="text-2xl lg:text-3xl">درباره ما</Title>
             <div>
-              <p className="text-sm lg:text-base">
+              <p className="text-sm lg:text-base leading-5">
                 شرکت چیدوساخت، با بیش از 17 سال تجربه در صنعت ساختمان، افتخار
                 دارد خدمات جامع و تخصصی خود را در حوزه‌های مختلف ساخت و ساز به
                 مشتریان ارائه دهد
               </p>
-              <p>
+              <p className="text-sm lg:text-base leading-5">
                 {" "}
                 ما که پیش‌تر با نام فناوران سازه شناخته می‌شدیم، اکنون با نام
                 چیدوساخت، آماده‌ایم تا تجربیات ارزشمند خود را در خدمت پروژه‌های
@@ -211,7 +212,42 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="mt-20 w-full h-1"> </section>
+        <section className="py-20 w-full h-1">
+          <div className="flex flex-col-reverse items-center gap-y-14 md:items-baseline md:flex-row justify-between">
+            <FilterProjectSection />
+            <div>
+              <Title>نمونه پروژه ها</Title>
+            </div>
+          </div>
+          {/* slides */}
+          <div className="w-full bg-muted mt-5 rounded-2xl px-9 py-4">
+            <div className="flex flex-col w-[261px]">
+              <div className="rounded-2xl overflow-hidden">
+                <Image
+                  alt="project-image"
+                  width={261}
+                  height={215}
+                  src={"/home/premium_photo.png"}
+                />
+              </div>
+              <div className="flex justify-between mt-5">
+                <Button
+                  size="icon"
+                  variant="secondary"
+                  className="text-primary [&_svg]:size-auto"
+                >
+                  <ChevronLeft />
+                </Button>
+                <div className="text-right space-y-0.5">
+                  <h6 className="text-sm font-yekan-semibold">
+                    پروژه احداث چمن‌مصنوعی در حیاط
+                  </h6>
+                  <p className="text-xs">اجرای پروژه بازسازی ساختمان مسکونی</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );

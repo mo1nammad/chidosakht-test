@@ -15,7 +15,7 @@
     --tertiary: 207 100% 63%;
     --tertiary-foreground: 0 0% 100%;
     --secondary: 214 95% 93%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary-foreground: 0 0% 0%;
     --muted: 0 0% 97%;
     --muted-foreground: 221 5% 40%;
     --accent: 216 33% 94%;
@@ -72,10 +72,3 @@
 #services-swiper .swiper {
   padding: 10px 10px !important;
 }
-
-/* #services-swiper .swiper-wrapper {
-} */
-
-/* #services-swiper .swiper-slide {
-  width: fit-content !important;
-} */

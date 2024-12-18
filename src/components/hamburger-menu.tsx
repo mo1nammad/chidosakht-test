@@ -13,7 +13,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "./ui/sheet";
-import { navigation } from "@/app/features/navigation/constants";
+import { navigation } from "@/app/features/navigation/home/constants";
 
 type Props = {
   classname?: string;
