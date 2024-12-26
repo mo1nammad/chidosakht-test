@@ -5,13 +5,14 @@ import { MoveLeft } from "lucide-react";
 import {
   servicesData,
   projectsData,
+  commentsData,
 } from "@/app/features/navigation/home/constants";
 import { Button } from "@/components/ui/button";
 import { ServicesSlider } from "@/app/features/navigation/home/components/services-slider";
 import { Title } from "@/app/features/navigation/home/components/title";
 import { FilterProjectSection } from "@/app/features/navigation/home/components/filter-projects";
 import { ProjectsSlider } from "@/app/features/navigation/home/components/projects-slider";
-import { Card, CardContent } from "@/components/ui/card";
+import { CommentsSlider } from "../features/navigation/home/components/comments-slider";
 
 export default function Home() {
   return (
@@ -230,67 +231,8 @@ export default function Home() {
         </section>
         <section>
           <Title classname="justify-center">نظر و تجربه کاربران چیدوساخت</Title>
-          <div className="flex mt-10 gap-6">
-            <Card className="drop-shadow-[0_0_25px_rgba(37,99,235,0.1)]">
-              <div className="flex items-center gap-4 p-7 pr-5">
-                <div className="text-right max-w-[260px] space-y-3">
-                  <h5>محمد حسین حبیب پور</h5>
-                  <p className="text-xs text-muted-foreground leading-5">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
-                    با استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با
-                    تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                    گرافیک استلورم ایپسوم متن ساختگی
-                  </p>
-                </div>
-                <Image
-                  src={"/home/comment-profile.png"}
-                  alt="comment profile"
-                  width={95}
-                  height={95}
-                  className="h-[95px]"
-                />
-              </div>
-            </Card>
-            <Card className="drop-shadow-[0_0_25px_rgba(37,99,235,0.1)]">
-              <div className="flex items-center gap-4 p-7 pr-5">
-                <div className="text-right max-w-[260px] space-y-3">
-                  <h5>محمد حسین حبیب پور</h5>
-                  <p className="text-xs text-muted-foreground leading-5">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
-                    با استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با
-                    تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                    گرافیک استلورم ایپسوم متن ساختگی
-                  </p>
-                </div>
-                <Image
-                  src={"/home/comment-profile.png"}
-                  alt="comment profile"
-                  width={95}
-                  height={95}
-                  className="h-[95px]"
-                />
-              </div>
-            </Card>
-            <Card className="drop-shadow-[0_0_25px_rgba(37,99,235,0.1)]">
-              <div className="flex items-center gap-4 p-7 pr-5">
-                <div className="text-right max-w-[260px] space-y-3">
-                  <h5>محمد حسین حبیب پور</h5>
-                  <p className="text-xs text-muted-foreground leading-5">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
-                    با استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با
-                    تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                    گرافیک استلورم ایپسوم متن ساختگی
-                  </p>
-                </div>
-                <Image
-                  src={"/home/comment-profile.png"}
-                  alt="comment profile"
-                  width={95}
-                  height={95}
-                  className="h-[95px]"
-                />
-              </div>
-            </Card>
+          <div className="drop-shadow-[0_0_25px_rgba(37,99,235,0.1)] py-12">
+            <CommentsSlider data={commentsData} />
           </div>
         </section>
       </div>
