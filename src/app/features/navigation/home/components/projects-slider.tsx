@@ -1,74 +1,47 @@
 "use client";
-import { useRef, useState } from "react";
-import { ChevronRight, ChevronLeft } from "lucide-react";
+
+import { useState } from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import { ServicesSlide } from "./services-slide";
+import { Pagination } from "swiper/modules";
+
+import { ProjectsSlide, ProjectsSlideProps } from "./projects-slide";
 
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/navigation";
+import "swiper/css/pagination";
 
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-type ServicesSliderProps = {
-  data: {
-    src: string;
-    title: string;
-  }[];
+type ProjectsSliderProps = {
+  data: ProjectsSlideProps[];
 };
-export const ServicesSlider = ({ data }: ServicesSliderProps) => {
+export const ProjectsSlider = ({ data }: ProjectsSliderProps) => {
   const [isSwiperLoaded, setIsSwiperLoaded] = useState(false);
-
-  const nextBtnRef = useRef<HTMLButtonElement>(null);
-  const prevBtnRef = useRef<HTMLButtonElement>(null);
 
   return (
     <div className={cn(isSwiperLoaded ? "block" : "hidden")}>
-      {/* custom next and prev buttons */}
-      <Button
-        ref={prevBtnRef}
-        className="absolute z-10 top-1/2 -translate-y-1/2 -left-10 sm:-left-5"
-        size={"icon"}
-        variant={"secondary"}
-      >
-        <ChevronLeft className="text-primary" />
-      </Button>
-      <Button
-        ref={nextBtnRef}
-        className="absolute z-10 top-1/2 -translate-y-1/2 -right-10 sm:-right-5"
-        size={"icon"}
-        variant={"secondary"}
-      >
-        <ChevronRight className="text-primary" />
-      </Button>
-
       <Swiper
         slidesPerView={1}
         spaceBetween={15}
-        height={240}
-        modules={[Navigation]}
-        navigation={{ nextEl: nextBtnRef.current, prevEl: prevBtnRef.current }}
-        onBeforeInit={(swiper) => {
-          if (
-            typeof swiper.params.navigation !== "boolean" &&
-            swiper.params.navigation
-          ) {
-            swiper.params.navigation.prevEl = prevBtnRef.current;
-            swiper.params.navigation.nextEl = nextBtnRef.current;
-          }
+        modules={[Pagination]}
+        style={{
+          padding: "40px 0",
+        }}
+        pagination={{
+          clickable: true,
+          bulletActiveClass: "bullet-active",
+          bulletClass: "all-bullets",
         }}
         onSwiper={() => setIsSwiperLoaded(true)}
         breakpoints={{
-          1024: {
+          1145: {
             slidesPerView: data.length,
           },
-          768: {
+          850: {
             slidesPerView: 3,
           },
-          647: {
+          680: {
             slidesPerView: 2,
             spaceBetween: 25,
           },
@@ -77,7 +50,7 @@ export const ServicesSlider = ({ data }: ServicesSliderProps) => {
         {/* slides */}
         {data.map((props, index) => (
           <SwiperSlide key={index}>
-            <ServicesSlide {...props} />
+            <ProjectsSlide {...props} />
           </SwiperSlide>
         ))}
       </Swiper>

@@ -43,3 +43,25 @@ export const servicesData = [
     title: "بازسازی بنا",
   },
 ];
+export const projectsData = [
+  {
+    src: "/home/premium_photo.png",
+    title: "پروژه احداث چمن‌مصنوعی در حیاط",
+    description: "اجرای پروژه بازسازی ساختمان مسکونی",
+  },
+  {
+    src: "/home/premium_photo.png",
+    title: "پروژه احداث چمن‌مصنوعی در حیاط",
+    description: "اجرای پروژه بازسازی ساختمان مسکونی",
+  },
+  {
+    src: "/home/premium_photo.png",
+    title: "پروژه احداث چمن‌مصنوعی در حیاط",
+    description: "اجرای پروژه بازسازی ساختمان مسکونی",
+  },
+  {
+    src: "/home/premium_photo.png",
+    title: "پروژه احداث چمن‌مصنوعی در حیاط",
+    description: "اجرای پروژه بازسازی ساختمان مسکونی",
+  },
+];

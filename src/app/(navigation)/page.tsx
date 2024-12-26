@@ -1,13 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
+import { MoveLeft } from "lucide-react";
 
-import { servicesData } from "@/app/features/navigation/home/constants";
+import {
+  servicesData,
+  projectsData,
+} from "@/app/features/navigation/home/constants";
 import { Button } from "@/components/ui/button";
 import { ServicesSlider } from "@/app/features/navigation/home/components/services-slider";
 import { Title } from "@/app/features/navigation/home/components/title";
-
-import { ChevronLeft, MoveLeft } from "lucide-react";
-import { FilterProjectSection } from "../features/navigation/home/components/filter-projects";
+import { FilterProjectSection } from "@/app/features/navigation/home/components/filter-projects";
+import { ProjectsSlider } from "@/app/features/navigation/home/components/projects-slider";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function Home() {
   return (
@@ -25,7 +29,7 @@ export default function Home() {
                 backgroundSize: "40px 40px",
                 opacity: 0.8,
               }}
-            ></div>{" "}
+            />
             <div className="size-[350px] bg-primary/60 absolute top-28 left-32 rounded-full blur-2xl"></div>
             <Image
               alt="hero section image"
@@ -212,7 +216,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="py-20 w-full h-1">
+        <section id="projects" className="py-16 w-full">
           <div className="flex flex-col-reverse items-center gap-y-14 md:items-baseline md:flex-row justify-between">
             <FilterProjectSection />
             <div>
@@ -220,32 +224,73 @@ export default function Home() {
             </div>
           </div>
           {/* slides */}
-          <div className="w-full bg-muted mt-5 rounded-2xl px-9 py-4">
-            <div className="flex flex-col w-[261px]">
-              <div className="rounded-2xl overflow-hidden">
+          <div className="w-full bg-muted mt-5 rounded-2xl px-9">
+            <ProjectsSlider data={projectsData} />
+          </div>
+        </section>
+        <section>
+          <Title classname="justify-center">نظر و تجربه کاربران چیدوساخت</Title>
+          <div className="flex mt-10 gap-6">
+            <Card className="drop-shadow-[0_0_25px_rgba(37,99,235,0.1)]">
+              <div className="flex items-center gap-4 p-7 pr-5">
+                <div className="text-right max-w-[260px] space-y-3">
+                  <h5>محمد حسین حبیب پور</h5>
+                  <p className="text-xs text-muted-foreground leading-5">
+                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                    با استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با
+                    تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                    گرافیک استلورم ایپسوم متن ساختگی
+                  </p>
+                </div>
                 <Image
-                  alt="project-image"
-                  width={261}
-                  height={215}
-                  src={"/home/premium_photo.png"}
+                  src={"/home/comment-profile.png"}
+                  alt="comment profile"
+                  width={95}
+                  height={95}
+                  className="h-[95px]"
                 />
               </div>
-              <div className="flex justify-between mt-5">
-                <Button
-                  size="icon"
-                  variant="secondary"
-                  className="text-primary [&_svg]:size-auto"
-                >
-                  <ChevronLeft />
-                </Button>
-                <div className="text-right space-y-0.5">
-                  <h6 className="text-sm font-yekan-semibold">
-                    پروژه احداث چمن‌مصنوعی در حیاط
-                  </h6>
-                  <p className="text-xs">اجرای پروژه بازسازی ساختمان مسکونی</p>
+            </Card>
+            <Card className="drop-shadow-[0_0_25px_rgba(37,99,235,0.1)]">
+              <div className="flex items-center gap-4 p-7 pr-5">
+                <div className="text-right max-w-[260px] space-y-3">
+                  <h5>محمد حسین حبیب پور</h5>
+                  <p className="text-xs text-muted-foreground leading-5">
+                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                    با استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با
+                    تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                    گرافیک استلورم ایپسوم متن ساختگی
+                  </p>
                 </div>
+                <Image
+                  src={"/home/comment-profile.png"}
+                  alt="comment profile"
+                  width={95}
+                  height={95}
+                  className="h-[95px]"
+                />
               </div>
-            </div>
+            </Card>
+            <Card className="drop-shadow-[0_0_25px_rgba(37,99,235,0.1)]">
+              <div className="flex items-center gap-4 p-7 pr-5">
+                <div className="text-right max-w-[260px] space-y-3">
+                  <h5>محمد حسین حبیب پور</h5>
+                  <p className="text-xs text-muted-foreground leading-5">
+                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                    با استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با
+                    تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                    گرافیک استلورم ایپسوم متن ساختگی
+                  </p>
+                </div>
+                <Image
+                  src={"/home/comment-profile.png"}
+                  alt="comment profile"
+                  width={95}
+                  height={95}
+                  className="h-[95px]"
+                />
+              </div>
+            </Card>
           </div>
         </section>
       </div>

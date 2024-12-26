@@ -1,26 +1,42 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 
-type ServicesSlideProps = {
+export type ProjectsSlideProps = {
   src: string;
   title: string;
+  description: string;
 };
 
-export const ServicesSlide = ({ src, title }: ServicesSlideProps) => {
+export const ProjectsSlide = ({
+  src,
+  title,
+  description,
+}: ProjectsSlideProps) => {
   return (
-    <Card className="w-full h-fit drop-shadow-md border-none group pt-1.5">
-      <CardContent className="mt-2 px-2 py-0">
+    <div className="flex flex-col w-full">
+      <div className="rounded-2xl overflow-hidden">
         <Image
+          alt="project-image"
+          width={261}
+          height={215}
           src={src}
-          width={250}
-          height={150}
-          alt="slider image"
-          className="rounded-lg w-full"
+          className="w-full object-cover"
         />
-        <h6 className="text-center py-4 group-hover:text-primary transition cursor-default">
-          {title}
-        </h6>
-      </CardContent>
-    </Card>
+      </div>
+      <div className="flex justify-between mt-5">
+        <Button
+          size="icon"
+          variant="secondary"
+          className="text-primary [&_svg]:size-auto"
+        >
+          <ChevronLeft />
+        </Button>
+        <div className="text-right space-y-0.5">
+          <h6 className="text-sm font-yekan-semibold">{title}</h6>
+          <p className="text-xs">{description}</p>
+        </div>
+      </div>
+    </div>
   );
 };
