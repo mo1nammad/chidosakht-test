@@ -23,7 +23,7 @@ export const FilterProjectSection = ({}) => {
       <button
         onClick={() => pushRoute(0)}
         className={cn(
-          "w-28 text-center py-2 transition relative",
+          "w-24 sm:w-28 text-center py-2 transition relative text-xs sm:text-base",
           (filterId === "0" || filterId === null) &&
             "text-primary before:absolute before:w-2.5 before:h-2 before:bg-primary before:-top-1 before:left-1/2 before:-translate-x-1/2 before:rounded-full"
         )}
@@ -34,7 +34,7 @@ export const FilterProjectSection = ({}) => {
       <button
         onClick={() => pushRoute(1)}
         className={cn(
-          "w-28 text-center py-2 transition relative",
+          "w-24 sm:w-28 text-center py-2 transition relative text-xs sm:text-base",
           filterId === "1" &&
             "text-primary before:absolute before:w-2.5 before:h-2 before:bg-primary before:-top-1 before:left-1/2 before:-translate-x-1/2 before:rounded-full"
         )}
@@ -45,7 +45,7 @@ export const FilterProjectSection = ({}) => {
       <button
         onClick={() => pushRoute(2)}
         className={cn(
-          "w-28 text-center py-2 transition relative",
+          "w-24 sm:w-28 text-center py-2 transition relative text-xs sm:text-base",
           filterId === "2" &&
             "text-primary before:absolute before:w-2.5 before:h-2 before:bg-primary before:-top-1 before:left-1/2 before:-translate-x-1/2 before:rounded-full"
         )}

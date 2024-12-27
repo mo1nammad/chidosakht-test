@@ -74,7 +74,7 @@
 }
 
 #projects .swiper-pagination .all-bullets {
-  @apply size-2 bg-[#DBD3D3] ml-1 inline-block rounded-full transition-[width] duration-300 cursor-pointer;
+  @apply size-1.5 bg-[#DBD3D3] ml-1 inline-block rounded-full transition-[width] duration-300 cursor-pointer;
 }
 #projects .swiper-pagination .all-bullets.bullet-active {
   @apply w-6 bg-primary;

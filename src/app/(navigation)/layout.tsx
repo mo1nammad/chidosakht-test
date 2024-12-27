@@ -1,3 +1,4 @@
+import { Footer } from "@/components/footer";
 import Navbar from "@/components/navbar";
 
 export default function RootLayout({
@@ -9,6 +10,7 @@ export default function RootLayout({
     <section>
       <Navbar />
       <main className="mt-20 md:mt-[110px]">{children}</main>
+      <Footer />
     </section>
   );
 }

@@ -2,21 +2,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { MoveLeft } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
 import {
   servicesData,
   projectsData,
   commentsData,
 } from "@/app/features/navigation/home/constants";
-import { Button } from "@/components/ui/button";
 import { ServicesSlider } from "@/app/features/navigation/home/components/services-slider";
 import { Title } from "@/app/features/navigation/home/components/title";
 import { FilterProjectSection } from "@/app/features/navigation/home/components/filter-projects";
 import { ProjectsSlider } from "@/app/features/navigation/home/components/projects-slider";
-import { CommentsSlider } from "../features/navigation/home/components/comments-slider";
+import { CommentsSlider } from "@/app/features/navigation/home/components/comments-slider";
 
 export default function Home() {
   return (
-    <div className="bg-background h-[757px]">
+    <div className="bg-background">
       {/* hero section */}
       <div className="container max-w-screen-xl mx-auto px-8">
         <section className="flex flex-col xl:flex-row items-center justify-between pt-6">
@@ -93,14 +93,14 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 lg:gap-0 lg:grid-cols-3 lg:grid-rows-2 mt-14 mx-auto">
+          <div className="grid grid-cols-1 gap-y-0 md:gap-y-9 lg:grid-cols-3 lg:grid-rows-2 mt-14 mx-auto">
             {/* left part */}
 
             <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
               <h1 className="w-52 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
                 بهره برداری
               </h1>
-              <p className="max-w-[357px] text-center md:text-right text-sm leading-7">
+              <p className="max-w-[357px] text-center text-sm leading-7">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
                 سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
@@ -111,7 +111,7 @@ export default function Home() {
               <h1 className="w-52 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
                 اجرا
               </h1>
-              <p className="max-w-[357px] text-center md:text-right text- leading-7">
+              <p className="max-w-[357px] text-center text-sm leading-7">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
                 سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
@@ -135,7 +135,7 @@ export default function Home() {
               <h1 className="w-52 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
                 تعریف پروژه
               </h1>
-              <p className="max-w-[357px] text-center md:text-right text-sm leading-7">
+              <p className="max-w-[357px] text-center text-sm leading-7">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
                 سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
@@ -146,7 +146,7 @@ export default function Home() {
               <h1 className="w-52 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
                 طراحی
               </h1>
-              <p className="max-w-[357px] text-center md:text-right text-sm leading-7">
+              <p className="max-w-[357px] text-center text-sm leading-7">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
                 سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم

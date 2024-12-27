@@ -52,8 +52,8 @@ export const CommentsSlider = ({ data }: CommentsSliderProps) => {
         {data.map((props, index) => (
           <SwiperSlide key={index}>
             <Card>
-              <div className="flex items-center gap-4 p-7 pr-5">
-                <div className="text-right space-y-3">
+              <div className="flex flex-col-reverse sm:flex-row items-center gap-4 p-7 pr-5">
+                <div className="text-center sm:text-right space-y-3">
                   <h5>{props.name}</h5>
                   <p className="text-xs text-muted-foreground leading-5">
                     {props.description}
@@ -61,6 +61,7 @@ export const CommentsSlider = ({ data }: CommentsSliderProps) => {
                 </div>
                 <Image
                   src={
+                    // TODO :update avatars
                     props.avatar ? props.avatar : "/home/comments-profile.png"
                   }
                   alt="comment profile"
