@@ -69,6 +69,14 @@
   }
 }
 
+::-moz-selection {
+  /* Code for Firefox */
+  @apply bg-secondary text-secondary-foreground;
+}
+
+::selection {
+  @apply bg-secondary text-secondary-foreground;
+}
 #services-swiper .swiper {
   padding: 10px 10px !important;
 }

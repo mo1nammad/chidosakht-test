@@ -13,7 +13,7 @@ export const Footer = () => {
       {" "}
       <footer className="bg-black text-white py-8">
         <div className="grid grid-cols-6 grid-flow-row xl:gap-x-[90px] gap-y-8 max-w-screen-xl mx-auto px-8">
-          <article className="order-last col-span-6 md:col-span-3 text-right max-w-[530px] ml-auto">
+          <article className="order-last col-span-6 md:col-span-3 text-center md:text-right max-w-[530px] mx-auto md:ml-auto">
             <h2 className="text-3xl text-primary font-yekan-black">
               چیدو ساخت
             </h2>
@@ -26,7 +26,7 @@ export const Footer = () => {
             </p>
 
             {/*phone */}
-            <div className="flex flex-col gap-y-4 sm:flex-row items-center justify-end gap-x-12 mt-5">
+            <div className="flex flex-col gap-y-4 sm:flex-row items-center justify-center md:justify-end gap-x-12 mt-5">
               <div className="flex gap-x-2.5 items-center">
                 <div className="">
                   <h6>شماره موبایل</h6>
@@ -128,7 +128,10 @@ export const Footer = () => {
       </footer>
       <div className="bg-[#333333] text-white">
         <div className="flex flex-col md:flex-row items-center justify-between  max-w-screen-xl mx-auto px-8 py-4 gap-4">
-          <a href="">Algorita طراحی سایت توسط تیم</a>
+          <a href="">
+            <span>طراحی سایت توسط تیم </span>
+            <span className="text-purple-400">الگوریتا</span>
+          </a>
           <p className="text-xs text-center">
             تمام حقوق مادی و معنوی این سایت متعلق به سایت چیدوساخت می‌باشد.
           </p>

@@ -160,7 +160,7 @@ export default function Home() {
 
         <section className="w-full bg-muted h-fit rounded-[40px] flex flex-row-reverse justify-between py-12 px-6 lg:px-24 overflow-hidden">
           <div className="flex flex-col items-end gap-y-6 lg:gap-y-10 lg:max-w-[450px] text-right">
-            <Title textClassname="text-2xl lg:text-3xl">درباره ما</Title>
+            <Title classname="text-2xl lg:text-3xl">درباره ما</Title>
             <div>
               <p className="text-sm lg:text-base leading-5">
                 شرکت چیدوساخت، با بیش از 17 سال تجربه در صنعت ساختمان، افتخار
@@ -230,7 +230,9 @@ export default function Home() {
           </div>
         </section>
         <section>
-          <Title classname="justify-center">نظر و تجربه کاربران چیدوساخت</Title>
+          <Title classname="justify-center text-center">
+            نظر و تجربه کاربران چیدوساخت
+          </Title>
           <div className="drop-shadow-[0_0_25px_rgba(37,99,235,0.1)] py-12">
             <CommentsSlider data={commentsData} />
           </div>
