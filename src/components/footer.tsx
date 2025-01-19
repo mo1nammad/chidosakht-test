@@ -68,7 +68,7 @@ export const Footer = () => {
                 <a href="mailto:algoritatech@gmail.com">
                   algoritatech@gmail.com
                 </a>
-                <p> : ایمیل</p>
+                <p className="ml-2"> ایمیل</p>
               </div>
             </div>
           </article>

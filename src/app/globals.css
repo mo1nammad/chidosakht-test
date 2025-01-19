@@ -81,9 +81,9 @@
   padding: 10px 10px !important;
 }
 
-#projects .swiper-pagination .all-bullets {
+.swiper-pagination .custom-bullets {
   @apply size-1.5 bg-[#DBD3D3] ml-1 inline-block rounded-full transition-[width] duration-300 cursor-pointer;
 }
-#projects .swiper-pagination .all-bullets.bullet-active {
+.swiper-pagination .custom-bullets.active {
   @apply w-6 bg-primary;
 }

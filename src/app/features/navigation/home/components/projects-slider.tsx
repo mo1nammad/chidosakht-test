@@ -30,8 +30,8 @@ export const ProjectsSlider = ({ data }: ProjectsSliderProps) => {
         }}
         pagination={{
           clickable: true,
-          bulletActiveClass: "bullet-active",
-          bulletClass: "all-bullets",
+          bulletActiveClass: "active",
+          bulletClass: "custom-bullets",
         }}
         onSwiper={() => setIsSwiperLoaded(true)}
         breakpoints={{

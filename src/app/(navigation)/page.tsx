@@ -9,7 +9,7 @@ import {
   commentsData,
 } from "@/app/features/navigation/home/constants";
 import { ServicesSlider } from "@/app/features/navigation/home/components/services-slider";
-import { Title } from "@/app/features/navigation/home/components/title";
+import { Title } from "@/components/title";
 import { FilterProjectSection } from "@/app/features/navigation/home/components/filter-projects";
 import { ProjectsSlider } from "@/app/features/navigation/home/components/projects-slider";
 import { CommentsSlider } from "@/app/features/navigation/home/components/comments-slider";
