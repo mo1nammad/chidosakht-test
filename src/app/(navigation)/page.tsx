@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <div className="bg-background">
       {/* hero section */}
-      <div className="container max-w-screen-xl mx-auto px-8">
+      <div className="container max-w-screen-xl mx-auto px-8 xl:px-4">
         <section className="flex flex-col xl:flex-row items-center justify-between pt-6">
           <div className="relative w-fit h-[600px] overflow-hidden hidden md:block">
             <div

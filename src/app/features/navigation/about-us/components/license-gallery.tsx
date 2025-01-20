@@ -10,14 +10,13 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
+import { CarouselBullets } from "@/components/carousel-bullets";
 
 const LicenseGallery = () => {
   const [api, setApi] = useState<CarouselApi>();
 
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
-  const bulletArray = new Array(count).fill(null);
 
   useEffect(() => {
     if (!api) {
@@ -59,19 +58,12 @@ const LicenseGallery = () => {
             );
           })}
         </CarouselContent>
-        <div className="flex gap-x-0.5 absolute inset-x-0 h-4 -bottom-10 justify-center items-center">
-          {count > 1 &&
-            bulletArray.map((_, index) => (
-              <button
-                key={index}
-                className={cn(
-                  "size-1.5 bg-[#DBD3D3] ml-1 inline-block rounded-full transition-[width] duration-300 cursor-pointer",
-                  current === index + 1 && "w-6 bg-primary"
-                )}
-                onClick={() => api?.scrollTo(index)}
-              />
-            ))}
-        </div>
+
+        <CarouselBullets
+          count={count}
+          current={current}
+          onBulletClick={(index) => api?.scrollTo(index)}
+        />
       </Carousel>
     </div>
   );
