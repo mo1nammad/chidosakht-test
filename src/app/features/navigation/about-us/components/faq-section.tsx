@@ -25,13 +25,13 @@ const FAQSection = () => {
         <AccordionItem key={data.value} value={data.value}>
           <AccordionTrigger
             className={cn(
-              "flex-row-reverse",
+              "flex-row-reverse text-right",
               data.value === value && "text-primary"
             )}
           >
             {data.question}
           </AccordionTrigger>
-          <AccordionContent className="text-muted-foreground">
+          <AccordionContent className="text-muted-foreground text-right">
             {data.answer}
           </AccordionContent>
         </AccordionItem>

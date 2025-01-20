@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 
 import { licenseGallery } from "../constants";
 import {
@@ -11,6 +12,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { CarouselBullets } from "@/components/carousel-bullets";
+const GalleryModal = dynamic(() => import("./gallery-modal"));
 
 const LicenseGallery = () => {
   const [api, setApi] = useState<CarouselApi>();
@@ -47,13 +49,17 @@ const LicenseGallery = () => {
                 key={license}
                 className="basis-[150px] rounded-[20px] overflow-hidden"
               >
-                <Image
-                  src={path}
-                  alt="license of work"
-                  width={127}
-                  height={179}
-                  className="w-full h-[179px]"
-                />
+                <GalleryModal
+                  imageSrc={path /* TODO add license path images later*/}
+                >
+                  <Image
+                    src={path}
+                    alt="license of work"
+                    width={127}
+                    height={179}
+                    className="w-full h-[179px]"
+                  />
+                </GalleryModal>
               </CarouselItem>
             );
           })}
