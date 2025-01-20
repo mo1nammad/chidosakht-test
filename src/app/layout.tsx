@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-import {
-  yekanBakhRegular,
-  yekanBakhSemiBold,
-  yekanBakhBlack,
-} from "./fonts/font-webhook";
+import { fontList } from "./fonts/font-webhook";
+
+const mapedFonts = fontList.map((font) => font.variable);
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${yekanBakhRegular.variable} ${yekanBakhSemiBold.variable} ${yekanBakhBlack.variable} antialiased font-yekan-regular`}
+        className={`${mapedFonts.join(" ")} antialiased font-yekan-regular`}
       >
         {children}
       </body>

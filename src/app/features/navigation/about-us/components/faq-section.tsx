@@ -11,7 +11,11 @@ import {
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 
-const FAQSection = () => {
+type AppProps = {
+  className?: string;
+};
+
+const FAQSection = ({ className }: AppProps) => {
   const [value, setValue] = useState<string | undefined>(undefined);
   return (
     <Accordion
@@ -19,7 +23,7 @@ const FAQSection = () => {
       value={value}
       onValueChange={(value) => setValue(value)}
       collapsible
-      className="w-full md:max-w-[500px] text-right"
+      className={cn("w-full text-right", className)}
     >
       {accordionData.map((data) => (
         <AccordionItem key={data.value} value={data.value}>

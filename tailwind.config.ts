@@ -12,6 +12,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        "yekan-light": ["var(--font-yekan-light)"],
         "yekan-regular": ["var(--font-yekan-reqular)"],
         "yekan-semibold": ["var(--font-yekan-semibold)"],
         "yekan-black": ["var(--font-yekan-black)"],

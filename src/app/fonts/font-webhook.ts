@@ -5,6 +5,11 @@ export const yekanBakhThin = localFont({
   variable: "--font-yekan-thin",
 });
 
+export const yekanBakhLight = localFont({
+  src: "./YekanBakhFaNum-Light.otf",
+  variable: "--font-yekan-light",
+});
+
 export const yekanBakhRegular = localFont({
   src: "./YekanBakhFaNum-Regular.otf",
   variable: "--font-yekan-reqular",
@@ -24,3 +29,10 @@ export const yekanBakhBlack = localFont({
   src: "./YekanBakhFaNum-Black.otf",
   variable: "--font-yekan-black",
 });
+
+export const fontList = [
+  yekanBakhRegular,
+  yekanBakhSemiBold,
+  yekanBakhBlack,
+  yekanBakhLight,
+];

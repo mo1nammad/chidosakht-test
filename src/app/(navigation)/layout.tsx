@@ -1,5 +1,6 @@
 import { Footer } from "@/components/footer";
 import Navbar from "@/components/navbar";
+import ContactUsModal from "@/app/features/navigation/components/contact-us-modal";
 
 export default function RootLayout({
   children,
@@ -7,10 +8,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <section>
+    <>
       <Navbar />
       <main className="mt-20 md:mt-[110px]">{children}</main>
       <Footer />
-    </section>
+      <ContactUsModal className="mt-20 md:mt-[110px]" />
+    </>
   );
 }

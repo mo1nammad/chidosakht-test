@@ -15,10 +15,6 @@ export const navigation = [
     title: "درباره‌ ما",
     route: "/about-us",
   },
-  {
-    title: "راهنما",
-    route: "/guide",
-  },
 ];
 
 export const servicesData = [

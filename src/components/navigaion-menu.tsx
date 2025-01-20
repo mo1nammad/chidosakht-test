@@ -1,11 +1,12 @@
 "use client";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 import { navigation } from "@/app/features/navigation/home/constants";
 const NavigationMenu = () => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   return (
     <ul className="flex flex-row-reverse items-center justify-between gap-x-[41px]">
@@ -13,7 +14,7 @@ const NavigationMenu = () => {
         return (
           <li
             className={cn(
-              pathname === item.route
+              pathname === item.route && !searchParams.get("modal")
                 ? "text-primary"
                 : "text-accent-foreground"
             )}
@@ -23,6 +24,16 @@ const NavigationMenu = () => {
           </li>
         );
       })}
+      {/* contact us modal routuing */}
+      <li
+        className={cn(
+          searchParams.get("modal") === "contact-us"
+            ? "text-primary"
+            : "text-accent-foreground"
+        )}
+      >
+        <Link href={`${pathname}?modal=contact-us`}>تماس با ما</Link>
+      </li>
     </ul>
   );
 };

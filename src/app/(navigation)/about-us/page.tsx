@@ -203,7 +203,7 @@ export default function AboutUsPage() {
       <section className="max-w-screen-xl mx-auto lg:px-4 px-8 pb-12">
         <Title classname="pb-8">سوالات متداول</Title>
         <div className="flex flex-row-reverse justify-between items-center">
-          <FAQSection />
+          <FAQSection className="md:max-w-[500px]" />
 
           <Image
             src={"/about-us/faq-banner-icon-in-flat-style-question.png"}
