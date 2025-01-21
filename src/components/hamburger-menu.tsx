@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { Menu } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -20,9 +21,18 @@ type Props = {
 };
 const HamburgerMenu = ({ classname }: Props) => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const modalParam = searchParams.get("modal");
+
+  const [isSheetOpen, setIsSheetOpen] = useState(true);
+
+  useEffect(() => {
+    setIsSheetOpen(false);
+  }, [pathname, modalParam]);
+
   return (
     <div className={cn("flex items-center justify-center", classname)}>
-      <Sheet>
+      <Sheet open={isSheetOpen} onOpenChange={(open) => setIsSheetOpen(open)}>
         <SheetTrigger>
           <Menu className="size-8" />
         </SheetTrigger>
@@ -45,7 +55,7 @@ const HamburgerMenu = ({ classname }: Props) => {
                 <Link
                   className={cn(
                     "text-lg hover:bg-muted py-2 pl-2 rounded-lg",
-                    pathname === item.route
+                    pathname === item.route && !modalParam
                       ? "text-primary"
                       : "text-accent-foreground"
                   )}
@@ -56,6 +66,18 @@ const HamburgerMenu = ({ classname }: Props) => {
                 </Link>
               );
             })}
+
+            <Link
+              className={cn(
+                "text-lg hover:bg-muted py-2 pl-2 rounded-lg",
+                modalParam === "contact-us"
+                  ? "text-primary"
+                  : "text-accent-foreground"
+              )}
+              href={`${pathname}?modal=contact-us`}
+            >
+              <li>ارتباط با ما</li>
+            </Link>
           </ul>
         </SheetContent>
       </Sheet>
