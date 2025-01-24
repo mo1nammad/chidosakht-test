@@ -65,13 +65,31 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground h-full;
+  }
+  html {
+    @apply h-full;
   }
 }
 
 ::-moz-selection {
   /* Code for Firefox */
   @apply bg-secondary text-secondary-foreground;
+}
+
+/* Remove arrows in Chrome, Safari, Edge */
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+  -webkit-appearance: none; /* Chrome, Safari, Edge */
+  appearance: none;
+}
+
+/* Optional: Remove the padding on the right side if there's unwanted space */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 ::selection {

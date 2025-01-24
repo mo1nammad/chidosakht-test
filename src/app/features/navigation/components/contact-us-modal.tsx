@@ -46,7 +46,7 @@ export default function ContactUsModal({ className }: AppProps) {
           "fixed inset-x-0 h-full lg:h-fit overflow-y-scroll lg:overflow-auto top-0 z-40 bg-muted rounded-b-xl max-w-screen-xl mx-auto transition-[top] duration-500 ease-out",
           modalParam === "contact-us"
             ? "top-0"
-            : "-top-[1170px] lg:-top-[600px]",
+            : "-top-[1170px] lg:-top-[630px]",
           className
         )}
       >

@@ -1,3 +1,5 @@
+import SignUpForm from "@/app/features/auth/components/signup-form";
+
 export default function SignUpPage() {
-  return <div className="margin-">bye world</div>;
+  return <SignUpForm />;
 }

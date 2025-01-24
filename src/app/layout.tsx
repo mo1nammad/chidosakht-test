@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import { fontList } from "./fonts/font-webhook";
+import Providers from "@/components/providers";
 
 const mapedFonts = fontList.map((font) => font.variable);
 
@@ -20,7 +21,7 @@ export default function RootLayout({
       <body
         className={`${mapedFonts.join(" ")} antialiased font-yekan-regular`}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
