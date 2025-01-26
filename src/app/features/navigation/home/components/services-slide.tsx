@@ -8,8 +8,8 @@ type ServicesSlideProps = {
 
 export const ServicesSlide = ({ src, title }: ServicesSlideProps) => {
   return (
-    <Card className="w-full h-fit drop-shadow-md border-none group pt-1.5">
-      <CardContent className="mt-2 px-2 py-0">
+    <Card className="w-full h-fit drop-shadow-md border-none group">
+      <CardContent className="p-1 sm:p-2">
         <Image
           src={src}
           width={250}
@@ -17,7 +17,7 @@ export const ServicesSlide = ({ src, title }: ServicesSlideProps) => {
           alt="slider image"
           className="rounded-lg w-full"
         />
-        <h6 className="text-center py-4 group-hover:text-primary transition cursor-default">
+        <h6 className="text-xs sm:text-base text-center py-2 sm:py-3 group-hover:text-primary transition cursor-default">
           {title}
         </h6>
       </CardContent>

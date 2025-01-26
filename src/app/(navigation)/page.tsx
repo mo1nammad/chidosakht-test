@@ -13,6 +13,8 @@ import { Title } from "@/components/title";
 import { FilterProjectSection } from "@/app/features/navigation/home/components/filter-projects";
 import { ProjectsSlider } from "@/app/features/navigation/home/components/projects-slider";
 import { CommentsSlider } from "@/app/features/navigation/home/components/comments-slider";
+import HeroImage from "@/app/features/navigation/home/components/hero-image";
+import { WorkstepsMobileSlider } from "@/app/features/navigation/home/components/worksteps-mobile-slider";
 
 export default function Home() {
   return (
@@ -20,34 +22,15 @@ export default function Home() {
       {/* hero section */}
       <div className="container max-w-screen-xl mx-auto px-8 xl:px-4">
         <section className="flex flex-col xl:flex-row items-center justify-between pt-6">
-          <div className="relative w-fit h-[600px] overflow-hidden hidden md:block">
-            <div
-              className="relative size-[600px] z-10"
-              style={{
-                background:
-                  "linear-gradient(#ffffff 1.7000000000000002px,transparent 1.7000000000000002px), linear-gradient(to right,#ffffff 1.7000000000000002px, #00000000 1.7000000000000002px)",
-                backgroundColor: "#00000000",
-                backgroundSize: "40px 40px",
-                opacity: 0.8,
-              }}
-            />
-            <div className="size-[350px] bg-primary/60 absolute top-28 left-32 rounded-full blur-2xl"></div>
-            <Image
-              alt="hero section image"
-              width={448}
-              height={450}
-              src={"/home/Fanavaran 1.png"}
-              className="absolute top-20 left-[70px] z-20"
-            />
-          </div>
+          <HeroImage />
 
-          <div className="flex flex-col mt-16 md:mt-0">
-            <div className="flex flex-col justify-center gap-y-14 sm:gap-y-8 max-w-[540px] text-center xl:text-right">
-              <h1 className="text-4xl font-yekan-black leading-snug">
+          <div className="flex flex-col mt-6 md:mt-0">
+            <div className="flex flex-col justify-center gap-y-8 sm:gap-y-8 max-w-[540px] text-center xl:text-right">
+              <h1 className="text-2xl sm:text-4xl font-yekan-black leading-snug">
                 آجربه‌آجر تا خانه رویاییتان را از ما بخواهید
               </h1>
               <div className="max-w-[540px] text-muted-foreground">
-                <p className="leading-7">
+                <p className="leading-7 text-sm sm:text-base">
                   در چیدوساخت، رویاهای مسکونی شما را با مهارت و اشتیاق به واقعیت
                   تبدیل می‌کنیم. با ترکیبی از تخصص، نوآوری و مصالح برتر،
                   خانه‌هایی می‌سازیم که نه تنها چشم‌نواز، بلکه ماندگار هستند با
@@ -56,14 +39,18 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="w-full sm:w-auto space-x-0 sm:space-x-7 self-center xl:self-end mt-8 flex gap-y-6 flex-col items-center justify-items-center sm:block">
-              <Button size="lg" className="w-full sm:w-auto" asChild>
+            <div className="w-full sm:w-auto space-x-0 sm:space-x-7 self-center xl:self-end mt-8 flex flex-col gap-y-4 sm:flex-row gap-x-6 items-center justify-items-center sm:block">
+              <Button
+                size="lg"
+                className="w-full sm:w-44 text-sm sm:text-base p-2"
+                asChild
+              >
                 <Link href={"#"}>مشاهده نمونه کارها</Link>
               </Button>
 
               <Button
                 size="lg"
-                className="w-full sm:w-auto"
+                className="w-full sm:w-44 text-sm sm:text-base p-2"
                 asChild
                 variant="outline"
               >
@@ -84,23 +71,15 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="py-20">
-          <div className="flex items-center justify-center">
-            <div className="w-fit relative">
-              <h1 className="text-3xl font-yekan-semibold after:absolute after:inset-x-0 after:-bottom-2 after:w-full after:h-[0.5px] after:bg-primary after:drop-shadow-[0_3px_4px_rgba(20,34,189,1)]">
-                مراحل انجام پروژه
-              </h1>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 gap-y-0 md:gap-y-9 lg:grid-cols-3 lg:grid-rows-2 mt-14 mx-auto">
+        <section className="py-16 sm:py-20 relative">
+          <WorkstepsMobileSlider />
+          <div className="hidden md:grid grid-cols-1 gap-y-0 md:gap-y-9 lg:grid-cols-3 lg:grid-rows-2 mt-7 sm:mt-14 mx-auto">
             {/* left part */}
-
             <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
-              <h1 className="w-52 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
-                بهره برداری
+              <h1 className="w-36 text-lg sm:text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
+                تعریف پروژه
               </h1>
-              <p className="max-w-[357px] text-center text-sm leading-7">
+              <p className="max-w-[357px] text-center text-xs sm:text-sm leading-7">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
                 سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
@@ -108,10 +87,10 @@ export default function Home() {
               </p>
             </div>
             <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
-              <h1 className="w-52 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
-                اجرا
+              <h1 className="w-36 text-lg sm:text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
+                طراحی
               </h1>
-              <p className="max-w-[357px] text-center text-sm leading-7">
+              <p className="max-w-[357px] text-center text-xs sm:text-sm leading-7">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
                 سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
@@ -130,12 +109,11 @@ export default function Home() {
               />
             </div>
             {/* right part */}
-
             <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
-              <h1 className="w-52 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
-                تعریف پروژه
+              <h1 className="w-36 text-lg sm:text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
+                بهره برداری
               </h1>
-              <p className="max-w-[357px] text-center text-sm leading-7">
+              <p className="max-w-[357px] text-center text-xs sm:text-sm leading-7">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
                 سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
@@ -143,10 +121,10 @@ export default function Home() {
               </p>
             </div>
             <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
-              <h1 className="w-52 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
-                طراحی
+              <h1 className="w-36 text-lg sm:text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
+                اجرا
               </h1>
-              <p className="max-w-[357px] text-center text-sm leading-7">
+              <p className="max-w-[357px] text-center text-xs sm:text-sm leading-7">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
                 سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم

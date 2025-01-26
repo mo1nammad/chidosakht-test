@@ -69,6 +69,7 @@ const LicenseGallery = () => {
           count={count}
           current={current}
           onBulletClick={(index) => api?.scrollTo(index)}
+          className="-bottom-10"
         />
       </Carousel>
     </div>

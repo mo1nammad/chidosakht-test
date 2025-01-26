@@ -35,9 +35,7 @@ export default function SignUpForm() {
 
   const { signUpFn } = useSignUp();
 
-  const onSubmit = (values: z.infer<typeof signUpSchema>) => {
-    signUpFn(values);
-  };
+  const onSubmit = (values: z.infer<typeof signUpSchema>) => signUpFn(values);
 
   return (
     <div className="max-w-[400px] mx-auto h-full">

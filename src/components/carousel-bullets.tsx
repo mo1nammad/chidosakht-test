@@ -4,12 +4,23 @@ type Props = {
   count: number;
   current: number;
   onBulletClick: (index: number) => void;
+  className?: string;
 };
-export const CarouselBullets = ({ count, onBulletClick, current }: Props) => {
+export const CarouselBullets = ({
+  count,
+  onBulletClick,
+  current,
+  className,
+}: Props) => {
   const bulletArray = new Array(count).fill(null);
 
   return (
-    <div className="flex gap-x-0.5 absolute inset-x-0 h-4 -bottom-10 justify-center items-center">
+    <div
+      className={cn(
+        "flex gap-x-0.5 absolute inset-x-0 h-4 bottom-0 justify-center items-center",
+        className
+      )}
+    >
       {count > 1 &&
         bulletArray.map((_, index) => (
           <button

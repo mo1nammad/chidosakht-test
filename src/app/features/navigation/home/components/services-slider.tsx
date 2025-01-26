@@ -1,17 +1,15 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
 import { ServicesSlide } from "./services-slide";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import {
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import { CarouselBullets } from "@/components/carousel-bullets";
 
 type ServicesSliderProps = {
   data: {
@@ -20,67 +18,59 @@ type ServicesSliderProps = {
   }[];
 };
 export const ServicesSlider = ({ data }: ServicesSliderProps) => {
-  const [isSwiperLoaded, setIsSwiperLoaded] = useState(false);
+  const [api, setApi] = useState<CarouselApi>();
 
-  const nextBtnRef = useRef<HTMLButtonElement>(null);
-  const prevBtnRef = useRef<HTMLButtonElement>(null);
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+    api.on("slidesInView", () => {
+      setCount(api.scrollSnapList().length);
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
 
   return (
-    <div className={cn(isSwiperLoaded ? "block" : "hidden")}>
-      {/* custom next and prev buttons */}
-      <Button
-        ref={prevBtnRef}
-        className="absolute z-10 top-1/2 -translate-y-1/2 -left-10 sm:-left-5 [&_svg]:size-auto"
-        size={"icon"}
-        variant={"secondary"}
-      >
-        <ChevronLeft className="text-primary" />
-      </Button>
-      <Button
-        ref={nextBtnRef}
-        className="absolute z-10 top-1/2 -translate-y-1/2 -right-10 sm:-right-5 [&_svg]:size-auto"
-        size={"icon"}
-        variant={"secondary"}
-      >
-        <ChevronRight className="text-primary" />
-      </Button>
-
-      <Swiper
-        slidesPerView={1}
-        spaceBetween={15}
-        height={240}
-        modules={[Navigation]}
-        navigation={{ nextEl: nextBtnRef.current, prevEl: prevBtnRef.current }}
-        onBeforeInit={(swiper) => {
-          if (
-            typeof swiper.params.navigation !== "boolean" &&
-            swiper.params.navigation
-          ) {
-            swiper.params.navigation.prevEl = prevBtnRef.current;
-            swiper.params.navigation.nextEl = nextBtnRef.current;
-          }
-        }}
-        onSwiper={() => setIsSwiperLoaded(true)}
-        breakpoints={{
-          1024: {
-            slidesPerView: data.length,
-          },
-          768: {
-            slidesPerView: 3,
-          },
-          647: {
-            slidesPerView: 2,
-            spaceBetween: 25,
-          },
-        }}
-      >
-        {/* slides */}
+    <Carousel setApi={setApi} className="relative ">
+      <CarouselContent className="p-2">
         {data.map((props, index) => (
-          <SwiperSlide key={index}>
+          // responsive : (basis)
+          <CarouselItem
+            className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5"
+            key={index}
+          >
             <ServicesSlide {...props} />
-          </SwiperSlide>
+          </CarouselItem>
         ))}
-      </Swiper>
-    </div>
+      </CarouselContent>
+      <button
+        className="absolute z-10 top-1/2 -translate-y-1/2 -left-8 sm:-left-10 size-6 p-0 sm:size-9 bg-secondary text-primary grid place-content-center rounded-lg"
+        onClick={() => api?.scrollPrev()}
+      >
+        <ChevronLeft className="text-primary !size-4 sm:size-8 p-0" />
+      </button>
+      <button
+        className="absolute z-10 top-1/2 -translate-y-1/2 -right-8 sm:-right-10 size-6 sm:size-9 bg-secondary text-primary grid place-content-center rounded-lg"
+        onClick={() => api?.scrollNext()}
+      >
+        <ChevronRight className="text-primary !size-4 sm:size-8 p-0" />
+      </button>
+      <CarouselBullets
+        count={count}
+        current={current}
+        onBulletClick={(index) => api?.scrollTo(index)}
+        className="-bottom-8"
+      />
+    </Carousel>
   );
 };
