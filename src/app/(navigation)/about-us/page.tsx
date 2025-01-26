@@ -9,7 +9,7 @@ export default function AboutUsPage() {
   return (
     <div className="space-y-20">
       {/* hero section */}
-      <section className="max-w-screen-xl mx-auto px-8 xl:px-4 flex flex-col gap-x-8 gap-y-12 lg:flex-row items-center justify-between pt-12">
+      <section className="max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4 flex flex-col gap-x-8 gap-y-12 lg:flex-row items-center justify-between pt-12">
         <Image
           src="/about-us/smart-civil-architect-engineer-inspecting.png"
           alt="hero banner"
@@ -66,7 +66,7 @@ export default function AboutUsPage() {
 
       {/* features */}
 
-      <section className="max-w-screen-xl mx-auto px-8 xl:px-4">
+      <section className="max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4">
         <Title classname="pb-10 items-start justify-start">
           خدمات جامع ساختمانی
         </Title>
@@ -138,7 +138,7 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      <section className="max-w-screen-xl mx-auto px-8 xl:px-4">
+      <section className="max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4">
         <Title classname="pb-10 lg:pb-2 items-start justify-start">
           رویکرد ما
         </Title>
@@ -182,25 +182,25 @@ export default function AboutUsPage() {
       </section>
 
       {/* licenses */}
-      <section className="max-w-screen-xl mx-auto px-8 xl:px-4">
+      <section className="max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4">
         <Title classname="pb-9">گواهینامه ها</Title>
         <LicenseGallery />
       </section>
 
       {/* team */}
       <section>
-        <Title classname="pb-5 max-w-screen-xl mx-auto lg:px-4 px-8">
+        <Title classname="pb-5 max-w-(--breakpoint-xl) mx-auto lg:px-4 px-8">
           اعضای تیم <span className="text-primary">چیدوساخت</span>
         </Title>
         <div className="bg-muted h-[329px]">
-          <div className="max-w-screen-xl mx-auto px-8 xl:px-4 py-9">
+          <div className="max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4 py-9">
             <TeamGallery />
           </div>
         </div>
       </section>
 
       {/* FAQ section */}
-      <section className="max-w-screen-xl mx-auto lg:px-4 px-8 pb-12">
+      <section className="max-w-(--breakpoint-xl) mx-auto lg:px-4 px-8 pb-12">
         <Title classname="pb-8">سوالات متداول</Title>
         <div className="flex flex-row-reverse justify-between items-center">
           <FAQSection className="md:max-w-[500px]" />

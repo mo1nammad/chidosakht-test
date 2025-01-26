@@ -31,7 +31,7 @@ const HeroImage = () => {
           opacity: 0.8,
         }}
       />
-      <div className="size-[200px] sm:size-[350] bg-primary/60 absolute left-[calc(50%+2px)] -translate-x-1/2 top-[70px] sm:top-28 sm:left-32 sm:translate-x-0 rounded-full blur-2xl"></div>
+      <div className="size-[200px] sm:size-[350px] bg-primary/60 absolute left-[calc(50%+2px)] -translate-x-1/2 top-[70px] sm:top-28 sm:left-32 sm:translate-x-0 rounded-full blur-2xl"></div>
       <Image
         alt="hero section image"
         width={isMobile ? 300 : 450}

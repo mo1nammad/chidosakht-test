@@ -20,7 +20,7 @@ export default function Home() {
   return (
     <div className="bg-background">
       {/* hero section */}
-      <div className="container max-w-screen-xl mx-auto px-8 xl:px-4">
+      <div className="container max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4">
         <section className="flex flex-col xl:flex-row items-center justify-between pt-6">
           <HeroImage />
 
@@ -159,7 +159,7 @@ export default function Home() {
                 className="px-5 py-4 bg-white transition-none hover:opacity-100 hover:bg-gray-100"
               >
                 <Link href="/about-us">
-                  <MoveLeft className="!size-5 text-foreground" />
+                  <MoveLeft className="size-5! text-foreground" />
                 </Link>
               </Button>
               <span className="text-sm lg:text-base">مشاهده پروژه ها</span>

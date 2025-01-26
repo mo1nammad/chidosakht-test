@@ -10,7 +10,7 @@ import Link from "next/link";
 const Navbar = () => {
   return (
     <div className="fixed inset-x-0 top-0 h-20 md:h-[110px] shadow-md rounded-2xl bg-background z-50">
-      <nav className="max-w-screen-xl mx-auto px-8 xl:px-4 h-full flex items-center justify-between">
+      <nav className="max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4 h-full flex items-center justify-between">
         <div
           id="button-group"
           className="flex items-center gap-x-8 w-full md:w-auto justify-between md:justify-normal"
@@ -41,12 +41,12 @@ const Navbar = () => {
                   })
                 )}
               >
-                <LogIn className="!size-5" />
+                <LogIn className="size-5!" />
                 <span>ورود | ثبت‌نام</span>
               </Link>
 
               <Button variant={"primary"}>
-                <Headset className="!size-5" />
+                <Headset className="size-5!" />
                 <span className="font-vazir-semibold">مشاوره‌رایگان</span>
               </Button>
             </div>

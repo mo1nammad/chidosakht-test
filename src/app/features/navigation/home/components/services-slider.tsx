@@ -57,13 +57,13 @@ export const ServicesSlider = ({ data }: ServicesSliderProps) => {
         className="absolute z-10 top-1/2 -translate-y-1/2 -left-8 sm:-left-10 size-6 p-0 sm:size-9 bg-secondary text-primary grid place-content-center rounded-lg"
         onClick={() => api?.scrollPrev()}
       >
-        <ChevronLeft className="text-primary !size-4 sm:size-8 p-0" />
+        <ChevronLeft className="text-primary size-4! sm:size-8 p-0" />
       </button>
       <button
         className="absolute z-10 top-1/2 -translate-y-1/2 -right-8 sm:-right-10 size-6 sm:size-9 bg-secondary text-primary grid place-content-center rounded-lg"
         onClick={() => api?.scrollNext()}
       >
-        <ChevronRight className="text-primary !size-4 sm:size-8 p-0" />
+        <ChevronRight className="text-primary size-4! sm:size-8 p-0" />
       </button>
       <CarouselBullets
         count={count}

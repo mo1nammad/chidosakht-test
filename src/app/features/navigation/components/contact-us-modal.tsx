@@ -43,7 +43,7 @@ export default function ContactUsModal({ className }: AppProps) {
 
       <div
         className={cn(
-          "fixed inset-x-0 h-full lg:h-fit overflow-y-scroll lg:overflow-auto top-0 z-40 bg-muted rounded-b-xl max-w-screen-xl mx-auto transition-[top] duration-500 ease-out",
+          "fixed inset-x-0 h-full lg:h-fit overflow-y-scroll lg:overflow-auto top-0 z-40 bg-muted rounded-b-xl max-w-(--breakpoint-xl) mx-auto transition-[top] duration-500 ease-out",
           modalParam === "contact-us"
             ? "top-0"
             : "-top-[1170px] lg:-top-[630px]",
@@ -59,7 +59,7 @@ export default function ContactUsModal({ className }: AppProps) {
           بازگشت
         </Button>
         <div className="flex h-fit flex-col lg:flex-row p-12">
-          <div className="lg:flex-grow">
+          <div className="lg:grow">
             <ContactUsForm />
           </div>
           {/* seperator */}

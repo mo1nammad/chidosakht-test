@@ -12,7 +12,7 @@ export const yekanBakhLight = localFont({
 
 export const yekanBakhRegular = localFont({
   src: "./YekanBakhFaNum-Regular.otf",
-  variable: "--font-yekan-reqular",
+  variable: "--font-yekan-regular",
 });
 
 export const yekanBakhSemiBold = localFont({
