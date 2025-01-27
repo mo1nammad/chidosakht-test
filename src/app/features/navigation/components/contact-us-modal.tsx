@@ -2,11 +2,11 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { Suspense, useEffect } from "react";
 
+import { cn } from "@/lib/utils";
 import FAQSection from "../about-us/components/faq-section";
 import ContactUsForm from "./contact-us-form";
-import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { MoveLeft } from "lucide-react";
 
@@ -26,7 +26,7 @@ export default function ContactUsModal({ className }: AppProps) {
   }, [modalParam]);
 
   return (
-    <>
+    <Suspense>
       {/* overlay */}
       <AnimatePresence>
         {modalParam && (
@@ -72,6 +72,6 @@ export default function ContactUsModal({ className }: AppProps) {
           </div>
         </div>
       </div>
-    </>
+    </Suspense>
   );
 }
