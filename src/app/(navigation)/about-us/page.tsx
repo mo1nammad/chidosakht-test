@@ -18,10 +18,10 @@ export default function AboutUsPage() {
         />
         <div className="flex flex-col">
           <div className="text-center lg:text-right">
-            <h1 className="font-yekan-black text-4xl">
-              ... وقتشه با چیدوساخت بیشتر آشنا شی
+            <h1 className="font-yekan-black text-2xl sm:text-4xl">
+              وقتشه با چیدوساخت بیشتر آشنا شی
             </h1>
-            <div className="mt-8 mb-9 max-w-[580px] text-muted-foreground">
+            <div className="mt-8 mb-9 max-w-[580px] text-muted-foreground text-sm sm:text-base">
               <p>
                 شرکت چیدوساخت، با بیش از 17 سال تجربه در صنعت ساختمان، افتخار
                 دارد خدمات جامع و تخصصی خود را در حوزه‌های مختلف ساخت و ساز به
@@ -79,56 +79,64 @@ export default function AboutUsPage() {
             className="hidden rounded-xl object-cover lg:block"
           />
           <div className="flex-1 text-right pl-7 md:pl-0">
-            <p>
+            <p className="text-sm sm:text-base">
               چیدوساخت با ارائه راهکارهای اقتصادی و کارآمد، تمامی نیازهای
               ساختمانی شما را پوشش می‌دهد
             </p>
-            <ul className="mt-9 space-y-2">
+            <ul className="mt-9 space-y-2 text-xs sm:text-base">
               <li className="relative right-6 after:content-[''] after:absolute after:size-1 after:bg-black after:rounded-full after:top-2.5 after:-right-4">
-                <span className="ml-1">طراحی و مشاوره:</span>
+                <span className="ml-1 text-sm sm:text-base">
+                  طراحی و مشاوره:
+                </span>
                 <span className="text-muted-foreground">
                   ارائه خدمات مشاوره معماری و مهندسی برای طراحی بهینه فضاها
                 </span>
               </li>
 
               <li className="relative right-6 after:content-[''] after:absolute after:size-1 after:bg-black after:rounded-full after:top-2.5 after:-right-4">
-                <span className="ml-1">ساخت و ساز:</span>
+                <span className="ml-1 text-sm sm:text-base">ساخت و ساز:</span>
                 <span className="text-muted-foreground">
                   خدمات مشاوره معماری و مهندسی برای طراحی بهینه فضاها
                 </span>
               </li>
               <li className="relative right-6 after:content-[''] after:absolute after:size-1 after:bg-black after:rounded-full after:top-2.5 after:-right-4">
-                <span className="ml-1">تعمیر و نگهداری:</span>
+                <span className="ml-1 text-sm sm:text-base">
+                  تعمیر و نگهداری:
+                </span>
                 <span className="text-muted-foreground">
                   خدمات جامع نگهداری و تعمیرات ساختمان‌ها{" "}
                 </span>
               </li>
               <li className="relative right-6 after:content-[''] after:absolute after:size-1 after:bg-black after:rounded-full after:top-2.5 after:-right-4">
-                <span className="ml-1">تأسیسات:</span>
+                <span className="ml-1 text-sm sm:text-base">تأسیسات:</span>
                 <span className="text-muted-foreground">
                   نصب و راه‌اندازی سیستم‌های برقی، مکانیکی و تهویه مطبوع
                 </span>
               </li>
               <li className="relative right-6 after:content-[''] after:absolute after:size-1 after:bg-black after:rounded-full after:top-2.5 after:-right-4">
-                <span className="ml-1">نوسازی و بازسازی:</span>
+                <span className="ml-1 text-sm sm:text-base">
+                  نوسازی و بازسازی:
+                </span>
                 <span className="text-muted-foreground">
                   ارتقاء و به‌روزرسانی ساختمان‌های قدیمی
                 </span>
               </li>
               <li className="relative right-6 after:content-[''] after:absolute after:size-1 after:bg-black after:rounded-full after:top-2.5 after:-right-4">
-                <span className="ml-1">مدیریت پروژه:</span>
+                <span className="ml-1 text-sm sm:text-base">مدیریت پروژه:</span>
                 <span className="text-muted-foreground">
                   نظارت دقیق بر تمامی مراحل اجرای پروژه
                 </span>
               </li>
               <li className="relative right-6 after:content-[''] after:absolute after:size-1 after:bg-black after:rounded-full after:top-2.5 after:-right-4">
-                <span className="ml-1">خدمات زمین:</span>
+                <span className="ml-1 text-sm sm:text-base">خدمات زمین:</span>
                 <span className="text-muted-foreground">
                   محوطه‌سازی و آماده‌سازی زمین برای ساخت و ساز
                 </span>
               </li>
               <li className="relative right-6 after:content-[''] after:absolute after:size-1 after:bg-black after:rounded-full after:top-2.5 after:-right-4">
-                <span className="ml-1">ایمنی و کیفیت:</span>
+                <span className="ml-1 text-sm sm:text-base">
+                  ایمنی و کیفیت:
+                </span>
                 <span className="text-muted-foreground">
                   تضمین رعایت استانداردهای ایمنی و کیفیت در تمامی مراحل
                 </span>
@@ -151,11 +159,11 @@ export default function AboutUsPage() {
             className="hidden lg:block rounded-xl object-cover w-[354px]"
           />
           <div className="flex-1 text-right pl-7 md:pl-0">
-            <p className="before:content-[':']">
+            <p className="before:content-[':'] text-sm sm:text-base">
               در چیدوساخت، ما معتقدیم آگاهی‌سازی مشتریان، کلید موفقیت پروژه‌های
               ساختمانی است به همین دلیل
             </p>
-            <ul className="mt-9 space-y-2">
+            <ul className="mt-9 space-y-2 text-xs sm:text-sm">
               <li className="relative before:content-['.'] text-muted-foreground right-6 after:content-[''] after:absolute after:size-1 after:bg-muted-foreground after:rounded-full after:top-2.5 after:-right-4">
                 با اطلاع‌رسانی دقیق درباره مسائل ساختمانی، دیدگاهی جامع به
                 مشتریان ارائه می‌دهیم

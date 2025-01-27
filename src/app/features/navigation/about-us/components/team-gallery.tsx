@@ -1,5 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useState, useEffect, useRef } from "react";
+import AutoScroll from "embla-carousel-auto-scroll";
 
 import { teamGalleryData } from "@/app/features/navigation/about-us/constants";
 import {
@@ -13,6 +15,7 @@ import { CarouselBullets } from "@/components/carousel-bullets";
 
 const TeamGallery = () => {
   const [api, setApi] = useState<CarouselApi>();
+  const plugin = useRef(AutoScroll({ speed: 0.5 }));
 
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
@@ -35,20 +38,20 @@ const TeamGallery = () => {
   }, [api]);
 
   return (
-    <Carousel setApi={setApi}>
-      <CarouselContent className="-ml-16 lg:-ml-0">
+    <Carousel plugins={[plugin.current]} setApi={setApi} opts={{ loop: true }}>
+      <CarouselContent className="-ml-16 mr-16 lg:-ml-0 lg:mr-0">
         {teamGalleryData.map((member) => (
           <CarouselItem
             key={member.work}
             className="basis-[200px] pl-16 lg:pl-0 lg:basis-1/4 xl:basis-1/5 "
           >
-            <div className="relative w-[180px] lg:w-[211px] h-48 lg:h-56 p-1.5 flex items-end">
+            <div className="relative w-[180px] lg:w-[211px] h-48 lg:h-56 p-1.5 flex items-end transition duration-300 grayscale hover:grayscale-0">
               <Image
                 src={member.imageSrc}
                 alt="member image"
                 width={211}
                 height={225}
-                className="-z-10 absolute inset-0 rounded-xl transition duration-300 grayscale hover:grayscale-0"
+                className="-z-10 absolute inset-0 rounded-xl"
               />
               <div className="w-full h-1/4 bg-white/90 rounded-xl flex flex-col items-center justify-center">
                 <h4 className="text-xs sm:text-sm">{member.name}</h4>

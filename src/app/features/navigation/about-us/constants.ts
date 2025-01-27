@@ -17,16 +17,6 @@ export const teamGalleryData: Readonly<
   }[]
 > = [
   {
-    name: "مهندس بهزاد شفیع راد",
-    work: "مدیر عامل",
-    imageSrc: "/about-us/team/behzad-shafi.png",
-  },
-  {
-    name: "مهندس جلیل پریدخت",
-    work: "کارشناس صنایع",
-    imageSrc: "/about-us/team/jalil-paridokht.png",
-  },
-  {
     name: "علی رضا پریدخت",
     work: "مدیر تیم IT",
     imageSrc: "/about-us/team/paridokht-ali.png",
@@ -45,6 +35,16 @@ export const teamGalleryData: Readonly<
     name: "محسن خلیلی",
     work: "برنامه نویس فرانت اند",
     imageSrc: "/about-us/team/pythonpour.png",
+  },
+  {
+    name: "مهندس بهزاد شفیع راد",
+    work: "مدیر عامل",
+    imageSrc: "/about-us/team/behzad-shafi.png",
+  },
+  {
+    name: "مهندس جلیل پریدخت",
+    work: "کارشناس صنایع",
+    imageSrc: "/about-us/team/jalil-paridokht.png",
   },
 ];
 
