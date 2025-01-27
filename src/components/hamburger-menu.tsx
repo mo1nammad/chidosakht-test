@@ -24,7 +24,7 @@ const HamburgerMenu = ({ classname }: Props) => {
   const searchParams = useSearchParams();
   const modalParam = searchParams.get("modal");
 
-  const [isSheetOpen, setIsSheetOpen] = useState(true);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   useEffect(() => {
     setIsSheetOpen(false);
