@@ -47,7 +47,7 @@ export function WorkstepsMobileSlider() {
                 index === current ? "scale-100" : "scale-50 opacity-0"
               )}
             >
-              <h1 className="w-36 text-lg sm:text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
+              <h1 className="w-33 text-base sm:text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
                 {data.title}
               </h1>
               <p className="max-w-[357px] text-center text-xs sm:text-sm leading-7">

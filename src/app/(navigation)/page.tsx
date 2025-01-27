@@ -73,13 +73,13 @@ export default function Home() {
 
         <section className="py-16 sm:py-20 relative">
           <WorkstepsMobileSlider />
-          <div className="hidden md:grid grid-cols-1 gap-y-0 md:gap-y-9 lg:grid-cols-3 lg:grid-rows-2 mt-7 sm:mt-14 mx-auto">
+          <div className="hidden md:grid  gap-y-0 md:gap-y-9 grid-cols-2 lg:grid-cols-3 grid-rows-2 mt-14 mx-auto">
             {/* left part */}
             <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
-              <h1 className="w-36 text-lg sm:text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
+              <h1 className="w-36 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
                 تعریف پروژه
               </h1>
-              <p className="max-w-[357px] text-center text-xs sm:text-sm leading-7">
+              <p className="max-w-[357px] text-center text-sm leading-7">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
                 سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
@@ -87,10 +87,10 @@ export default function Home() {
               </p>
             </div>
             <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
-              <h1 className="w-36 text-lg sm:text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
+              <h1 className="w-36 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
                 طراحی
               </h1>
-              <p className="max-w-[357px] text-center text-xs sm:text-sm leading-7">
+              <p className="max-w-[357px] text-center text-sm leading-7">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
                 سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
@@ -110,10 +110,10 @@ export default function Home() {
             </div>
             {/* right part */}
             <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
-              <h1 className="w-36 text-lg sm:text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
+              <h1 className="w-36 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
                 بهره برداری
               </h1>
-              <p className="max-w-[357px] text-center text-xs sm:text-sm leading-7">
+              <p className="max-w-[357px] text-center text-sm leading-7">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
                 سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
@@ -121,10 +121,10 @@ export default function Home() {
               </p>
             </div>
             <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
-              <h1 className="w-36 text-lg sm:text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
+              <h1 className="w-36 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
                 اجرا
               </h1>
-              <p className="max-w-[357px] text-center text-xs sm:text-sm leading-7">
+              <p className="max-w-[357px] text-center text-sm leading-7">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
                 سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
@@ -136,16 +136,16 @@ export default function Home() {
 
         {/* about us */}
 
-        <section className="w-full bg-muted h-fit rounded-[40px] flex flex-row-reverse justify-between py-12 px-6 lg:px-24 overflow-hidden">
-          <div className="flex flex-col items-end gap-y-6 lg:gap-y-10 lg:max-w-[450px] text-right">
-            <Title classname="text-2xl lg:text-3xl">درباره ما</Title>
-            <div>
-              <p className="text-sm lg:text-base leading-5">
+        <section className="w-full bg-muted h-fit rounded-[40px] flex flex-row-reverse justify-between gap-x-10 items-center py-9 px-6 lg:px-24 overflow-hidden">
+          <div className="flex flex-col items-end gap-y-6 lg:gap-y-10 text-right max-w-full sm:max-w-100 xl:max-w-110">
+            <Title>درباره ما</Title>
+            <div className="text-xs sm:text-sm lg:text-base text-muted-foreground leading-6">
+              <p>
                 شرکت چیدوساخت، با بیش از 17 سال تجربه در صنعت ساختمان، افتخار
                 دارد خدمات جامع و تخصصی خود را در حوزه‌های مختلف ساخت و ساز به
                 مشتریان ارائه دهد
               </p>
-              <p className="text-sm lg:text-base leading-5">
+              <p>
                 {" "}
                 ما که پیش‌تر با نام فناوران سازه شناخته می‌شدیم، اکنون با نام
                 چیدوساخت، آماده‌ایم تا تجربیات ارزشمند خود را در خدمت پروژه‌های
@@ -156,16 +156,16 @@ export default function Home() {
               <Button
                 asChild
                 size="icon"
-                className="px-5 py-4 bg-white transition-none hover:opacity-100 hover:bg-gray-100"
+                className="h-6 w-6 sm:w-9 sm:h-9 py-2 sm:px-5 sm:py-4 bg-white transition-none hover:opacity-100 hover:bg-gray-100"
               >
                 <Link href="/about-us">
-                  <MoveLeft className="size-5! text-foreground" />
+                  <MoveLeft className="size-3! sm:size-5! text-foreground" />
                 </Link>
               </Button>
               <span className="text-sm lg:text-base">مشاهده پروژه ها</span>
             </div>
           </div>
-          <div className="hidden lg:grid grid-cols-2 grid-rows-3 w-[400px] gap-x-4 gap-y-3 h-[273px]">
+          <div className="hidden sm:grid grid-cols-2 grid-rows-3  gap-x-4 gap-y-3 md:w-80 md:h-50 lg:w-[400px] lg:h-[273px]">
             <div className="row-span-3 rounded-2xl overflow-hidden">
               <Image
                 src="/home/about-us-sec-image.png"

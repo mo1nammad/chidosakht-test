@@ -16,12 +16,36 @@ export const teamGalleryData: Readonly<
     imageSrc: string;
   }[]
 > = [
-  { name: "مهندس بهزاد شفیع راد", work: "مدیر عامل", imageSrc: "" },
-  { name: "مهندس جلیل پریدخت", work: "کارشناس صنایع", imageSrc: "" },
-  { name: "علی رضا پریدخت", work: "مدیر تیم IT", imageSrc: "" },
-  { name: "محمد حسین حبیب پور", work: "مدیر پروژه", imageSrc: "" },
-  { name: "جان دو", work: "برنامه نویس ارشد", imageSrc: "" },
-  { name: "محسن خلیلی", work: "برنامه نویس فرانت اند", imageSrc: "" },
+  {
+    name: "مهندس بهزاد شفیع راد",
+    work: "مدیر عامل",
+    imageSrc: "/about-us/team/behzad-shafi.png",
+  },
+  {
+    name: "مهندس جلیل پریدخت",
+    work: "کارشناس صنایع",
+    imageSrc: "/about-us/team/jalil-paridokht.png",
+  },
+  {
+    name: "علی رضا پریدخت",
+    work: "مدیر تیم IT",
+    imageSrc: "/about-us/team/paridokht-ali.png",
+  },
+  {
+    name: "محمد حسین حبیب پور",
+    work: "مدیر پروژه",
+    imageSrc: "/about-us/team/pythonpour.png",
+  },
+  {
+    name: "جان دو",
+    work: "برنامه نویس ارشد",
+    imageSrc: "/about-us/team/pythonpour.png",
+  },
+  {
+    name: "محسن خلیلی",
+    work: "برنامه نویس فرانت اند",
+    imageSrc: "/about-us/team/pythonpour.png",
+  },
 ];
 
 export const accordionData: Readonly<

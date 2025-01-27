@@ -192,7 +192,7 @@ export default function AboutUsPage() {
         <Title classname="pb-5 max-w-(--breakpoint-xl) mx-auto lg:px-4 px-8">
           اعضای تیم <span className="text-primary">چیدوساخت</span>
         </Title>
-        <div className="bg-muted h-[329px]">
+        <div className="bg-muted h-fit">
           <div className="max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4 py-9">
             <TeamGallery />
           </div>
@@ -201,7 +201,7 @@ export default function AboutUsPage() {
 
       {/* FAQ section */}
       <section className="max-w-(--breakpoint-xl) mx-auto lg:px-4 px-8 pb-12">
-        <Title classname="pb-8">سوالات متداول</Title>
+        <Title classname="pb-4">سوالات متداول</Title>
         <div className="flex flex-row-reverse justify-between items-center">
           <FAQSection className="md:max-w-[500px]" />
 
