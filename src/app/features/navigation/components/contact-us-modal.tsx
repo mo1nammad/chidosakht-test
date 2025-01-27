@@ -14,7 +14,7 @@ type AppProps = {
   className?: string;
 };
 
-export default function ContactUsModal({ className }: AppProps) {
+function ContactUsModal({ className }: AppProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const modalParam = searchParams.get("modal");
@@ -26,7 +26,7 @@ export default function ContactUsModal({ className }: AppProps) {
   }, [modalParam]);
 
   return (
-    <Suspense>
+    <>
       {/* overlay */}
       <AnimatePresence>
         {modalParam && (
@@ -72,6 +72,14 @@ export default function ContactUsModal({ className }: AppProps) {
           </div>
         </div>
       </div>
-    </Suspense>
+    </>
   );
 }
+
+const Component = (props: AppProps) => (
+  <Suspense>
+    <ContactUsModal {...props} />
+  </Suspense>
+);
+
+export default Component;
