@@ -8,22 +8,22 @@ const FilterProjectSection = () => {
   const searchParams = useSearchParams();
   const filterId = searchParams.get("project-filter-id");
 
-  // const pushRoute = (filter: number) =>
-  //   window.history.pushState(
-  //     `${filter}`,
-  //     "Title",
-  //     `/?project-filter-id=${filter}`
-  //   );
-  // /*
-  //   id : 0 == >طراحی داخلی< Default
-  //   id : 1 == >بازسازی<
-  //   id : 2 == >طراحی نما<
-  // */
+  const pushRoute = (filter: number) =>
+    window.history.pushState(
+      `${filter}`,
+      "Title",
+      `/?project-filter-id=${filter}`
+    );
+  /*
+    id : 0 == >طراحی داخلی< Default
+    id : 1 == >بازسازی<
+    id : 2 == >طراحی نما<
+  */
 
   return (
     <div className="flex items-center bg-muted rounded-lg overflow-hidden w-fit">
       <button
-        // onClick={() => pushRoute(0)}
+        onClick={() => pushRoute(0)}
         className={cn(
           "w-24 sm:w-28 text-center py-2 transition relative text-xs sm:text-base",
           (filterId === "0" || filterId === null) &&
@@ -34,7 +34,7 @@ const FilterProjectSection = () => {
       </button>
       <div className="border-l border-border w-1 h-2/3" />
       <button
-        // onClick={() => pushRoute(1)}
+        onClick={() => pushRoute(1)}
         className={cn(
           "w-24 sm:w-28 text-center py-2 transition relative text-xs sm:text-base",
           filterId === "1" &&
@@ -45,7 +45,7 @@ const FilterProjectSection = () => {
       </button>
       <div className="border-l border-border w-1 h-2/3" />
       <button
-        // onClick={() => pushRoute(2)}
+        onClick={() => pushRoute(2)}
         className={cn(
           "w-24 sm:w-28 text-center py-2 transition relative text-xs sm:text-base",
           filterId === "2" &&
