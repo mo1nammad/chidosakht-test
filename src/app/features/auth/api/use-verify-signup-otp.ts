@@ -1,17 +1,15 @@
 import { useMutation } from "@tanstack/react-query";
 import { client } from "@/lib/rpc";
 import { InferRequestType, InferResponseType } from "hono/client";
-import { useRouter } from "next/navigation";
 
-type PostType = (typeof client.api.auth.register)["request-otp"]["$post"];
+type PostType = (typeof client.api.auth.register)["verify-otp"]["$post"];
 type ApiRequest = InferRequestType<PostType>["json"];
 type ApiResponse = InferResponseType<PostType>;
 
-export const useSignUp = () => {
-  const router = useRouter();
-  const { mutate, status } = useMutation<ApiResponse, undefined, ApiRequest>({
+export const useVerifySignupOtp = () => {
+  const { mutate } = useMutation<ApiResponse, Error, ApiRequest>({
     mutationFn: async (req) => {
-      const response = await client.api.auth.register["request-otp"].$post({
+      const response = await client.api.auth.register["verify-otp"].$post({
         json: req,
       });
 
@@ -20,9 +18,6 @@ export const useSignUp = () => {
       }
       throw new Error("Failed to sign up");
     },
-    onSuccess: () => {
-      router.push(`/sign-up/verify-otp`);
-    },
   });
-  return { signUpFn: mutate, status };
+  return { verifyOtp: mutate };
 };

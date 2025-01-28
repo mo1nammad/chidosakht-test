@@ -1,0 +1,74 @@
+"use client";
+
+import React, { useState } from "react";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
+
+import { useVerifySignupOtp } from "../api/use-verify-signup-otp";
+
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+
+type AppProps = {
+  className?: string;
+};
+
+export default function SignupOtpForm({ className }: AppProps) {
+  const { verifyOtp } = useVerifySignupOtp();
+
+  const [value, setValue] = useState("");
+  const [error, setError] = useState("");
+
+  const handleOtp = () =>
+    verifyOtp(
+      { otp: value },
+      {
+        onError: (err) => setError(err.message),
+        onSuccess: () => {},
+      }
+    );
+
+  return (
+    <>
+      {error ? <p className="text-destructive text-center">{error}</p> : null}
+      <InputOTP
+        containerClassName={className}
+        maxLength={6}
+        minLength={6}
+        value={value}
+        onChange={(value) => setValue(value)}
+        onComplete={handleOtp}
+        pattern={REGEXP_ONLY_DIGITS}
+      >
+        <InputOTPGroup>
+          <InputOTPSlot
+            className="p-2 sm:ml-1.5 sm:rounded-xl! sm:p-6"
+            index={0}
+          />
+          <InputOTPSlot
+            className="p-2 sm:ml-1.5 sm:rounded-xl! sm:p-6"
+            index={1}
+          />
+          <InputOTPSlot
+            className="p-2 sm:ml-1.5 sm:rounded-xl! sm:p-6"
+            index={2}
+          />
+          <InputOTPSlot
+            className="p-2 sm:ml-1.5 sm:rounded-xl! sm:p-6"
+            index={3}
+          />
+          <InputOTPSlot
+            className="p-2 sm:ml-1.5 sm:rounded-xl! sm:p-6"
+            index={4}
+          />
+          <InputOTPSlot
+            className="p-2 sm:ml-1.5 sm:rounded-xl! sm:p-6"
+            index={5}
+          />
+        </InputOTPGroup>
+      </InputOTP>
+    </>
+  );
+}

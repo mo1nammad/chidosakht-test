@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useSignUp } from "../api/use-signup";
+import { Loader } from "lucide-react";
 
 // component
 export default function SignUpForm() {
@@ -33,7 +34,7 @@ export default function SignUpForm() {
     },
   });
 
-  const { signUpFn } = useSignUp();
+  const { signUpFn, status } = useSignUp();
 
   const onSubmit = (values: z.infer<typeof signUpSchema>) => signUpFn(values);
 
@@ -138,8 +139,15 @@ export default function SignUpForm() {
                 )}
               />
 
-              <Button className="w-full py-6 font-yekan-semibold mt-2">
-                عضویت
+              <Button
+                className="w-full py-6 font-yekan-semibold mt-2"
+                disabled={status === "pending"}
+              >
+                {status === "pending" ? (
+                  <Loader className="animate-spin size-4" />
+                ) : (
+                  "عضویت"
+                )}
               </Button>
               <div className="text-[11px]">
                 ورود شما به معنای پذیرش{" "}

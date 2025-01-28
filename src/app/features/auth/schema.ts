@@ -8,7 +8,7 @@ export const signUpSchema = z.object({
   phone: z.coerce
     .string()
     .regex(
-      /9[0-9]{9}$/,
+      /^9[0-9]{9}$/,
       "شماره تماس باید با 09 یا +98 شروع شود و حداکثر 11 رقم باشد"
     ),
   email: z.union([z.literal(""), z.string().email().max(64)]),
