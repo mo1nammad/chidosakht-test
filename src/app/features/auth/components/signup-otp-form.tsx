@@ -10,18 +10,20 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { useHandleOtpRoute } from "../hooks/use-handle-otp-route";
 
 type AppProps = {
   className?: string;
 };
 
 export default function SignupOtpForm({ className }: AppProps) {
+  useHandleOtpRoute();
   const { verifyOtp } = useVerifySignupOtp();
 
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
 
-  const handleOtp = () =>
+  const handleOtpForm = () =>
     verifyOtp(
       { otp: value },
       {
@@ -39,7 +41,7 @@ export default function SignupOtpForm({ className }: AppProps) {
         minLength={6}
         value={value}
         onChange={(value) => setValue(value)}
-        onComplete={handleOtp}
+        onComplete={handleOtpForm}
         pattern={REGEXP_ONLY_DIGITS}
       >
         <InputOTPGroup>

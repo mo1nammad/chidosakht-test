@@ -140,7 +140,7 @@ export default function SignUpForm() {
               />
 
               <Button
-                className="w-full py-6 font-yekan-semibold mt-2"
+                className="w-full py-6 font-yekan-semibold mt-2 cursor-pointer"
                 disabled={status === "pending"}
               >
                 {status === "pending" ? (
