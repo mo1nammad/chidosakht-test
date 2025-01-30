@@ -1,19 +1,22 @@
 import { useEffect } from "react";
-import { invalidateOtpSession, getOtpSessionStatus } from "../server/actions";
+import { getOtpSessionStatus } from "../server/actions";
 import { useRouter } from "next/navigation";
+import { client } from "@/lib/rpc";
 
 export function useHandleOtpRoute() {
   const router = useRouter();
+  console.log(router);
+
   useEffect(() => {
     const handleReload = () => {
-      invalidateOtpSession();
+      client.api.auth.register["verify-otp"].eject.$get();
     };
 
     window.addEventListener("beforeunload", handleReload);
 
     return () => {
       window.removeEventListener("beforeunload", handleReload);
-      invalidateOtpSession(); // disable React strictmode to test
+      client.api.auth.register["verify-otp"].eject.$get();
     };
   }, []);
 

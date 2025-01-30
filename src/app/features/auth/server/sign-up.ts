@@ -110,4 +110,8 @@ export const SignUp = app
         return c.json({ error: "Invalid or expired token." }, 400);
       }
     }
-  );
+  )
+  .get("/verify-otp/eject", (c) => {
+    deleteCookie(c, OTP_SESSION_NAME);
+    return c.json({ message: "success" });
+  });
