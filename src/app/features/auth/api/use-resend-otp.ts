@@ -1,22 +1,21 @@
 import { useMutation } from "@tanstack/react-query";
 import { client } from "@/lib/rpc";
-import { InferRequestType, InferResponseType } from "hono/client";
-import { useRouter } from "next/navigation";
+import { InferResponseType } from "hono/client";
 import { toast } from "sonner";
 
-type PostType = (typeof client.api.auth.register)["request-otp"]["$post"];
-type ApiRequest = InferRequestType<PostType>["json"];
+type PostType =
+  (typeof client.api.auth.register)["request-otp"]["resend"]["$post"];
 type ApiResponse = InferResponseType<PostType>;
 
-export const useSignUp = () => {
-  const router = useRouter();
+export const useResendOtp = () => {
+  const { mutate, status } = useMutation<ApiResponse, Error>({
+    mutationFn: async () => {
+      const response = await client.api.auth.register["request-otp"][
+        "resend"
+      ].$post();
 
-  const { mutate, status } = useMutation<ApiResponse, Error, ApiRequest>({
-    mutationFn: async (req) => {
-      const response = await client.api.auth.register["request-otp"].$post({
-        json: req,
-      });
       const data = await response.json();
+
       if (!response.ok || "error" in data) {
         throw new Error(
           "error" in data ? data.error : "An unknown error occurred"
@@ -26,14 +25,14 @@ export const useSignUp = () => {
     },
     onSuccess: (data) => {
       if ("message" in data) {
+        console.log(data);
+
         const { code, message } = data;
         toast.success(message, {
           description: () => code,
         });
       }
-
-      router.push(`/sign-up/verify-otp`);
     },
   });
-  return { signUpFn: mutate, status };
+  return { resendOtp: mutate, status };
 };

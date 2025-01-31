@@ -2,23 +2,29 @@ import { Hono } from "hono";
 import { getCookie, setCookie, deleteCookie } from "hono/cookie";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+
+// controllers
+import {
+  encryptSession,
+  decryptSession,
+  updateSession,
+  generateOtp,
+} from "./controllers";
 
 // db
 import { db } from "@/db";
-import { usersTable } from "@/db/schema";
-
-import { signUpSchema } from "../schema";
-import { OTP_SESSION_NAME, AUTH_SESSION_NAME } from "../constant";
+import { otpTable, usersTable } from "@/db/schema/index";
 import { eq } from "drizzle-orm";
 
-const app = new Hono();
-const SECRET_KEY = process.env.JWT_SECRET_KEY!;
+import { signUpSchema } from "../schema";
+import { OTP_SESSION_NAME } from "../constant";
 
-type SignupSchema = z.infer<typeof signUpSchema>;
-type OtpTokenDecoded = SignupSchema & {
-  otpCode: string;
+const app = new Hono();
+
+type OtpTokenDecoded = {
+  phone: string;
+  userId: string;
 };
 
 export const SignUp = app
@@ -27,48 +33,72 @@ export const SignUp = app
   .post("/request-otp", zValidator("json", signUpSchema), async (c) => {
     const req = c.req.valid("json");
 
-    // TODO check if user exists//
+    // check if user exists//
     const checkedUser = await db
       .select()
       .from(usersTable)
       .where(eq(usersTable.phone, req.phone))
       .then(([result]) => result);
 
-    if (checkedUser)
-      return c.json({ message: "phone number exists in database" }, 400);
+    if (checkedUser) {
+      return c.json(
+        { error: "با شماره ی مورد نظر اکانتی ثبت شده لطفا وارد شوید" },
+        400
+      );
+    }
 
-    // otp
-    const otpCode = Math.floor(100000 + Math.random() * 900000).toString(); // 6 رقمی string
-    const expiresIn = 5 * 60;
-
-    // hash otp code & password
-    const hashedOtp = await bcrypt.hash(otpCode, 10);
+    // hash password
     const hashedPassword = await bcrypt.hash(req.password, 10);
 
-    // otp token we should save in database
-    const otpSession = jwt.sign(
-      {
-        ...req,
-        password: hashedPassword,
-        otpCode: hashedOtp,
-      },
-      SECRET_KEY,
-      {
-        expiresIn,
-      }
-    );
+    try {
+      // signing user info in DB
+      const newUser = await db
+        .insert(usersTable)
+        .values({
+          name: req.name,
+          password: hashedPassword,
+          phone: req.phone,
+          email: req.email,
+        })
+        .returning({ id: usersTable.id, phone: usersTable.phone })
+        .then(([data]) => data);
 
-    // TODO send otp code to phone number
-    console.log(`Generated OTP: ${otpCode} for phone: ${req.phone}`);
-    // store token in DB
-    setCookie(c, OTP_SESSION_NAME, otpSession, {
-      maxAge: 60 * 3,
-      sameSite: "lax",
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-    });
+      // otp we should save in database
+      const otpCode = generateOtp();
+      const otpInserted = await db
+        .insert(otpTable)
+        .values({
+          value: otpCode,
+          userId: newUser.id,
+          expiresAt: new Date(Date.now() + 2 * 60 * 1000),
+        })
+        .returning({ value: otpTable.value })
+        .then(([data]) => data);
 
-    return c.json({ message: "پیامک احراز هویت دو مرحله ای ارسال شد" });
+      const otpSession = await encryptSession(
+        { phone: newUser.phone, userId: newUser.id },
+        "5 minutes"
+      );
+      setCookie(c, OTP_SESSION_NAME, otpSession, {
+        maxAge: 5 * 60, // user can request otp for 5 minutes
+        httpOnly: true,
+        sameSite: "Lax",
+        secure: process.env.NODE_ENV === "production",
+      });
+
+      // TODO send otp code to phone number
+      console.log(
+        `Generated OTP: ${otpInserted.value} for phone: ${req.phone}`
+      );
+
+      return c.json({
+        message: "پیامک احراز هویت دو مرحله ای ارسال شد",
+        code: otpInserted.value, // remove after adding sms service
+      });
+    } catch (error) {
+      console.log(error, "[/register/request-otp]");
+      return c.json({ error: "something went wrong" }, 400);
+    }
   })
   .post(
     "/verify-otp",
@@ -81,7 +111,7 @@ export const SignUp = app
 
     async (c) => {
       // retrieve data 1
-      const { otp } = c.req.valid("json");
+      const { otp: input } = c.req.valid("json");
 
       const otpToken = getCookie(c, OTP_SESSION_NAME);
 
@@ -89,45 +119,34 @@ export const SignUp = app
 
       try {
         // verificaton 2
-        const decoded = jwt.verify(otpToken, SECRET_KEY) as OtpTokenDecoded;
+        const decoded = await decryptSession<OtpTokenDecoded>(otpToken);
 
-        const otpCheck = await bcrypt.compare(otp, decoded.otpCode);
+        const otp = await db
+          .select()
+          .from(otpTable)
+          .where(eq(otpTable.userId, decoded.userId))
+          .then(([otp]) => otp);
+
+        if (!otp || new Date(otp.expiresAt).getTime() < Date.now())
+          return c.json({ error: "مدت استفاده از کد منقضی شده است" }, 400);
+
+        const otpCheck = input === otp.value;
         if (!otpCheck) return c.json({ error: "Invalid OTP code." }, 400);
 
+        // update account to verified
         console.log(`Phone number ${decoded.phone} verified successfully.`);
-        // signing 3
+        await db
+          .update(usersTable)
+          .set({ isVerified: true })
+          .where(eq(usersTable.id, decoded.userId));
 
-        // signing user info in DB
-        await db.insert(usersTable).values({
-          name: decoded.name,
-          password: decoded.password,
-          phone: decoded.phone,
-          email: decoded.email,
-        });
-
-        // set new authorization cookie and delete otp session
-        const session = jwt.sign(
-          {
-            phone: decoded.phone,
-            name: decoded.name,
-            email: decoded.email ?? null,
-            password: decoded.password,
-          },
-          SECRET_KEY,
-          { expiresIn: "7d" }
-        );
-
+        // delete otp from db
+        await db.delete(otpTable).where(eq(otpTable.userId, decoded.userId));
         deleteCookie(c, OTP_SESSION_NAME);
-        setCookie(c, AUTH_SESSION_NAME, session, {
-          maxAge: 60 * 60 * 24 * 7,
-          sameSite: "lax",
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-        });
 
-        return c.json({ message: "User verified successfully." });
+        return c.json({ message: "اکانت شما با موفقیت ساخته شد" });
       } catch (error) {
-        console.log("/verify-otp route", error);
+        console.log("[/register/verify-otp]", error);
         return c.json({ error: "Invalid or expired token." }, 400);
       }
     }
@@ -135,4 +154,56 @@ export const SignUp = app
   .get("/verify-otp/eject", (c) => {
     deleteCookie(c, OTP_SESSION_NAME);
     return c.json({ message: "success" });
+  })
+  .post("/request-otp/resend", async (c) => {
+    try {
+      const otpToken = getCookie(c, OTP_SESSION_NAME);
+      if (!otpToken) return c.json({ error: "token is required" }, 400);
+
+      const decoded = await decryptSession<OtpTokenDecoded>(otpToken);
+
+      // check if there is an active otp
+      const ActiveOtpList = await db
+        .select()
+        .from(otpTable)
+        .where(eq(otpTable.userId, decoded.userId))
+        .then(([data]) => data);
+
+      if (new Date(ActiveOtpList.expiresAt).getTime() > Date.now()) {
+        return c.json({ error: "you have an active otp" }, 403);
+      }
+
+      // update otp session
+      const updatedSession = await updateSession(otpToken, "5 minutes");
+      setCookie(c, OTP_SESSION_NAME, updatedSession, {
+        maxAge: 5 * 60, // user can request otp for 5 minutes
+        httpOnly: true,
+        sameSite: "Lax",
+        secure: process.env.NODE_ENV === "production",
+      });
+
+      // delete inActive otp passwords
+      await db.delete(otpTable).where(eq(otpTable.userId, decoded.userId));
+      const newOtp = generateOtp();
+
+      // insert new otp
+      const otpInserted = await db
+        .insert(otpTable)
+        .values({
+          value: newOtp,
+          userId: decoded.userId,
+          expiresAt: new Date(Date.now() + 2 * 60 * 1000),
+        })
+        .returning({ value: otpTable.value })
+        .then(([data]) => data);
+      // TODO send it to user
+
+      return c.json({
+        message: "پیامک احراز هویت دو مرحله ای ارسال شد",
+        code: otpInserted.value, // remove after adding sms service
+      });
+    } catch (error) {
+      console.log("[/register/request-otp/resend]", error);
+      return c.json({ error: "Invalid or expired token." }, 400);
+    }
   });

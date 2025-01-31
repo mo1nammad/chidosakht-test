@@ -4,13 +4,14 @@ import React, { useState } from "react";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 
 import { useVerifySignupOtp } from "../api/use-verify-signup-otp";
+import { useHandleOtpRoute } from "../hooks/use-handle-otp-route";
 
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { useHandleOtpRoute } from "../hooks/use-handle-otp-route";
+import CountDownTimer from "./countdown-timer";
 
 type AppProps = {
   className?: string;
@@ -22,13 +23,13 @@ export default function SignupOtpForm({ className }: AppProps) {
 
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
+  const [] = useState(new Date());
 
   const handleOtpForm = () =>
     verifyOtp(
       { otp: value },
       {
         onError: (err) => setError(err.message),
-        onSuccess: () => {},
       }
     );
 
@@ -71,6 +72,8 @@ export default function SignupOtpForm({ className }: AppProps) {
           />
         </InputOTPGroup>
       </InputOTP>
+
+      <CountDownTimer />
     </>
   );
 }

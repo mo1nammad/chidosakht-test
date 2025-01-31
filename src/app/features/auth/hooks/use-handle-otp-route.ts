@@ -5,7 +5,6 @@ import { client } from "@/lib/rpc";
 
 export function useHandleOtpRoute() {
   const router = useRouter();
-  console.log(router);
 
   useEffect(() => {
     const handleReload = () => {

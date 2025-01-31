@@ -3,6 +3,7 @@ import "./globals.css";
 
 import { fontList } from "./fonts/font-webhook";
 import Providers from "@/components/providers";
+import { Toaster } from "@/components/ui/sonner";
 
 const mapedFonts = fontList.map((font) => font.variable);
 
@@ -22,6 +23,7 @@ export default function RootLayout({
         className={`${mapedFonts.join(" ")} antialiased font-yekan-regular`}
       >
         <Providers>{children}</Providers>
+        <Toaster />
       </body>
     </html>
   );
