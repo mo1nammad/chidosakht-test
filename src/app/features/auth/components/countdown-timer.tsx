@@ -30,18 +30,21 @@ const CountDownTimer = () => {
   };
   return (
     <div className="w-full flex justify-center items-center gap-x-10 mt-6">
-      <Button
-        onClick={handleResend}
-        size={"sm"}
-        disabled={isResendButtonDisabled || status === "pending"}
-        className="max-w-83 w-full"
-      >
-        {status === "pending" ? (
-          <Loader className="animate-spin size-4" />
-        ) : (
-          "درخواست دوباره کد"
-        )}
-      </Button>
+      <div className="max-w-83 ">
+        <Button
+          onClick={handleResend}
+          size={"sm"}
+          disabled={isResendButtonDisabled || status === "pending"}
+          className="w-full"
+        >
+          {status === "pending" ? (
+            <Loader className="animate-spin size-4" />
+          ) : (
+            "درخواست دوباره کد"
+          )}
+        </Button>
+      </div>
+
       <span className="text-lg">{formatTime(timeLeft)}</span>
     </div>
   );

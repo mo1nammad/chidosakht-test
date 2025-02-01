@@ -22,6 +22,7 @@ export const ServicesSlider = ({ data }: ServicesSliderProps) => {
 
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
+  console.log(count);
 
   useEffect(() => {
     if (!api) {
@@ -41,7 +42,7 @@ export const ServicesSlider = ({ data }: ServicesSliderProps) => {
   }, [api]);
 
   return (
-    <Carousel setApi={setApi} className="relative ">
+    <Carousel setApi={setApi} className="relative sm:px-12">
       <CarouselContent className="p-2">
         {data.map((props, index) => (
           // responsive : (basis)
@@ -53,18 +54,24 @@ export const ServicesSlider = ({ data }: ServicesSliderProps) => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <button
-        className="absolute z-10 top-1/2 -translate-y-1/2 -left-8 sm:-left-10 size-6 p-0 sm:size-9 bg-secondary text-primary grid place-content-center rounded-lg"
-        onClick={() => api?.scrollPrev()}
-      >
-        <ChevronLeft className="text-primary size-4! sm:size-8 p-0" />
-      </button>
-      <button
-        className="absolute z-10 top-1/2 -translate-y-1/2 -right-8 sm:-right-10 size-6 sm:size-9 bg-secondary text-primary grid place-content-center rounded-lg"
-        onClick={() => api?.scrollNext()}
-      >
-        <ChevronRight className="text-primary size-4! sm:size-8 p-0" />
-      </button>
+      {count > 1 && (
+        <>
+          <button
+            className="absolute z-10 top-1/2 -translate-y-1/2 -left-8 sm:left-0 size-6 p-0 sm:size-9 bg-secondary text-primary grid place-content-center rounded-lg cursor-pointer disabled:cursor-default disabled:opacity-50"
+            onClick={() => api?.scrollPrev()}
+            disabled={current === 1}
+          >
+            <ChevronLeft className="text-primary size-4! sm:size-8 p-0" />
+          </button>
+          <button
+            className="absolute z-10 top-1/2 -translate-y-1/2 -right-8 sm:right-0 size-6 sm:size-9 bg-secondary text-primary grid place-content-center rounded-lg cursor-pointer disabled:cursor-default disabled:opacity-50"
+            onClick={() => api?.scrollNext()}
+            disabled={current === count}
+          >
+            <ChevronRight className="text-primary size-4! sm:size-8 p-0" />
+          </button>
+        </>
+      )}
       <CarouselBullets
         count={count}
         current={current}
