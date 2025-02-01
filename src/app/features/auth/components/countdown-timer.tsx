@@ -9,6 +9,8 @@ const CountDownTimer = () => {
   const isResendButtonDisabled = timeLeft !== 0;
 
   const { resendOtp, status } = useResendOtp();
+  const handleResend = () =>
+    resendOtp(undefined, { onSuccess: () => setTimeLeft(120) });
 
   useEffect(() => {
     if (timeLeft <= 0) return;
@@ -29,9 +31,10 @@ const CountDownTimer = () => {
   return (
     <div className="w-full flex justify-center items-center gap-x-10 mt-6">
       <Button
-        onClick={() => resendOtp()}
+        onClick={handleResend}
         size={"sm"}
         disabled={isResendButtonDisabled || status === "pending"}
+        className="max-w-83 w-full"
       >
         {status === "pending" ? (
           <Loader className="animate-spin size-4" />
