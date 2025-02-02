@@ -23,7 +23,11 @@ export default function RootLayout({
         className={`${mapedFonts.join(" ")} antialiased font-yekan-regular`}
       >
         <Providers>{children}</Providers>
-        <Toaster />
+        <Toaster
+          theme="light"
+          richColors
+          className="font-yekan-regular! text-right!"
+        />
       </body>
     </html>
   );

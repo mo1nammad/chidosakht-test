@@ -12,6 +12,8 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import CountDownTimer from "./countdown-timer";
+import { toast } from "sonner";
+import { Loader } from "lucide-react";
 
 type AppProps = {
   className?: string;
@@ -25,13 +27,31 @@ export default function SignupOtpForm({ className }: AppProps) {
   const [error, setError] = useState("");
   const [] = useState(new Date());
 
-  const handleOtpForm = () =>
-    verifyOtp(
+  const handleOtpForm = async () => {
+    setError("");
+    const promise = verifyOtp(
       { otp: value },
       {
         onError: (err) => setError(err.message),
       }
     );
+    toast.promise(promise, {
+      loading: (
+        <div className="flex gap-x-4 items-center">
+          <p className="text-sm"> در حال پردازش</p>
+          <Loader className="animate-spin size-4" />
+        </div>
+      ),
+      success: (data) => {
+        if ("message" in data) {
+          return data.message;
+        } else return "success";
+      },
+      error: (err: Error) => err.message,
+      position: "top-center",
+      className: "flex-row-reverse! gap-x-4!",
+    });
+  };
 
   return (
     <>

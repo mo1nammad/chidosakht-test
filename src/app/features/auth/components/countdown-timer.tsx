@@ -30,7 +30,7 @@ const CountDownTimer = () => {
   };
   return (
     <div className="w-full flex justify-center items-center gap-x-10 mt-6">
-      <div className="max-w-83 ">
+      <div className="max-w-83">
         <Button
           onClick={handleResend}
           size={"sm"}

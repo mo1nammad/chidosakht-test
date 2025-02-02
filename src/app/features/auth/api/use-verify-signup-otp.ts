@@ -10,21 +10,24 @@ type ApiResponse = InferResponseType<PostType>;
 
 export const useVerifySignupOtp = () => {
   const router = useRouter();
-  const { mutate } = useMutation<ApiResponse, Error, ApiRequest>({
+  const { mutateAsync } = useMutation<ApiResponse, Error, ApiRequest>({
     mutationFn: async (req) => {
       const response = await client.api.auth.register["verify-otp"].$post({
         json: req,
       });
+      const data = await response.json();
 
-      if (response.ok) {
-        return response.json(); // Extract JSON data and return
+      if (response.ok || "message" in data) {
+        return data; // Extract JSON data and return
       }
-      throw new Error("Failed to sign up");
+
+      throw new Error(
+        "error" in data ? data.error : "مشکلی پیش آمد دوباره تلاش کنید"
+      );
     },
     onSuccess: () => {
-      // TODO do somthing here
-      router.push("/");
+      router.push(`/sign-up/verify-otp`);
     },
   });
-  return { verifyOtp: mutate };
+  return { verifyOtp: mutateAsync };
 };

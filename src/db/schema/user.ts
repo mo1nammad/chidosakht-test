@@ -13,7 +13,7 @@ export const usersTable = pgTable(
   {
     id: uuid("id").primaryKey().defaultRandom(),
     name: varchar({ length: 255 }).notNull(),
-    email: varchar({ length: 255 }).unique(),
+    email: varchar({ length: 255 }),
     phone: varchar({ length: 32 }).notNull().unique(),
     password: varchar({ length: 255 }).notNull(),
     isVerified: boolean().default(false).notNull(),

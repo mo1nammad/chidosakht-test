@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { client } from "@/lib/rpc";
 import { InferRequestType, InferResponseType } from "hono/client";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { toast } from "@/lib/toast";
 
 type PostType = (typeof client.api.auth.register)["request-otp"]["$post"];
 type ApiRequest = InferRequestType<PostType>["json"];
@@ -28,11 +28,14 @@ export const useSignUp = () => {
       if ("message" in data) {
         const { code, message } = data;
         toast.success(message, {
-          description: () => code,
+          description: code,
         });
       }
 
       router.push(`/sign-up/verify-otp`);
+    },
+    onError: (err) => {
+      toast.error(err.message);
     },
   });
   return { signUpFn: mutate, status };

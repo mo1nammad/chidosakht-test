@@ -33,7 +33,7 @@ export const SignUp = app
   .post("/request-otp", zValidator("json", signUpSchema), async (c) => {
     const req = c.req.valid("json");
 
-    // check if user exists//
+    // check if user exists
     const checkedUser = await db
       .select()
       .from(usersTable)
@@ -45,6 +45,24 @@ export const SignUp = app
         { error: "با شماره ی مورد نظر اکانتی ثبت شده لطفا وارد شوید" },
         400
       );
+    }
+    // check if email exists
+
+    if (req.email) {
+      const checkedUniqueEmail = await db
+        .select()
+        .from(usersTable)
+        .where(eq(usersTable.email, req.email));
+
+      if (checkedUniqueEmail.length > 0) {
+        return c.json(
+          {
+            error:
+              "با ایمیل مورد نظر اکانتی ثبت شده لطفا وارد شوید یا ایمیل دیگری ثبت کنید",
+          },
+          400
+        );
+      }
     }
 
     // hash password
@@ -75,12 +93,13 @@ export const SignUp = app
         .returning({ value: otpTable.value })
         .then(([data]) => data);
 
+      // user can request otp for 5 minutes
       const otpSession = await encryptSession(
         { phone: newUser.phone, userId: newUser.id },
         "5 minutes"
       );
       setCookie(c, OTP_SESSION_NAME, otpSession, {
-        maxAge: 5 * 60, // user can request otp for 5 minutes
+        maxAge: 5 * 60,
         httpOnly: true,
         sameSite: "Lax",
         secure: process.env.NODE_ENV === "production",
@@ -97,7 +116,12 @@ export const SignUp = app
       });
     } catch (error) {
       console.log(error, "[/register/request-otp]");
-      return c.json({ error: "something went wrong" }, 400);
+      return c.json(
+        {
+          error: "مشکلی پیش آمد! لطفا وبسایت را مجددا بارگزاری کنید",
+        },
+        400
+      );
     }
   })
   .post(
@@ -131,7 +155,7 @@ export const SignUp = app
           return c.json({ error: "مدت استفاده از کد منقضی شده است" }, 400);
 
         const otpCheck = input === otp.value;
-        if (!otpCheck) return c.json({ error: "Invalid OTP code." }, 400);
+        if (!otpCheck) return c.json({ error: "کد وارد شده اشتباه است" }, 400);
 
         // update account to verified
         console.log(`Phone number ${decoded.phone} verified successfully.`);
@@ -147,7 +171,13 @@ export const SignUp = app
         return c.json({ message: "اکانت شما با موفقیت ساخته شد" });
       } catch (error) {
         console.log("[/register/verify-otp]", error);
-        return c.json({ error: "Invalid or expired token." }, 400);
+        return c.json(
+          {
+            error:
+              "مدت زمان مجاز شما برای ثبت نام به پایان رسید وبسایت را مجددا بارگزاری کنید",
+          },
+          400
+        );
       }
     }
   )
