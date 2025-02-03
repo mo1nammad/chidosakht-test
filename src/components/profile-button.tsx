@@ -1,17 +1,18 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 
+import { logoutSession } from "@/app/features/auth/server/actions";
 import { Session } from "@/app/features/auth/constant";
+
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "./ui/button";
-import Link from "next/link";
-import { logoutSession } from "@/app/features/auth/server/actions";
 
 type Props = {
   session: Session;
@@ -26,12 +27,14 @@ export default function ProfileButton({ session }: Props) {
       <PopoverTrigger>
         <Avatar className="w-12 h-12 cursor-pointer">
           <AvatarFallback>{fallback}</AvatarFallback>
+          <AvatarImage src="/blank-profile-picture.png" alt="user avatar" />
         </Avatar>
       </PopoverTrigger>
       <PopoverContent>
         <div className="w-full h-full flex items-center justify-center gap-x-8">
           <Avatar className="w-16 h-16 cursor-pointer">
-            <AvatarFallback className="text-lg">{fallback}</AvatarFallback>
+            <AvatarFallback className="text-lg">{fallback}</AvatarFallback>{" "}
+            <AvatarImage src="/blank-profile-picture.png" alt="user avatar" />
           </Avatar>
           <div>
             <h6>{session.name}</h6>
