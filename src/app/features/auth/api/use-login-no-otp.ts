@@ -2,7 +2,6 @@ import { useMutation } from "@tanstack/react-query";
 import { client } from "@/lib/rpc";
 import { InferRequestType, InferResponseType } from "hono/client";
 import { useRouter } from "next/navigation";
-import { toast } from "@/lib/toast";
 
 type PostType = (typeof client.api.auth.login)["$post"];
 type ApiRequest = InferRequestType<PostType>["json"];
@@ -10,8 +9,7 @@ type ApiResponse = InferResponseType<PostType>;
 
 export const useLoginNoOtp = () => {
   const router = useRouter();
-
-  const { mutate, status } = useMutation<ApiResponse, Error, ApiRequest>({
+  const { mutateAsync, status } = useMutation<ApiResponse, Error, ApiRequest>({
     mutationFn: async (req) => {
       const response = await client.api.auth.login.$post({
         json: req,
@@ -24,16 +22,9 @@ export const useLoginNoOtp = () => {
       }
       return data;
     },
-    onSuccess: (data) => {
-      if ("message" in data) {
-        const { message } = data;
-        toast.success(message);
-      }
+    onSuccess: () => {
       router.push("/");
     },
-    onError: (err) => {
-      toast.error(err.message);
-    },
   });
-  return { mutate, status };
+  return { mutateAsync, status };
 };

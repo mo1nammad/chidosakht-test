@@ -21,6 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Loader } from "lucide-react";
 import { useLoginNoOtp } from "../api/use-login-no-otp";
+import { toast } from "sonner";
 
 // component
 export default function LoginForm() {
@@ -32,9 +33,28 @@ export default function LoginForm() {
     },
   });
 
-  const { mutate, status } = useLoginNoOtp();
+  const { mutateAsync, status } = useLoginNoOtp();
 
-  const onSubmit = (values: z.infer<typeof loginNoOtpSchema>) => mutate(values);
+  const onSubmit = (values: z.infer<typeof loginNoOtpSchema>) => {
+    const promise = mutateAsync(values);
+
+    toast.promise(promise, {
+      loading: (
+        <div className="flex gap-x-4 items-center">
+          <p className="text-sm"> در حال پردازش</p>
+          <Loader className="animate-spin size-4" />
+        </div>
+      ),
+      success: (data) => {
+        if ("message" in data) {
+          return data.message;
+        } else return "success";
+      },
+      error: (err: Error) => err.message,
+      position: "top-center",
+      className: "flex-row-reverse! gap-x-4!",
+    });
+  };
 
   return (
     <div className="max-w-[400px] mx-auto h-full">
