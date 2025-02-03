@@ -10,6 +10,8 @@ import HamburgerMenu from "./hamburger-menu";
 import { getSession } from "@/app/features/auth/server/actions";
 import ProfileButton from "./profile-button";
 
+export const dynamic = "force-dynamic"; // Ensure fresh data
+
 const Navbar = async () => {
   const session = await getSession();
 
