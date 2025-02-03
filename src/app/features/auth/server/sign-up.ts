@@ -95,7 +95,7 @@ export const SignUp = app
       setCookie(c, OTP_SESSION_NAME, otpSession, {
         maxAge: 5 * 60,
         httpOnly: true,
-        sameSite: "Lax",
+        sameSite: "strict",
         secure: process.env.NODE_ENV === "production",
       });
 

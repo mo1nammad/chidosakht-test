@@ -49,7 +49,7 @@ export default app
       });
 
       setCookie(c, AUTH_SESSION_NAME, token, {
-        sameSite: "strict",
+        sameSite: "lax",
         maxAge: 60 * 60 * 24 * 7,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
@@ -99,7 +99,7 @@ export default app
       setCookie(c, OTP_SESSION_NAME, otpSession, {
         maxAge: 5 * 60,
         httpOnly: true,
-        sameSite: "Lax",
+        sameSite: "strict",
         secure: process.env.NODE_ENV === "production",
       });
 
@@ -176,7 +176,7 @@ export default app
         });
 
         setCookie(c, AUTH_SESSION_NAME, token, {
-          sameSite: "strict",
+          sameSite: "lax",
           maxAge: 60 * 60 * 24 * 7,
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
