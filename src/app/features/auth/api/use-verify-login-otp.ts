@@ -4,15 +4,15 @@ import { useMutation } from "@tanstack/react-query";
 
 import { client } from "@/lib/rpc";
 
-type PostType = (typeof client.api.auth.register)["verify-otp"]["$post"];
+type PostType = (typeof client.api.auth.login)["verify-otp"]["$post"];
 type ApiRequest = InferRequestType<PostType>["json"];
 type ApiResponse = InferResponseType<PostType>;
 
-export const useVerifySignupOtp = () => {
+export const useVerifyLoginOtp = () => {
   const router = useRouter();
   const { mutateAsync } = useMutation<ApiResponse, Error, ApiRequest>({
     mutationFn: async (req) => {
-      const response = await client.api.auth.register["verify-otp"].$post({
+      const response = await client.api.auth.login["verify-otp"].$post({
         json: req,
       });
       const data = await response.json();
@@ -26,7 +26,7 @@ export const useVerifySignupOtp = () => {
       );
     },
     onSuccess: () => {
-      router.push(`/login`);
+      router.push(`/`);
     },
   });
   return { verifyOtp: mutateAsync };

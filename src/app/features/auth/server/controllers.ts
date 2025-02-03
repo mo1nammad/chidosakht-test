@@ -3,11 +3,11 @@ import { JWTPayload, jwtVerify, SignJWT } from "jose";
 const secret = process.env.JWT_SECRET_KEY!;
 const key = new TextEncoder().encode(secret);
 
-export async function encryptSession(
-  payload: unknown,
+export async function encryptSession<T>(
+  payload: T,
   expire: number | string | Date = "7d"
 ) {
-  return await new SignJWT(payload as JWTPayload)
+  return await new SignJWT(payload as JWTPayload & T)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime(expire)
@@ -26,16 +26,8 @@ export async function updateSession(
   input: string,
   expires: number | string | Date
 ) {
-  const { payload } = await jwtVerify(input, key, {
-    algorithms: ["HS256"],
-  });
-
-  return await new SignJWT(payload as JWTPayload)
-    .setProtectedHeader({ alg: "HS256" })
-    .setIssuedAt()
-    .setExpirationTime(expires)
-    .sign(key);
+  const payload = await decryptSession<JWTPayload>(input);
+  return await encryptSession(payload, expires);
 }
-
 export const generateOtp = () =>
   Math.floor(100000 + Math.random() * 900000).toString(); // 6 رقمی string

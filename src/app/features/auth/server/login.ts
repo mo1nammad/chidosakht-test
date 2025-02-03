@@ -1,79 +1,83 @@
 import { Hono } from "hono";
-import { getCookie, setCookie, deleteCookie } from "hono/cookie";
 import { zValidator } from "@hono/zod-validator";
-import { z } from "zod";
 import bcrypt from "bcrypt";
+import { z } from "zod";
 
-// controllers
-import { encryptSession, decryptSession, generateOtp } from "./controllers";
-
-// db
+// database
 import { db } from "@/db";
-import { otpTable, usersTable } from "@/db/schema/index";
 import { desc, eq } from "drizzle-orm";
+import { otpTable, usersTable } from "@/db/schema";
 
-import { signUpSchema } from "../schema";
-import { OTP_SESSION_NAME } from "../constant";
+import { loginNoOtpSchema, loginWithOtpSchema } from "../schema";
+import { decryptSession, encryptSession, generateOtp } from "./controllers";
+import { AUTH_SESSION_NAME, OTP_SESSION_NAME, Session } from "../constant";
+import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 
 const app = new Hono();
 
-export const SignUp = app
-  .get("/otp/eject", (c) => {
-    deleteCookie(c, OTP_SESSION_NAME);
-    return c.json({ message: "success" });
-  })
-  .basePath("/register")
-  // TODO : create a middleware
-  .post("/request-otp", zValidator("json", signUpSchema), async (c) => {
-    const req = c.req.valid("json");
-
-    // check if user exists
-    const checkedUser = await db
-      .select()
-      .from(usersTable)
-      .where(eq(usersTable.phone, req.phone))
-      .then(([result]) => result);
-
-    if (checkedUser) {
-      return c.json(
-        { error: "با شماره ی مورد نظر اکانتی ثبت شده لطفا وارد شوید" },
-        400
-      );
-    }
-    // check if email exists
-
-    if (req.email) {
-      const checkedUniqueEmail = await db
+export default app
+  .basePath("/login")
+  .post("/", zValidator("json", loginNoOtpSchema), async (c) => {
+    const { password, phone } = c.req.valid("json");
+    try {
+      // Check if the user exists
+      const user = await db
         .select()
         .from(usersTable)
-        .where(eq(usersTable.email, req.email));
+        .where(eq(usersTable.phone, phone))
+        .then(([data]) => data);
 
-      if (checkedUniqueEmail.length > 0) {
+      if (!user) {
         return c.json(
-          {
-            error:
-              "با ایمیل مورد نظر اکانتی ثبت شده لطفا وارد شوید یا ایمیل دیگری ثبت کنید",
-          },
-          400
+          { error: "حسابی برای شماره مورد نظر وجود ندارد لظفا ثبت نام کنید" },
+          401
         );
       }
-    }
 
-    // hash password
-    const hashedPassword = await bcrypt.hash(req.password, 10);
+      // Validate the password
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        return c.json({ error: "رمز یا ایمیل وارد شده درست نیست" }, 401);
+      }
+
+      // Generate a JWT token
+      const token = await encryptSession<Session>({
+        email: user.email,
+        phone: user.phone,
+        userId: user.id,
+        name: user.name,
+      });
+
+      setCookie(c, AUTH_SESSION_NAME, token, {
+        sameSite: "strict",
+        maxAge: 60 * 60 * 24 * 7,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+      });
+      return c.json({ message: "ورود با موفقیت انجام شد" });
+    } catch (error) {
+      console.log(error, "/login");
+
+      return c.json({ error: "Invalid email or password" }, 401);
+    }
+  })
+  .post("/request-otp", zValidator("query", loginWithOtpSchema), async (c) => {
+    const query = c.req.valid("query");
 
     try {
-      // signing user info in DB
-      const newUser = await db
-        .insert(usersTable)
-        .values({
-          name: req.name,
-          password: hashedPassword,
-          phone: req.phone,
-          email: req.email,
-        })
-        .returning()
+      // Check if the user exists
+      const user = await db
+        .select()
+        .from(usersTable)
+        .where(eq(usersTable.phone, query.phone))
         .then(([data]) => data);
+
+      if (!user) {
+        return c.json(
+          { error: "حسابی برای شماره مورد نظر وجود ندارد لظفا ثبت نام کنید" },
+          401
+        );
+      }
 
       // otp we should save in database
       const otpCode = generateOtp();
@@ -81,7 +85,7 @@ export const SignUp = app
         .insert(otpTable)
         .values({
           value: otpCode,
-          userId: newUser.id,
+          userId: user.id,
           expiresAt: new Date(Date.now() + 2 * 60 * 1000),
         })
         .returning({ value: otpTable.value })
@@ -89,7 +93,7 @@ export const SignUp = app
 
       // user can request otp for 5 minutes
       const otpSession = await encryptSession<{ userId: string }>(
-        { userId: newUser.id },
+        { userId: user.id },
         "5 minutes"
       );
       setCookie(c, OTP_SESSION_NAME, otpSession, {
@@ -101,7 +105,7 @@ export const SignUp = app
 
       // TODO send otp code to phone number
       console.log(
-        `Generated OTP: ${otpInserted.value} for phone: ${req.phone}`
+        `Generated OTP: ${otpInserted.value} for phone: ${user.phone}`
       );
 
       return c.json({
@@ -109,7 +113,7 @@ export const SignUp = app
         code: otpInserted.value, // remove after adding sms service
       });
     } catch (error) {
-      console.log(error, "[/register/request-otp]");
+      console.log(error, "[/login/request-otp]");
       return c.json(
         {
           error: "مشکلی پیش آمد! لطفا وبسایت را مجددا بارگزاری کنید",
@@ -132,7 +136,6 @@ export const SignUp = app
       const { otp: input } = c.req.valid("json");
 
       const otpToken = getCookie(c, OTP_SESSION_NAME);
-
       if (!otpToken) return c.json({ message: "token is required" }, 400);
 
       try {
@@ -153,18 +156,32 @@ export const SignUp = app
         if (!otpCheck) return c.json({ error: "کد وارد شده اشتباه است" }, 400);
 
         // update account to verified
-        await db
+        const user = await db
           .update(usersTable)
           .set({ isVerified: true })
-          .where(eq(usersTable.id, decoded.userId));
+          .where(eq(usersTable.id, decoded.userId))
+          .returning()
+          .then(([data]) => data);
 
         // delete otp from db
         await db.delete(otpTable).where(eq(otpTable.userId, decoded.userId));
         deleteCookie(c, OTP_SESSION_NAME);
 
-        return c.json({
-          message: "اکانت شما با موفقیت ساخته شد لطفا وارد شوید",
+        // Generate a session JWT token
+        const token = await encryptSession<Session>({
+          email: user.email,
+          phone: user.phone,
+          userId: user.id,
+          name: user.name,
         });
+
+        setCookie(c, AUTH_SESSION_NAME, token, {
+          sameSite: "strict",
+          maxAge: 60 * 60 * 24 * 7,
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+        });
+        return c.json({ message: "ورود با موفقیت انجام شد" });
       } catch (error) {
         console.log("[/register/verify-otp]", error);
         return c.json(

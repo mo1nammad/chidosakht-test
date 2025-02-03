@@ -6,7 +6,10 @@ import {
   uuid,
   text,
   index,
+  pgEnum,
 } from "drizzle-orm/pg-core";
+
+export const rolesEnum = pgEnum("roles", ["guest", "user", "admin"]);
 
 export const usersTable = pgTable(
   "user",
@@ -17,17 +20,14 @@ export const usersTable = pgTable(
     phone: varchar({ length: 32 }).notNull().unique(),
     password: varchar({ length: 255 }).notNull(),
     isVerified: boolean().default(false).notNull(),
+    role: rolesEnum().default("user"),
 
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at", { mode: "string" })
       .notNull()
       .defaultNow(),
   },
-  (table) => {
-    return {
-      phoneIdx: index("phone_idx").on(table.phone),
-    };
-  }
+  (table) => [index("phone_index").on(table.phone)]
 );
 
 export const otpTable = pgTable("otp-code", {

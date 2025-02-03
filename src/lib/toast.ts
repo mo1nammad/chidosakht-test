@@ -12,7 +12,11 @@ const preferedConfig: Record<ToastKey, ExternalToast> = {
     richColors: true,
     className: "flex-row-reverse! gap-x-4!",
   },
-  success: {},
+  success: {
+    position: "top-center",
+    richColors: true,
+    className: "flex-row-reverse! gap-x-4!",
+  },
 };
 
 export function toaster(

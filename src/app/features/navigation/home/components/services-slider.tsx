@@ -22,7 +22,6 @@ export const ServicesSlider = ({ data }: ServicesSliderProps) => {
 
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
-  console.log(count);
 
   useEffect(() => {
     if (!api) {

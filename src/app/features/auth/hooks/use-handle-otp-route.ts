@@ -3,19 +3,19 @@ import { getOtpSessionStatus } from "../server/actions";
 import { useRouter } from "next/navigation";
 import { client } from "@/lib/rpc";
 
-export function useHandleOtpRoute() {
+export function useProtectOtpRoute() {
   const router = useRouter();
 
   useEffect(() => {
     const handleReload = () => {
-      client.api.auth.register["verify-otp"].eject.$get();
+      client.api.auth.otp.eject.$get();
     };
 
     window.addEventListener("beforeunload", handleReload);
 
     return () => {
       window.removeEventListener("beforeunload", handleReload);
-      client.api.auth.register["verify-otp"].eject.$get();
+      client.api.auth.otp.eject.$get();
     };
   }, []);
 
