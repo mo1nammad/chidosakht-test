@@ -2,9 +2,9 @@
 
 import React from "react";
 import Link from "next/link";
+import { LogIn } from "lucide-react";
 
 import { logoutSession } from "@/app/features/auth/server/actions";
-import { Session } from "@/app/features/auth/constant";
 
 import {
   Popover,
@@ -12,17 +12,17 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
+import { cn } from "@/lib/utils";
+import { useSession } from "@/hooks/use-session";
 
-type Props = {
-  session: Session;
-};
+export default function ProfileButton() {
+  const { session } = useSession();
 
-export default function ProfileButton({ session }: Props) {
-  const fallback = session.name.slice(0, 2);
+  const fallback = session?.name.slice(0, 2);
   console.log(fallback);
 
-  return (
+  return session ? (
     <Popover>
       <PopoverTrigger>
         <Avatar className="w-12 h-12 cursor-pointer">
@@ -53,5 +53,17 @@ export default function ProfileButton({ session }: Props) {
         </div>
       </PopoverContent>
     </Popover>
+  ) : (
+    <Link
+      href="/sign-up"
+      className={cn(
+        buttonVariants({
+          variant: "outline",
+        })
+      )}
+    >
+      <LogIn className="size-5!" />
+      <span>ورود | ثبت‌نام</span>
+    </Link>
   );
 }

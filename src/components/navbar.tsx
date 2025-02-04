@@ -1,18 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Headset, LogIn, Smartphone } from "lucide-react";
+import { Headset, Smartphone } from "lucide-react";
 
-import { cn } from "@/lib/utils";
-import { Button, buttonVariants } from "./ui/button";
+import { Button } from "./ui/button";
 import NavigationMenu from "./navigaion-menu";
 import HamburgerMenu from "./hamburger-menu";
 
-import { getSession } from "@/app/features/auth/server/actions";
 import ProfileButton from "./profile-button";
 
 const Navbar = async () => {
-  const session = await getSession();
-
   return (
     <div className="fixed inset-x-0 top-0 h-20 md:h-[110px] shadow-md rounded-2xl bg-background z-50">
       <nav className="max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4 h-full flex items-center justify-between">
@@ -36,21 +32,7 @@ const Navbar = async () => {
             </div>
 
             <div className="flex items-center justify-center gap-x-5 md:gap-x-6">
-              {session ? (
-                <ProfileButton session={session} />
-              ) : (
-                <Link
-                  href="/sign-up"
-                  className={cn(
-                    buttonVariants({
-                      variant: "outline",
-                    })
-                  )}
-                >
-                  <LogIn className="size-5!" />
-                  <span>ورود | ثبت‌نام</span>
-                </Link>
-              )}
+              <ProfileButton />
 
               <Button variant={"primary"} className="hidden sm:inline-flex">
                 <Headset className="size-5!" />
