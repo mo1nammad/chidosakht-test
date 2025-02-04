@@ -3,7 +3,9 @@
 import React from "react";
 import Link from "next/link";
 import { LogIn } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 
+import { useSession } from "@/hooks/use-session";
 import { logoutSession } from "@/app/features/auth/server/actions";
 
 import {
@@ -14,13 +16,24 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
-import { useSession } from "@/hooks/use-session";
 
 export default function ProfileButton() {
+  const queryClient = useQueryClient();
   const { session } = useSession();
 
+  const invalidateSession = async () => {
+    await logoutSession();
+    queryClient.removeQueries({
+      queryKey: ["user-session"],
+    });
+    await queryClient.refetchQueries({
+      queryKey: ["user-session"],
+    });
+  };
+
+  console.log(session);
+
   const fallback = session?.name.slice(0, 2);
-  console.log(fallback);
 
   return session ? (
     <Popover>
@@ -44,7 +57,7 @@ export default function ProfileButton() {
           </div>
         </div>
         <div className="flex flex-col-reverse mt-4 gap-3">
-          <Button onClick={logoutSession} variant="destructive" size="sm">
+          <Button onClick={invalidateSession} variant="destructive" size="sm">
             خروج از حساب
           </Button>
           <Button asChild variant="accent" size="sm">

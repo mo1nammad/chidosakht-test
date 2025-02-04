@@ -3,7 +3,6 @@
 import { cookies } from "next/headers";
 import { AUTH_SESSION_NAME, OTP_SESSION_NAME, Session } from "../constant";
 import { decryptSession } from "./controllers";
-import { redirect } from "next/navigation";
 
 export const getOtpSessionStatus = async () => {
   const cookie = await cookies();
@@ -25,9 +24,7 @@ export const getSession = async (): Promise<Session | null> => {
   return payload;
 };
 
-export const logoutSession = async (): Promise<Session | null> => {
+export const logoutSession = async () => {
   const cookie = await cookies();
   cookie.delete(AUTH_SESSION_NAME);
-
-  redirect("/");
 };

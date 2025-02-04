@@ -23,7 +23,7 @@ export const useSession = () => {
     },
     staleTime: 1000 * 60 * 5, // ✅ Cache for 5 minutes (reduce network requests)
     gcTime: 1000 * 60 * 10,
-    retry: 2, // ✅ Retry 2 times on failure
+    retry: 2,
     refetchOnWindowFocus: false, // ✅ Avoid unnecessary refetching when switching tabs
     refetchOnReconnect: true, // ✅ Refetch when internet reconnects
   });

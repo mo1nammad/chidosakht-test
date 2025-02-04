@@ -17,6 +17,8 @@ export default createMiddleware<AdditionalContext>(async (c, next) => {
       403
     );
 
+  console.log(session);
+
   try {
     const decoded = await decryptSession<Session>(session);
     c.set("userId", decoded.userId);
