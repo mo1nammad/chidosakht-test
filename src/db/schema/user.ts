@@ -9,7 +9,7 @@ import {
   pgEnum,
 } from "drizzle-orm/pg-core";
 
-export const rolesEnum = pgEnum("roles", ["guest", "user", "admin"]);
+export const rolesEnum = pgEnum("role", ["moderator", "user", "admin"]);
 
 export const usersTable = pgTable(
   "user",
@@ -20,7 +20,9 @@ export const usersTable = pgTable(
     phone: varchar({ length: 32 }).notNull().unique(),
     password: varchar({ length: 255 }).notNull(),
     isVerified: boolean().default(false).notNull(),
-    role: rolesEnum().default("user"),
+    role: rolesEnum()
+      .notNull()
+      .$default(() => "user"),
 
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at", { mode: "string" })

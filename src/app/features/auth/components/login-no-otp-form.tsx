@@ -112,10 +112,7 @@ export default function LoginForm() {
                       <span className="text-destructive">*</span> گذرواژه
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        className={"rounded-xl border-border"}
-                        {...field}
-                      />
+                      <Input className="rounded-xl border-border" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

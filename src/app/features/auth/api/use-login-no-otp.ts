@@ -23,7 +23,7 @@ export const useLoginNoOtp = () => {
       return data;
     },
     onSuccess: () => {
-      router.push("/");
+      router.push("/dashboard");
     },
   });
   return { mutateAsync, status };

@@ -46,6 +46,7 @@ export default app
         phone: user.phone,
         userId: user.id,
         name: user.name,
+        role: user.role,
       });
 
       setCookie(c, AUTH_SESSION_NAME, token, {
@@ -141,6 +142,7 @@ export default app
       try {
         // verificaton 2
         const decoded = await decryptSession<{ userId: string }>(otpToken);
+        if (!decoded) return c.json({ error: "invalid token" });
 
         const otp = await db
           .select()
@@ -173,6 +175,7 @@ export default app
           phone: user.phone,
           userId: user.id,
           name: user.name,
+          role: user.role,
         });
 
         setCookie(c, AUTH_SESSION_NAME, token, {

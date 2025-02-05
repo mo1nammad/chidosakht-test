@@ -41,17 +41,18 @@ const Navbar = async () => {
             </div>
           </>
         </div>
-        <div id="menu" className="hidden items-center xl:flex">
-          <NavigationMenu />
+
+        <div className="flex items-center gap-x-16">
+          <NavigationMenu className="hidden xl:flex xl:items-center" />
+          <Link
+            href="/"
+            id="logo"
+            className="md:flex items-center gap-x-3 hidden"
+          >
+            <span className="text-2xl font-yekan-semibold">Chidosakht</span>
+            <Image src="/logo.svg" width={71} height={56} alt="logo" />
+          </Link>
         </div>
-        <Link
-          href="/"
-          id="logo"
-          className="md:flex items-center gap-x-3 hidden"
-        >
-          <span className="text-2xl font-yekan-semibold">Chidosakht</span>
-          <Image src="/logo.svg" width={71} height={56} alt="logo" />
-        </Link>
       </nav>
     </div>
   );

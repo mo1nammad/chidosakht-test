@@ -7,16 +7,26 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { navigation } from "@/app/features/navigation/home/constants";
 
-const NavigationMenu = () => {
+type Props = {
+  className?: string;
+};
+
+const NavigationMenu = ({ className }: Props) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   return (
-    <ul className="flex flex-row-reverse items-center justify-between gap-x-[41px]">
+    <ul
+      className={cn(
+        "flex flex-row-reverse items-center justify-between gap-x-6",
+        className
+      )}
+    >
       {navigation.map((item, index) => {
         return (
           <li
             className={cn(
+              "hover:text-blue-900",
               pathname === item.route && !searchParams.get("modal")
                 ? "text-primary"
                 : "text-accent-foreground"
@@ -41,9 +51,9 @@ const NavigationMenu = () => {
   );
 };
 
-const Component = () => (
+const Component = (props: Props) => (
   <Suspense>
-    <NavigationMenu />
+    <NavigationMenu {...props} />
   </Suspense>
 );
 

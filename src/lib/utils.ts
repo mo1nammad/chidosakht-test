@@ -24,7 +24,7 @@ export const customErrorMap: z.ZodErrorMap = (error, ctx) => {
     case z.ZodIssueCode.too_small:
       if (error.minimum !== undefined) {
         return {
-          message: `مقدار وارد شده باید حداقل ${error.minimum} باشد`,
+          message: `مقدار وارد شده باید حداقل ${error.minimum} حرف باشد`,
         };
       }
       break;

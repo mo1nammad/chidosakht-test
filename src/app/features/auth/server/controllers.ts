@@ -14,12 +14,16 @@ export async function encryptSession<T>(
     .sign(key);
 }
 
-export async function decryptSession<T>(input: string): Promise<T> {
-  const { payload } = await jwtVerify(input, key, {
-    algorithms: ["HS256"],
-  });
-
-  return payload as T;
+export async function decryptSession<T>(input: string): Promise<T | null> {
+  try {
+    const { payload } = await jwtVerify(input, key, {
+      algorithms: ["HS256"],
+    });
+    return payload as T;
+  } catch (error) {
+    console.log(error, "session decryption");
+    return null;
+  }
 }
 
 export async function updateSession(

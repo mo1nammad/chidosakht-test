@@ -30,7 +30,7 @@ export default app
         );
 
       const decoded = await decryptSession<{ userId: string }>(otpToken);
-
+      if (!decoded) return c.json({ error: "invalid token" });
       // check if there is an active otp
       const ActiveOtpList = await db
         .select()

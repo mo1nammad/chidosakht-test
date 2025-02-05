@@ -26,7 +26,7 @@ export const useVerifyLoginOtp = () => {
       );
     },
     onSuccess: () => {
-      router.push("/");
+      router.push("/dashboard");
     },
   });
   return { verifyOtp: mutateAsync };

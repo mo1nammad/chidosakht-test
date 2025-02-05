@@ -138,6 +138,7 @@ export const SignUp = app
       try {
         // verificaton 2
         const decoded = await decryptSession<{ userId: string }>(otpToken);
+        if (!decoded) return c.json({ error: "invalid token" });
 
         const otp = await db
           .select()

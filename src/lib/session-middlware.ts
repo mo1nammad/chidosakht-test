@@ -8,23 +8,24 @@ type AdditionalContext = {
 };
 
 export default createMiddleware<AdditionalContext>(async (c, next) => {
-  const session = getCookie(c, AUTH_SESSION_NAME);
-  if (!session)
-    return c.json(
-      {
-        error: "لطفا برای دسترسی به این سرویس وارد اکانت خود شوید",
-      },
-      403
-    );
-
-  console.log(session);
-
   try {
+    const session = getCookie(c, AUTH_SESSION_NAME);
+    if (!session)
+      return c.json(
+        {
+          error: "لطفا برای دسترسی به این سرویس وارد اکانت خود شوید",
+        },
+        403
+      );
+
     const decoded = await decryptSession<Session>(session);
+    if (!decoded) return c.json({ error: "Unauthorized" }, 401);
+
     c.set("userId", decoded.userId);
     c.set("email", decoded.email);
     c.set("phone", decoded.phone);
     c.set("name", decoded.name);
+    c.set("role", decoded.role);
 
     await next();
   } catch (error) {

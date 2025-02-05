@@ -31,8 +31,6 @@ export default function ProfileButton() {
     });
   };
 
-  console.log(session);
-
   const fallback = session?.name.slice(0, 2);
 
   return session ? (
