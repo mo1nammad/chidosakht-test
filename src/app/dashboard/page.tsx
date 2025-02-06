@@ -6,5 +6,8 @@ import { getSession } from "../features/auth/server/actions";
 export default async function DashboardPage() {
   const session = await getSession();
   if (!session) redirect("/login");
-  return <div className="min-h-screen">DashboardPage</div>;
+
+  return (
+    <div className="min-h-[calc(100vh-4.5rem)] text-right">DashboardPage</div>
+  );
 }

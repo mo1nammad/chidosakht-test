@@ -5,6 +5,7 @@ import { SignUp } from "@/app/features/auth/server/sign-up";
 import Login from "@/app/features/auth/server/login";
 import Otp from "@/app/features/auth/server/otp";
 import User from "@/app/features/auth/server/user";
+import blog from "@/app/features/dashboard/admin/server/blog";
 
 // export const runtime = "edge";
 
@@ -16,8 +17,8 @@ const router = app
   .route("/auth", SignUp)
   .route("/auth", Login)
   .route("/auth", Otp)
-  .route("/auth", User);
-
+  .route("/auth", User)
+  .route("/", blog);
 export const GET = handle(router);
 export const POST = handle(router);
 export type AppType = typeof router;

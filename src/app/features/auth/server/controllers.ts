@@ -20,8 +20,9 @@ export async function decryptSession<T>(input: string): Promise<T | null> {
       algorithms: ["HS256"],
     });
     return payload as T;
-  } catch (error) {
-    console.log(error, "session decryption");
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (err) {
     return null;
   }
 }

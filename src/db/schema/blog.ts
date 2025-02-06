@@ -22,6 +22,8 @@ export const blogCategoryTable = pgTable("blog_category", {
 export const blogTable = pgTable("blog", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   title: varchar({ length: 64 }).notNull(),
+  thumbnail: text().notNull(),
+  imagesUrlList: varchar({ length: 2048 }).array(),
   categoryId: integer("category_id")
     .notNull()
     .references(() => blogCategoryTable.id),

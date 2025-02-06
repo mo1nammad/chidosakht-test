@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import authMiddleware from "@/lib/session-middlware";
+import { authMiddleware } from "@/lib/session-middlware";
 
 const app = new Hono();
 
