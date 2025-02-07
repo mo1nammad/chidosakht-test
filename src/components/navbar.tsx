@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
 import NavigationMenu from "./navigaion-menu";
 import HamburgerMenu from "./hamburger-menu";
 
-import ProfileButton from "./profile-button";
+import ProfileButton from "./profile-dropdown";
 
 const Navbar = async () => {
   return (

@@ -17,9 +17,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 
-export default function ProfileButton() {
+export default function ProfileDropdown() {
   const queryClient = useQueryClient();
-  const { session } = useSession();
+  const { session, isLoading } = useSession();
 
   const invalidateSession = async () => {
     await logoutSession();
@@ -33,6 +33,7 @@ export default function ProfileButton() {
 
   const fallback = session?.name.slice(0, 2);
 
+  if (isLoading) return null;
   return session ? (
     <Popover>
       <PopoverTrigger>

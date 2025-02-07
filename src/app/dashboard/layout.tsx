@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "@/app/features/dashboard/components/sidebar";
+import SidebarLayout from "@/app/features/dashboard/components/sidebar-layout";
 import DashboardNavbar from "../features/dashboard/components/dashboard-navbar";
 
 type Props = {
@@ -15,10 +15,13 @@ export default function DashboardLayout({ children }: Props) {
           "--sidebar-width": SIDEBAR_WIDTH,
         } as never
       }
+      className="bg-muted"
     >
-      <DashboardNavbar className="mr-(--sidebar-width) h-18" />
-      <Sidebar className="w-(--sidebar-width) bg-white" />
-      <main className="mr-(--sidebar-width) pt-18">{children}</main>
+      <DashboardNavbar className="md:mr-(--sidebar-width) h-18" />
+      <SidebarLayout className="w-(--sidebar-width) bg-white hidden md:flex" />
+      <main className="md:mr-(--sidebar-width) pt-18 min-h-screen">
+        {children}
+      </main>
     </div>
   );
 }

@@ -5,7 +5,7 @@ type Props = {
   className?: string;
 };
 
-const Sidebar = ({ className }: Props) => {
+const SidebarLayout = ({ className }: Props) => {
   return (
     <aside
       className={cn(
@@ -18,4 +18,4 @@ const Sidebar = ({ className }: Props) => {
   );
 };
 
-export default Sidebar;
+export default SidebarLayout;
