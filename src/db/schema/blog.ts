@@ -1,4 +1,5 @@
 import {
+  boolean,
   integer,
   pgTable,
   text,
@@ -21,9 +22,8 @@ export const blogCategoryTable = pgTable("blog_category", {
 
 export const blogTable = pgTable("blog", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  title: varchar({ length: 64 }).notNull(),
+  title: varchar({ length: 256 }).notNull(),
   thumbnail: text().notNull(),
-  imagesUrlList: varchar({ length: 2048 }).array(),
   categoryId: integer("category_id")
     .notNull()
     .references(() => blogCategoryTable.id),
@@ -34,6 +34,27 @@ export const blogTable = pgTable("blog", {
       onDelete: "cascade",
     }),
   headersHtmlIds: varchar("headers_html_ids", { length: 32 }).notNull().array(),
+  isPublished: boolean("is_published").default(false).notNull(),
+
+  createAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+});
+
+export const blogCommentTable = pgTable("blog_comment", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  content: varchar({ length: 512 }).notNull(),
+  authorId: uuid("author_id")
+    .notNull()
+    .references(() => usersTable.id, {
+      onDelete: "cascade",
+    }),
+  blogId: integer("blog_id")
+    .notNull()
+    .references(() => blogTable.id, {
+      onDelete: "cascade",
+    }),
 
   createAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at")
