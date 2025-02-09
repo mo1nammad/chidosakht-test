@@ -1,0 +1,31 @@
+services:
+  next-js:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgresql://user:password@postgres:5432/mydatabase
+      - NEXT_PUBLIC_DEVELOPMENT_URL=http://localhost:3000
+      - NEXT_PUBLIC_PRODUCTION_URL=https://chidosakht-test.vercel.app
+      - JWT_SECRET_KEY=4cdae5f20fc47cf4f9b21a95bb4c14aa99cbdf7c8d23bed64ebf15193c038dc0
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: ["/bin/sh", "-c", "/app/entrypoint.sh"]
+
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data: # Defines a volume for PostgreSQL data
