@@ -26,11 +26,14 @@ export default function Home() {
 
           <div className="flex flex-col mt-6 md:mt-0">
             <div className="flex flex-col justify-center gap-y-8 sm:gap-y-8 max-w-[540px] text-center xl:text-right">
-              <h1 className="text-2xl sm:text-4xl font-yekan-black leading-snug">
-                آجربه‌آجر تا خانه رویاییتان را از ما بخواهید
+              <h1
+                dir="rtl"
+                className="text-2xl sm:text-4xl font-yekan-black leading-snug"
+              >
+                آجربه‌آجر تا خانه رویاییتان را از ما بخواهید.
               </h1>
               <div className="max-w-[540px] text-muted-foreground">
-                <p className="leading-7 text-sm sm:text-base">
+                <p dir="rtl" className="leading-7 text-sm sm:text-base">
                   در چیدوساخت، رویاهای مسکونی شما را با مهارت و اشتیاق به واقعیت
                   تبدیل می‌کنیم. با ترکیبی از تخصص، نوآوری و مصالح برتر،
                   خانه‌هایی می‌سازیم که نه تنها چشم‌نواز، بلکه ماندگار هستند با
@@ -163,7 +166,10 @@ export default function Home() {
 
           <div className="relative z-10 flex flex-col items-end gap-y-6 lg:gap-y-10 text-right w-full md:max-w-110">
             <Title>درباره ما</Title>
-            <div className="text-xs sm:text-sm lg:text-base text-[#242424] leading-6">
+            <div
+              dir="rtl"
+              className="text-xs sm:text-sm lg:text-base text-[#242424] leading-6"
+            >
               <p>
                 شرکت چیدوساخت، با بیش از 17 سال تجربه در صنعت ساختمان، افتخار
                 دارد خدمات جامع و تخصصی خود را در حوزه‌های مختلف ساخت و ساز به
@@ -227,7 +233,7 @@ export default function Home() {
           </div>
         </div>
         {/* slides */}
-        <div className="pt-4 pb-12 bg-muted px-12 rounded-3xl mt-3">
+        <div className="pt-4 pb-12 bg-muted px-12 mt-3">
           <div className="container max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4">
             <ProjectsSlider data={projectsData} />
           </div>

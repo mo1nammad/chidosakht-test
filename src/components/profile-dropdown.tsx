@@ -74,8 +74,8 @@ export default function ProfileDropdown() {
         })
       )}
     >
-      <LogIn className="size-5!" />
       <span>ورود | ثبت‌نام</span>
+      <LogIn className="size-5!" />
     </Link>
   );
 }

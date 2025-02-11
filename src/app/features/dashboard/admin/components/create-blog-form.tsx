@@ -75,6 +75,7 @@ export default function CreateBlogForm({ className, userId }: Props) {
                   <FormControl>
                     <Input
                       {...field}
+                      dir="rtl"
                       className="bg-background border-border text-right"
                     />
                   </FormControl>
@@ -112,6 +113,7 @@ export default function CreateBlogForm({ className, userId }: Props) {
                     <FormControl>
                       <Input
                         {...field}
+                        dir="rtl"
                         className="bg-background border-border text-right"
                       />
                     </FormControl>

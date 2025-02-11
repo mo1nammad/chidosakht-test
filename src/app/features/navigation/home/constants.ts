@@ -23,20 +23,20 @@ export const servicesData = [
     title: "بازسازی بنا",
   },
   {
-    src: "/home/Luxury-house-design-Top-10-tips-to-add-luxury-to-your-house-FEATURE-compressed 1.png",
-    title: "بازسازی بنا",
+    src: "/home/ellenfleckinteriors1_4bbf217306 1.png",
+    title: "پنجره گیوتینی",
   },
   {
-    src: "/home/Luxury-house-design-Top-10-tips-to-add-luxury-to-your-house-FEATURE-compressed 1.png",
-    title: "بازسازی بنا",
+    src: "/home/house-luxury-3.png",
+    title: "باز‌طراحی داخلی",
   },
   {
-    src: "/home/Luxury-house-design-Top-10-tips-to-add-luxury-to-your-house-FEATURE-compressed 1.png",
-    title: "بازسازی بنا",
+    src: "/home/Luxury-Home-1024x683 1.png",
+    title: "طراحی دکوراسیون داخلی",
   },
   {
-    src: "/home/Luxury-house-design-Top-10-tips-to-add-luxury-to-your-house-FEATURE-compressed 1.png",
-    title: "بازسازی بنا",
+    src: "/home/rooflights-luxury-home-improvement 1.png",
+    title: "بازسازی",
   },
 ];
 
@@ -78,18 +78,18 @@ export const projectsData = [
     description: "اجرای پروژه بازسازی ساختمان مسکونی",
   },
   {
-    src: "/home/premium_photo.png",
-    title: "پروژه احداث چمن‌مصنوعی در حیاط",
+    src: "/home/What-makes-a-home-a-Luxury-Home 1 (1).png",
+    title: "پروژه بازسازی ساختمون",
     description: "اجرای پروژه بازسازی ساختمان مسکونی",
   },
   {
-    src: "/home/premium_photo.png",
-    title: "پروژه احداث چمن‌مصنوعی در حیاط",
+    src: "/home/great-green-grasses.png",
+    title: "پروژه ساخت اسخرمدرن",
     description: "اجرای پروژه بازسازی ساختمان مسکونی",
   },
   {
-    src: "/home/premium_photo.png",
-    title: "پروژه احداث چمن‌مصنوعی در حیاط",
+    src: "/home/luxury-house-july062020-min 1.png",
+    title: "پروژه ساخت‌و‌ ساز ساختمان",
     description: "اجرای پروژه بازسازی ساختمان مسکونی",
   },
 ];

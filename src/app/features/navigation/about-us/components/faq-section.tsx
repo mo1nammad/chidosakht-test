@@ -35,7 +35,10 @@ const FAQSection = ({ className }: AppProps) => {
           >
             {data.question}
           </AccordionTrigger>
-          <AccordionContent className="text-muted-foreground text-right">
+          <AccordionContent
+            dir="rtl"
+            className="text-muted-foreground text-right"
+          >
             {data.answer}
           </AccordionContent>
         </AccordionItem>

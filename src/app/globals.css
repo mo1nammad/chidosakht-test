@@ -119,8 +119,8 @@
   --popover-foreground: hsl(240 10% 3.9%);
   --primary: hsl(223 83% 53%);
   --primary-foreground: hsl(0 0% 100%);
-  --tertiary: hsl(207 100% 63%);
-  --tertiary-foreground: hsl(0 0% 100%);
+  --tertiary: hsl(221 63% 85%);
+  --tertiary-foreground: hsl(0 0% 14);
   --secondary: hsl(214 95% 93%);
   --secondary-foreground: hsl(0 0% 0%);
   --muted: hsl(0 0% 97%);

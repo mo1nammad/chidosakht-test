@@ -159,9 +159,9 @@ export default function AboutUsPage() {
             className="hidden lg:block rounded-xl object-cover w-[354px]"
           />
           <div className="flex-1 text-right pl-7 md:pl-0">
-            <p className="before:content-[':'] text-sm sm:text-base">
+            <p dir="rtl" className="text-sm sm:text-base">
               در چیدوساخت، ما معتقدیم آگاهی‌سازی مشتریان، کلید موفقیت پروژه‌های
-              ساختمانی است به همین دلیل
+              ساختمانی است به همین دلیل:
             </p>
             <ul className="mt-9 space-y-2 text-xs sm:text-sm">
               <li className="relative before:content-['.'] text-muted-foreground right-6 after:content-[''] after:absolute after:size-1 after:bg-muted-foreground after:rounded-full after:top-2.5 after:-right-4">

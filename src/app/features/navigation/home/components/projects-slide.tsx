@@ -27,7 +27,7 @@ export const ProjectsSlide = ({
       <div className="flex justify-between items-center mt-5">
         <Button
           size="icon"
-          variant="secondary"
+          variant="tertiary"
           className="text-primary max-sm:size-6 sm:[&_svg]:size-auto"
         >
           <ChevronLeft />

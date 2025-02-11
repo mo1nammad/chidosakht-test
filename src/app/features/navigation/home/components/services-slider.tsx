@@ -56,18 +56,18 @@ export const ServicesSlider = ({ data }: ServicesSliderProps) => {
       {count > 1 && (
         <>
           <button
-            className="absolute z-10 top-1/2 -translate-y-1/2 -left-8 sm:left-0 size-6 p-0 sm:size-9 bg-secondary text-primary grid place-content-center rounded-lg cursor-pointer disabled:cursor-default disabled:opacity-50"
+            className="absolute z-10 top-1/2 -translate-y-1/2 -left-8 sm:left-0 size-6 p-0 sm:size-9 bg-tertiary text-primary grid place-content-center rounded-lg cursor-pointer disabled:cursor-default disabled:opacity-50"
             onClick={() => api?.scrollPrev()}
             disabled={current === 1}
           >
-            <ChevronLeft className="text-primary size-4! sm:size-8 p-0" />
+            <ChevronLeft className="text-primary size-4 sm:size-6 p-0" />
           </button>
           <button
-            className="absolute z-10 top-1/2 -translate-y-1/2 -right-8 sm:right-0 size-6 sm:size-9 bg-secondary text-primary grid place-content-center rounded-lg cursor-pointer disabled:cursor-default disabled:opacity-50"
+            className="absolute z-10 top-1/2 -translate-y-1/2 -right-8 sm:right-0 size-6 sm:size-9 bg-tertiary text-primary grid place-content-center rounded-lg cursor-pointer disabled:cursor-default disabled:opacity-50"
             onClick={() => api?.scrollNext()}
             disabled={current === count}
           >
-            <ChevronRight className="text-primary size-4! sm:size-8 p-0" />
+            <ChevronRight className="text-primary size-4 sm:size-6 p-0" />
           </button>
         </>
       )}

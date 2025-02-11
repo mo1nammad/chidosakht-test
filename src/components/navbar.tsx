@@ -35,8 +35,8 @@ const Navbar = async () => {
               <ProfileButton />
 
               <Button variant={"primary"} className="hidden sm:inline-flex">
-                <Headset className="size-5!" />
                 <span className="font-vazir-semibold">مشاوره‌رایگان</span>
+                <Headset className="size-5!" />
               </Button>
             </div>
           </>
