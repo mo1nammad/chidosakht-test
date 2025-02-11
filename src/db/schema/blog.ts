@@ -33,7 +33,7 @@ export const blogTable = pgTable("blog", {
     .references(() => usersTable.id, {
       onDelete: "cascade",
     }),
-  headersHtmlIds: varchar("headers_html_ids", { length: 32 }).notNull().array(),
+  timeToRead: varchar("time_to_read", { length: 64 }).notNull(),
   isPublished: boolean("is_published").default(false).notNull(),
 
   createAt: timestamp("created_at").defaultNow(),
@@ -55,6 +55,7 @@ export const blogCommentTable = pgTable("blog_comment", {
     .references(() => blogTable.id, {
       onDelete: "cascade",
     }),
+  isVerified: boolean("is_verified").default(false).notNull(),
 
   createAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at")

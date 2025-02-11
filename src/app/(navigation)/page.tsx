@@ -44,22 +44,23 @@ export default function Home() {
                 size="lg"
                 className="w-full sm:w-44 text-sm sm:text-base p-2"
                 asChild
-              >
-                <Link href={"#"}>مشاهده نمونه کارها</Link>
-              </Button>
-
-              <Button
-                size="lg"
-                className="w-full sm:w-44 text-sm sm:text-base p-2"
-                asChild
                 variant="outline"
               >
                 <Link href={"#"}>مشاهده خدمات</Link>
               </Button>
+              <Button
+                size="lg"
+                className="w-full sm:w-44 text-sm sm:text-base p-2"
+                asChild
+              >
+                <Link href={"#"}>مشاهده نمونه کارها</Link>
+              </Button>
             </div>
           </div>
         </section>
-        <section className="pb-8 mt-10">
+      </div>
+      <div className="container max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4">
+        <section className="pb-8 mt-10 md:mt-15 xl:mt-0">
           <Title>
             خدمات <span className="text-primary">چیدوساخت</span>
           </Title>
@@ -70,27 +71,33 @@ export default function Home() {
             <ServicesSlider data={servicesData} />
           </div>
         </section>
+      </div>
 
+      <div className="container max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4">
         <section className="py-16 sm:py-20 relative">
           <WorkstepsMobileSlider />
-          <div className="hidden md:grid  gap-y-0 md:gap-y-9 grid-cols-2 lg:grid-cols-3 grid-rows-2 mt-14 mx-auto">
+          <Title classname="hidden md:flex justify-center items-center">
+            مراحل انجام پروژه
+          </Title>
+          <div className="hidden md:grid gap-y-0 md:gap-y-9 grid-cols-2 lg:grid-cols-3 grid-rows-2 mt-9 mx-auto">
             {/* left part */}
             <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
-              <h1 className="w-36 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
-                تعریف پروژه
+              <h1 className="w-50 text-2xl bg-secondary text-primary text-center py-2 rounded-(--radius) font-yekan-semibold">
+                بهره برداری
               </h1>
-              <p className="max-w-[357px] text-center text-sm leading-7">
+              <p className="max-w-[357px] text-sm leading-7 text-right">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
                 سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
                 ایپسوم متن ساختگی
               </p>
             </div>
+
             <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
-              <h1 className="w-36 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
-                طراحی
+              <h1 className="w-50 text-2xl bg-secondary text-primary text-center py-2 rounded-(--radius) font-yekan-semibold">
+                تعریف پروژه
               </h1>
-              <p className="max-w-[357px] text-center text-sm leading-7">
+              <p className="max-w-[357px] text-sm leading-7 text-right">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
                 سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
@@ -110,10 +117,10 @@ export default function Home() {
             </div>
             {/* right part */}
             <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
-              <h1 className="w-36 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
-                بهره برداری
+              <h1 className="w-50 text-2xl bg-secondary text-primary text-center py-2 rounded-(--radius) font-yekan-semibold">
+                اجرا
               </h1>
-              <p className="max-w-[357px] text-center text-sm leading-7">
+              <p className="max-w-[357px] text-sm leading-7 text-right">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
                 سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
@@ -121,10 +128,10 @@ export default function Home() {
               </p>
             </div>
             <div className="flex flex-col gap-y-4 items-center justify-center my-6 md:my-0">
-              <h1 className="w-36 text-2xl bg-secondary text-primary text-center py-2 rounded-md font-yekan-semibold">
-                اجرا
+              <h1 className="w-50 text-2xl bg-secondary text-primary text-center py-2 rounded-(--radius) font-yekan-semibold">
+                طراحی و مشاوره
               </h1>
-              <p className="max-w-[357px] text-center text-sm leading-7">
+              <p className="max-w-[357px] text-sm leading-7 text-right">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید
                 سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک استلورم
@@ -133,13 +140,30 @@ export default function Home() {
             </div>
           </div>
         </section>
+      </div>
 
-        {/* about us */}
+      {/* about us */}
+      <div className="container max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4">
+        <section className="w-full relative bg-muted h-fit rounded-[40px] flex flex-row-reverse justify-between gap-x-10 items-center py-9 px-6 lg:px-24 overflow-hidden">
+          {/* boxes */}
+          <Image
+            src="/home/multi-boxes.png"
+            alt="boxes"
+            className="absolute -top-54 right-81 hidden md:block"
+            width={465}
+            height={329}
+          />
+          <Image
+            src="/home/multi-boxes.png"
+            alt="boxes"
+            className="absolute -bottom-54 right-72 rotate-x-180 rotate-y-180 hidden md:block"
+            width={465}
+            height={329}
+          />
 
-        <section className="w-full bg-muted h-fit rounded-[40px] flex flex-row-reverse justify-between gap-x-10 items-center py-9 px-6 lg:px-24 overflow-hidden">
-          <div className="flex flex-col items-end gap-y-6 lg:gap-y-10 text-right max-w-full sm:max-w-100 xl:max-w-110">
+          <div className="relative z-10 flex flex-col items-end gap-y-6 lg:gap-y-10 text-right w-full md:max-w-110">
             <Title>درباره ما</Title>
-            <div className="text-xs sm:text-sm lg:text-base text-muted-foreground leading-6">
+            <div className="text-xs sm:text-sm lg:text-base text-[#242424] leading-6">
               <p>
                 شرکت چیدوساخت، با بیش از 17 سال تجربه در صنعت ساختمان، افتخار
                 دارد خدمات جامع و تخصصی خود را در حوزه‌های مختلف ساخت و ساز به
@@ -152,7 +176,7 @@ export default function Home() {
                 مسکونی، اداری و تجاری قرار دهیم.
               </p>
             </div>
-            <div className="flex items-center gap-x-2 bg-primary w-fit text-white p-1.5 rounded-xl">
+            <div className="relative z-10 flex items-center gap-x-2 bg-primary w-fit text-white p-1.5 rounded-xl">
               <Button
                 asChild
                 size="icon"
@@ -165,48 +189,51 @@ export default function Home() {
               <span className="text-sm lg:text-base">مشاهده پروژه ها</span>
             </div>
           </div>
-          <div className="hidden sm:grid grid-cols-2 grid-rows-3  gap-x-4 gap-y-3 md:w-80 md:h-50 lg:w-[400px] lg:h-[273px]">
-            <div className="row-span-3 rounded-2xl overflow-hidden">
+          <div className="relative z-10 hidden md:flex gap-4">
+            <div className="relative">
               <Image
                 src="/home/about-us-sec-image.png"
                 width={190}
                 height={273}
                 alt="about us"
-                className="size-full object-cover"
+                className="object-cover"
               />
             </div>
-            <div className="row-span-2 rounded-2xl overflow-hidden">
+            <div className="flex flex-col justify-between">
               <Image
                 src="/home/istockphoto-1393537665-612x612 1.png"
                 width={185}
                 height={156}
                 alt="about us"
-                className="size-full object-cover"
+                className="object-cover rounded-lg"
               />
-            </div>
-            <div className="rounded-2xl overflow-hidden">
               <Image
                 src="/home/Three-Points-Blvd_061-2 1.png"
                 width={185}
                 height={156}
                 alt="about us"
-                className="size-full object-cover"
+                className="object-cover rounded-lg"
               />
             </div>
           </div>
         </section>
-        <section id="projects" className="py-16 w-full">
+      </div>
+
+      <section id="projects" className="py-16 w-full">
+        <div className="container max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4">
           <div className="flex flex-col-reverse items-center gap-y-14 md:items-baseline md:flex-row justify-between">
             <FilterProjectSection />
-            <div>
-              <Title>نمونه پروژه ها</Title>
-            </div>
+            <Title classname="-mb-4 sm:mb-8">نمونه پروژه ها</Title>
           </div>
-          {/* slides */}
-          <div className="w-full bg-muted mt-5 rounded-2xl px-9">
+        </div>
+        {/* slides */}
+        <div className="pt-4 pb-12 bg-muted px-12 rounded-3xl mt-3">
+          <div className="container max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4">
             <ProjectsSlider data={projectsData} />
           </div>
-        </section>
+        </div>
+      </section>
+      <div className="container max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4">
         <section>
           <Title classname="justify-center text-center">
             نظر و تجربه کاربران چیدوساخت

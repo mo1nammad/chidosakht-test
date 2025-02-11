@@ -25,7 +25,7 @@ const HeroImage = () => {
         className="absolute left-1/2 -translate-x-1/2 sm:relative sm:top-0 sm:left-0 sm:translate-x-0 size-[300px] sm:size-[600px] z-10"
         style={{
           background:
-            "linear-gradient(#ffffff 1.7000000000000002px,transparent 1.7000000000000002px), linear-gradient(to right,#ffffff 1.7000000000000002px, #00000000 1.7000000000000002px)",
+            "linear-gradient(#ffffff 1.5px,transparent 1.5px), linear-gradient(to right,#ffffff 1.5px, #00000000 1.5px)",
           backgroundColor: "#00000000",
           backgroundSize: isMobile ? "25px 25px" : "40px 40px",
           opacity: 0.8,

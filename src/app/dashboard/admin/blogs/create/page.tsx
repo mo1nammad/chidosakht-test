@@ -1,7 +1,12 @@
 import React from "react";
 
-import CreateBlogForm from "@/app/features/dashboard/admin/components/blog/create-blog-form";
-export default function CreateBlogsPage() {
+import CreateBlogForm from "@/app/features/dashboard/admin/components/create-blog-form";
+import { getSession } from "@/app/features/auth/server/actions";
+import { redirect } from "next/navigation";
+export default async function CreateBlogsPage() {
+  const session = await getSession();
+  if (!session || !session.userId) return redirect("/");
+
   return (
     <div className="px-6">
       <div className="max-w-5xl mx-auto py-10 text-right space-y-2.5">
@@ -13,7 +18,7 @@ export default function CreateBlogsPage() {
           کرده سپس روی دکمه ایجاد بلاگ کلیک کنید
         </p>
 
-        <CreateBlogForm />
+        <CreateBlogForm userId={session.userId} />
       </div>
     </div>
   );

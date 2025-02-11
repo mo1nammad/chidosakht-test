@@ -52,10 +52,10 @@ export const CommentsSlider = ({ data }: CommentsSliderProps) => {
         {data.map((props, index) => (
           <SwiperSlide key={index}>
             <Card>
-              <div className="flex flex-col-reverse sm:flex-row items-center gap-4 p-7 pr-5">
+              <div className="flex flex-col-reverse sm:flex-row items-center gap-4 p-4 sm:p-7 pr-5">
                 <div className="text-center sm:text-right space-y-3">
-                  <h5>{props.name}</h5>
-                  <p className="text-xs text-muted-foreground leading-5">
+                  <h5 className="text-sm sm:text-base">{props.name}</h5>
+                  <p className="text-[10px] sm:text-xs text-[#a5a5a5] leading-5">
                     {props.description}
                   </p>
                 </div>
@@ -67,7 +67,7 @@ export const CommentsSlider = ({ data }: CommentsSliderProps) => {
                   alt="comment profile"
                   width={95}
                   height={95}
-                  className="h-[95px]"
+                  className="size-[75px] sm:size-[95px]"
                 />
               </div>
             </Card>

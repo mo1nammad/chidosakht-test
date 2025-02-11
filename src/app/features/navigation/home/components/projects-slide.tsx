@@ -14,7 +14,7 @@ export const ProjectsSlide = ({
   description,
 }: ProjectsSlideProps) => {
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full group">
       <div className="rounded-2xl overflow-hidden">
         <Image
           alt="project-image"
@@ -24,17 +24,19 @@ export const ProjectsSlide = ({
           className="w-full object-cover"
         />
       </div>
-      <div className="flex justify-between mt-5">
+      <div className="flex justify-between items-center mt-5">
         <Button
           size="icon"
           variant="secondary"
-          className="text-primary [&_svg]:size-auto"
+          className="text-primary max-sm:size-6 sm:[&_svg]:size-auto"
         >
           <ChevronLeft />
         </Button>
         <div className="text-right space-y-0.5">
-          <h6 className="text-sm font-yekan-semibold">{title}</h6>
-          <p className="text-xs">{description}</p>
+          <h6 className="text-xs sm:text-sm font-yekan-semibold group-hover:text-primary">
+            {title}
+          </h6>
+          <p className="text-[10px] sm:text-xs text-[#a5a5a5]">{description}</p>
         </div>
       </div>
     </div>

@@ -42,11 +42,11 @@ export const ServicesSlider = ({ data }: ServicesSliderProps) => {
 
   return (
     <Carousel setApi={setApi} className="relative sm:px-12">
-      <CarouselContent className="p-2">
+      <CarouselContent className="py-2 px-1">
         {data.map((props, index) => (
           // responsive : (basis)
           <CarouselItem
-            className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5"
+            className="basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
             key={index}
           >
             <ServicesSlide {...props} />

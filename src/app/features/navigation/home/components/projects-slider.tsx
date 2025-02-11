@@ -1,9 +1,6 @@
 "use client";
 
-import { useState } from "react";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+import { useEffect, useState } from "react";
 
 import { ProjectsSlide, ProjectsSlideProps } from "./projects-slide";
 
@@ -11,49 +8,57 @@ import { ProjectsSlide, ProjectsSlideProps } from "./projects-slide";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import { cn } from "@/lib/utils";
+import { CarouselBullets } from "@/components/carousel-bullets";
+import {
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 
 type ProjectsSliderProps = {
   data: ProjectsSlideProps[];
 };
 export const ProjectsSlider = ({ data }: ProjectsSliderProps) => {
-  const [isSwiperLoaded, setIsSwiperLoaded] = useState(false);
+  const [api, setApi] = useState<CarouselApi>();
 
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+    api.on("slidesInView", () => {
+      setCount(api.scrollSnapList().length);
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
   return (
-    <div className={cn(isSwiperLoaded ? "block" : "hidden")}>
-      <Swiper
-        slidesPerView={1}
-        spaceBetween={15}
-        modules={[Pagination]}
-        style={{
-          padding: "40px 0",
-        }}
-        pagination={{
-          clickable: true,
-          bulletActiveClass: "active",
-          bulletClass: "custom-bullets",
-        }}
-        onSwiper={() => setIsSwiperLoaded(true)}
-        breakpoints={{
-          1145: {
-            slidesPerView: data.length,
-          },
-          850: {
-            slidesPerView: 3,
-          },
-          680: {
-            slidesPerView: 2,
-            spaceBetween: 25,
-          },
-        }}
-      >
-        {/* slides */}
+    <Carousel setApi={setApi} className="max-w-[260px] mx-auto sm:max-w-full">
+      <CarouselContent className="py-2 px-1 -ml-5">
         {data.map((props, index) => (
-          <SwiperSlide key={index}>
+          <CarouselItem
+            className="basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4 pl-5"
+            key={index}
+          >
             <ProjectsSlide {...props} />
-          </SwiperSlide>
+          </CarouselItem>
         ))}
-      </Swiper>
-    </div>
+      </CarouselContent>
+      <CarouselBullets
+        count={count}
+        current={current}
+        onBulletClick={(index) => api?.scrollTo(index)}
+        className="-bottom-6"
+      />
+    </Carousel>
   );
 };

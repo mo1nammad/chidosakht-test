@@ -5,7 +5,7 @@ import { zValidator } from "@hono/zod-validator";
 
 // database
 import { db } from "@/db";
-import { blogTable } from "@/db/schema";
+import { blogCategoryTable, blogTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 // middleware
@@ -14,6 +14,7 @@ import { createBlogFormSchema } from "../schema";
 
 export default app
   .basePath("/blogs")
+
   .get("/", async (c) => {
     try {
       const blogs = await db.select().from(blogTable);
@@ -25,6 +26,20 @@ export default app
     } catch (error) {
       console.log(error, "/blogs : GET");
       return c.json({ error: "somthing went wrong" }, 400);
+    }
+  })
+  .get("/categories", async (c) => {
+    try {
+      const categories = await db.select().from(blogCategoryTable);
+      return c.json({
+        message: "categories fetched",
+        categories,
+      });
+    } catch (error) {
+      console.log(error);
+      console.log(error, "/blogs/categories GET");
+
+      return c.json({ error: "internal server error" });
     }
   })
   .get("/:id", async (c) => {

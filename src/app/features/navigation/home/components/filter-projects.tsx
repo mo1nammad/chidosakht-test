@@ -21,7 +21,7 @@ const FilterProjectSection = () => {
   */
 
   return (
-    <div className="flex items-center bg-muted rounded-lg overflow-hidden w-fit">
+    <div className="flex items-center justify-around bg-muted rounded-lg overflow-hidden w-fit">
       <button
         onClick={() => pushRoute(0)}
         className={cn(
@@ -32,7 +32,8 @@ const FilterProjectSection = () => {
       >
         طراحی داخلی
       </button>
-      <div className="border-l border-border w-1 h-2/3" />
+
+      <div className="border-l border-border w-1 h-4 sm:h-6" />
       <button
         onClick={() => pushRoute(1)}
         className={cn(
@@ -43,7 +44,7 @@ const FilterProjectSection = () => {
       >
         بازسازی
       </button>
-      <div className="border-l border-border w-1 h-2/3" />
+      <div className="border-l border-border w-1 h-4 sm:h-6" />
       <button
         onClick={() => pushRoute(2)}
         className={cn(

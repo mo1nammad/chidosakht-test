@@ -17,7 +17,7 @@ export const ServicesSlide = ({ src, title }: ServicesSlideProps) => {
           alt="slider image"
           className="rounded-lg w-full"
         />
-        <h6 className="text-xs sm:text-base text-center py-2 sm:py-3 group-hover:text-primary transition cursor-default">
+        <h6 className="text-xs sm:text-base text-center py-2 sm:pt-3 sm:pb-1.5 group-hover:text-primary transition cursor-default">
           {title}
         </h6>
       </CardContent>
