@@ -50,12 +50,12 @@ export default function CreateBlogForm({ className, userId }: Props) {
         className={cn(className)}
         onSubmit={form.handleSubmit(submitHandler)}
       >
-        <div className="grid lg:grid-cols-6 grid-flow-row mt-10 gap-12">
+        <div className="grid md:grid-cols-6 grid-flow-row mt-10 gap-12">
           <FormField
             control={form.control}
             name="thumbnail"
             render={({}) => (
-              <FormItem className="col-span-1 lg:col-span-3">
+              <FormItem className="col-span-1 md:col-span-3">
                 <FormLabel className="font-yekan-light">عکس تامبنیل</FormLabel>
                 <FormControl>
                   <ThumbnailDropzone />
@@ -65,7 +65,7 @@ export default function CreateBlogForm({ className, userId }: Props) {
             )}
           />
 
-          <div className="col-span-1 lg:col-span-3 space-y-6">
+          <div className="col-span-1 md:col-span-3 space-y-6">
             <FormField
               control={form.control}
               name="title"
@@ -163,7 +163,23 @@ export default function CreateBlogForm({ className, userId }: Props) {
         {/* text editor */}
 
         {/* <TextEditor className="mt-10" /> */}
-        <TextEditor className="mt-10 shadow-none" />
+        <TextEditor
+          className="mt-10 shadow-none"
+          toolbar={{
+            className: "sticky top-20 z-50",
+            handlers: {
+              onImageClick(insertImage) {
+                insertImage(
+                  "https://static.roocket.ir/images/cover/2023/12/1/bfXiSAuUHdHj6jI8sUsQx0j7MdTGRd3zF4O3Lyzc.jpg"
+                );
+              },
+              onLinkClick() {
+                console.log("link clicked");
+                return "link";
+              },
+            },
+          }}
+        />
       </form>
     </Form>
   );

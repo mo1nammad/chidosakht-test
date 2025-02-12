@@ -17,9 +17,9 @@ export default function DashboardLayout({ children }: Props) {
       }
       className="bg-muted"
     >
-      <DashboardNavbar className="md:mr-(--sidebar-width) h-18" />
-      <SidebarLayout className="w-(--sidebar-width) bg-white hidden md:flex" />
-      <main className="md:mr-(--sidebar-width) pt-18 min-h-screen">
+      <DashboardNavbar className="lg:mr-(--sidebar-width) h-18" />
+      <SidebarLayout className="w-(--sidebar-width) bg-white hidden lg:flex" />
+      <main className="lg:mr-(--sidebar-width) pt-18 min-h-screen">
         {children}
       </main>
     </div>

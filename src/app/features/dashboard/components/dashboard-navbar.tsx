@@ -61,7 +61,7 @@ const DashboardNavbar = ({ className }: Props) => {
               </div>
             ))}
           </div>
-          <MobileSidebar className="flex md:hidden" />
+          <MobileSidebar className="flex lg:hidden" />
         </div>
         {/* right side */}
         <ProfileDropdown />
