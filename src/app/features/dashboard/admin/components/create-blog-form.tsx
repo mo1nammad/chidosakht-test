@@ -168,11 +168,6 @@ export default function CreateBlogForm({ className, userId }: Props) {
           toolbar={{
             className: "sticky top-20 z-50",
             handlers: {
-              onImageClick(insertImage) {
-                insertImage(
-                  "https://static.roocket.ir/images/cover/2023/12/1/bfXiSAuUHdHj6jI8sUsQx0j7MdTGRd3zF4O3Lyzc.jpg"
-                );
-              },
               onLinkClick() {
                 console.log("link clicked");
                 return "link";
