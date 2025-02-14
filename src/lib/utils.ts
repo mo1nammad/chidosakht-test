@@ -43,3 +43,9 @@ export const customErrorMap: z.ZodErrorMap = (error, ctx) => {
   }
   return { message: ctx.defaultError };
 };
+
+export function convertToBase64(file: File, cb: (url: string) => void) {
+  const reader = new FileReader();
+  reader.onloadend = () => cb(reader.result as string);
+  reader.readAsDataURL(file);
+}

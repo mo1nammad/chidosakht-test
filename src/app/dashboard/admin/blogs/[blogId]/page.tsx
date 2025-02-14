@@ -1,11 +1,19 @@
 import React from "react";
 
-import CreateBlogForm from "@/app/features/dashboard/admin/components/create-blog-form";
+import BlogForm from "@/app/features/dashboard/admin/components/blog-form";
 import { getSession } from "@/app/features/auth/server/actions";
 import { redirect } from "next/navigation";
-export default async function CreateBlogsPage() {
+
+type Props = {
+  params: {
+    blogId: string;
+  };
+};
+
+export default async function BlogPage({ params }: Props) {
   const session = await getSession();
   if (!session || !session.userId) return redirect("/");
+  console.log(params.blogId);
 
   return (
     <div className="px-6">
@@ -18,7 +26,7 @@ export default async function CreateBlogsPage() {
           کرده سپس روی دکمه ایجاد بلاگ کلیک کنید
         </p>
 
-        <CreateBlogForm userId={session.userId} />
+        <BlogForm userId={session.userId} />
       </div>
     </div>
   );

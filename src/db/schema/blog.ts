@@ -23,17 +23,15 @@ export const blogCategoryTable = pgTable("blog_category", {
 export const blogTable = pgTable("blog", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   title: varchar({ length: 256 }).notNull(),
-  thumbnail: text().notNull(),
-  categoryId: integer("category_id")
-    .notNull()
-    .references(() => blogCategoryTable.id),
-  content: text().notNull(),
+  thumbnail: text(),
+  content: text(),
+  categoryId: integer("category_id").references(() => blogCategoryTable.id),
   authorId: uuid("author_id")
     .notNull()
     .references(() => usersTable.id, {
       onDelete: "cascade",
     }),
-  timeToRead: varchar("time_to_read", { length: 64 }).notNull(),
+  timeToRead: varchar("time_to_read", { length: 128 }),
   isPublished: boolean("is_published").default(false).notNull(),
 
   createAt: timestamp("created_at").defaultNow(),

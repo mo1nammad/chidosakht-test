@@ -34,6 +34,10 @@
   margin: 1.5rem auto !important;
   max-width: 100% !important;
 }
+.tiptap a {
+  color: rgb(61, 61, 255) !important;
+  cursor: pointer !important;
+}
 
 /* List styles */
 .tiptap ul,

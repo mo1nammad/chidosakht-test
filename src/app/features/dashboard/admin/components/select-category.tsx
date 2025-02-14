@@ -14,8 +14,8 @@ import { cn } from "@/lib/utils";
 
 type Props = {
   className?: string;
-  onChange: (value: string) => void;
-  value: number | undefined;
+  onChange: (value: number) => void;
+  value?: number | null;
 };
 export default function SelectCategory({ className, onChange, value }: Props) {
   const { data } = useBlogCategories();
@@ -23,7 +23,10 @@ export default function SelectCategory({ className, onChange, value }: Props) {
   if (!data || "error" in data) return null;
 
   return (
-    <Select onValueChange={onChange} value={value?.toString()}>
+    <Select
+      onValueChange={(value) => onChange(+value)}
+      value={value ? value.toString() : undefined}
+    >
       <SelectTrigger
         className={cn(
           "w-full sm:w-[210px] h-full border-border bg-background flex-row-reverse",

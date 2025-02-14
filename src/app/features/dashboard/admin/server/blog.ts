@@ -72,6 +72,7 @@ export default app
     zValidator("json", createBlogFormSchema),
     async (c) => {
       const role = c.get("role");
+      const userId = c.get("userId");
       if (role === "user") return c.json({ error: "Access denied" }, 401);
 
       const body = c.req.valid("json");
@@ -82,15 +83,15 @@ export default app
           .insert(blogTable)
           .values({
             ...body,
+            authorId: userId,
           })
           .returning({ id: blogTable.id })
           .then(([data]) => data);
 
         return c.json({
-          message: "آپلود بلاگ موفق بود",
-          data: {
-            blogId: blog.id,
-          },
+          message: "ایجاد بلاگ موفق بود",
+
+          blogId: blog.id,
         });
       } catch (error) {
         console.log(error, "/blogs/create :POST");

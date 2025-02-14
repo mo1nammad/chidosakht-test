@@ -22,19 +22,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import TextEditor from "@/components/text-editor";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   className?: string;
   userId: string;
 };
 
-export default function CreateBlogForm({ className, userId }: Props) {
+export default function BlogForm({ className }: Props) {
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(createBlogFormSchema),
     defaultValues: {
       title: "",
       timeToRead: "",
-      authorId: userId,
       categoryId: 1,
       content: "",
       isPublished: true,
@@ -50,15 +50,16 @@ export default function CreateBlogForm({ className, userId }: Props) {
         className={cn(className)}
         onSubmit={form.handleSubmit(submitHandler)}
       >
+        <Button className="">ثبت مطلب</Button>
         <div className="grid md:grid-cols-6 grid-flow-row mt-10 gap-12">
           <FormField
             control={form.control}
             name="thumbnail"
-            render={({}) => (
+            render={({ field }) => (
               <FormItem className="col-span-1 md:col-span-3">
                 <FormLabel className="font-yekan-light">عکس تامبنیل</FormLabel>
                 <FormControl>
-                  <ThumbnailDropzone />
+                  <ThumbnailDropzone {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -161,19 +162,24 @@ export default function CreateBlogForm({ className, userId }: Props) {
         </div>
 
         {/* text editor */}
-
-        {/* <TextEditor className="mt-10" /> */}
-        <TextEditor
-          className="mt-10 shadow-none"
-          toolbar={{
-            className: "sticky top-20 z-50",
-            handlers: {
-              onLinkClick() {
-                console.log("link clicked");
-                return "link";
-              },
-            },
-          }}
+        <FormField
+          control={form.control}
+          name="content"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <TextEditor
+                  className="mt-10 shadow-none"
+                  toolbar={{
+                    className:
+                      "sticky top-18 z-50 bg-muted/60 backdrop-blur-2xl bg-op pt-4",
+                  }}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
       </form>
     </Form>
