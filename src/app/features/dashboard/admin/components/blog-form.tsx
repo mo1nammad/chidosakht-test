@@ -11,9 +11,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { createBlogFormSchema } from "../schema";
+import { editBlogFormSchema } from "../schema";
 import { z } from "zod";
-type FormSchemaType = z.infer<typeof createBlogFormSchema>;
+type FormSchemaType = z.infer<typeof editBlogFormSchema>;
 
 import { cn } from "@/lib/utils";
 import SelectCategory from "./select-category";
@@ -23,24 +23,29 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import TextEditor from "@/components/text-editor";
 import { Button } from "@/components/ui/button";
+import { useBlogData } from "../api/use-blog-data";
 
 type Props = {
   className?: string;
-  userId: string;
+  blogId: string;
 };
 
-export default function BlogForm({ className }: Props) {
+export default function BlogForm({ className, blogId }: Props) {
+  const { data } = useBlogData({ id: blogId });
+  console.log("hello");
+
   const form = useForm<FormSchemaType>({
-    resolver: zodResolver(createBlogFormSchema),
-    defaultValues: {
-      title: "",
-      timeToRead: "",
-      categoryId: 1,
-      content: "",
-      isPublished: true,
-      thumbnail: "",
+    resolver: zodResolver(editBlogFormSchema),
+    values: {
+      title: data?.blog.title ?? "",
+      timeToRead: data?.blog.timeToRead ?? "",
+      categoryId: data?.blog.categoryId ?? undefined,
+      content: data?.blog.content ?? "",
+      isPublished: data?.blog.isPublished ?? false,
+      thumbnail: data?.blog.thumbnail ?? "",
     },
   });
+
   const submitHandler = (values: FormSchemaType) => {
     console.log(values);
   };

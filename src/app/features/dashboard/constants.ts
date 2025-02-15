@@ -48,8 +48,8 @@ export const adminNavData: Route[] = [
     url: "/dashboard/admin/blogs",
     subRoutes: [
       {
-        title: "ایجاد مطلب",
-        url: "/dashboard/admin/blogs/create",
+        title: "مطلب",
+        url: "/dashboard/admin/blogs/*",
       },
     ],
   },
@@ -64,10 +64,26 @@ export const generateNavigateUrlList = ({
   serachList: Route[] | SubRoute[];
   result: { url: string; title: string }[];
 }): { url: string; title: string }[] => {
+  // routes searching
   const route = serachList.find((data) => {
+    // all exceptions
     if (data.url === "/dashboard") {
       return path === data.url;
     }
+
+    if (data.url.endsWith("/*")) {
+      if (path.length >= data.url.length) {
+        const sliceIndex = path.lastIndexOf("/");
+        const slicedPath = path.slice(0, sliceIndex);
+
+        if (data.url.includes(slicedPath)) {
+          data.url = path;
+          return true;
+        }
+        return false;
+      }
+    }
+
     return path.includes(data.url);
   });
 

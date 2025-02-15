@@ -20,13 +20,13 @@ export default async function BlogPage({ params }: Props) {
       <div className="max-w-5xl mx-auto py-10 text-right space-y-2.5">
         {/* container */}
 
-        <h3 className="text-lg sm:text-2xl font-yekan-semibold">ایجاد مطلب</h3>
+        <h3 className="text-lg sm:text-2xl font-yekan-semibold">مطلب</h3>
         <p className="text-sm sm:text-base text-muted-foreground">
-          این قسمت برای ایجاد بلاگ های وبسایت است ابتدا فرم ایجاد وبسایت را پر
-          کرده سپس روی دکمه ایجاد بلاگ کلیک کنید
+          این قسمت برای تغییرات مطلب های وبسایت است ابتدا فرم ایجاد وبسایت را پر
+          کرده سپس روی دکمه ثبت مطلب کلیک کنید
         </p>
 
-        <BlogForm userId={session.userId} />
+        <BlogForm blogId={params.blogId} />
       </div>
     </div>
   );

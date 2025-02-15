@@ -34,10 +34,11 @@ export const blogTable = pgTable("blog", {
   timeToRead: varchar("time_to_read", { length: 128 }),
   isPublished: boolean("is_published").default(false).notNull(),
 
-  createAt: timestamp("created_at").defaultNow(),
+  createAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
-    .$onUpdate(() => new Date()),
+    .$onUpdate(() => new Date())
+    .notNull(),
 });
 
 export const blogCommentTable = pgTable("blog_comment", {

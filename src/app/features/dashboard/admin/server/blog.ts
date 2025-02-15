@@ -5,8 +5,8 @@ import { zValidator } from "@hono/zod-validator";
 
 // database
 import { db } from "@/db";
-import { blogCategoryTable, blogTable } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { blogCategoryTable, blogTable, usersTable } from "@/db/schema";
+import { desc, eq } from "drizzle-orm";
 
 // middleware
 import { authMiddleware } from "@/lib/session-middlware";
@@ -17,11 +17,29 @@ export default app
 
   .get("/", async (c) => {
     try {
-      const blogs = await db.select().from(blogTable);
+      // get all blogs
+      const blogs = await db
+        .select({
+          id: blogTable.id,
+          authorName: usersTable.name,
+          categoryTitle: blogCategoryTable.title,
+          isPublished: blogTable.isPublished,
+          title: blogTable.title,
+          updatedAt: blogTable.updatedAt,
+        })
+        .from(blogTable)
+        .innerJoin(usersTable, eq(blogTable.authorId, usersTable.id))
+        .leftJoin(
+          blogCategoryTable,
+          eq(blogTable.categoryId, blogCategoryTable.id)
+        )
+        .orderBy(desc(blogTable.updatedAt));
+
+      console.log(blogs, "blogs");
 
       return c.json({
         message: "blogs success",
-        data: { blogs },
+        blogs: blogs,
       });
     } catch (error) {
       console.log(error, "/blogs : GET");
@@ -57,13 +75,29 @@ export default app
 
       return c.json({
         message: "بلاگ با موفقیت دریافت شد",
-        data: {
-          blog: selectedBlog,
-        },
+        blog: selectedBlog,
       });
     } catch (error) {
       console.log(error, "/blogs/:id GET");
       return c.json({ error: "دریافت بلاگ ناموفق بود" }, 400);
+    }
+  })
+  .put("/:id", async (c) => {
+    return c.json({ message: "update blog" });
+  })
+  .delete("/:id", async (c) => {
+    try {
+      const blogId = Number(c.req.param("id"));
+      if (typeof blogId !== "number")
+        return c.json({ error: "آیدی بلاگ برای حذف بلاگ صحیح نیست" }, 403);
+
+      // delete blog
+      await db.delete(blogTable).where(eq(blogTable.id, blogId)).execute();
+
+      return c.json({ message: "بلاگ با موفقیت حذف شد" });
+    } catch (error) {
+      console.log(error, "/blogs/:id DELETE");
+      return c.json({ error: "حذف بلاگ ناموفق بود" }, 400);
     }
   })
   .post(
