@@ -5,15 +5,16 @@ import { getSession } from "@/app/features/auth/server/actions";
 import { redirect } from "next/navigation";
 
 type Props = {
-  params: {
+  params: Promise<{
     blogId: string;
-  };
+  }>;
 };
 
 export default async function BlogPage({ params }: Props) {
   const session = await getSession();
   if (!session || !session.userId) return redirect("/");
-  console.log(params.blogId);
+  const { blogId } = await params;
+  console.log(blogId);
 
   return (
     <div className="px-6">
@@ -26,7 +27,7 @@ export default async function BlogPage({ params }: Props) {
           کرده سپس روی دکمه ثبت مطلب کلیک کنید
         </p>
 
-        <BlogForm blogId={params.blogId} />
+        <BlogForm blogId={blogId} />
       </div>
     </div>
   );

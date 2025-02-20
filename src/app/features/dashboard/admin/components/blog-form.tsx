@@ -32,7 +32,6 @@ type Props = {
 
 export default function BlogForm({ className, blogId }: Props) {
   const { data } = useBlogData({ id: blogId });
-  console.log("hello");
 
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(editBlogFormSchema),

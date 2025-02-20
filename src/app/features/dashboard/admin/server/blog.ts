@@ -35,8 +35,6 @@ export default app
         )
         .orderBy(desc(blogTable.updatedAt));
 
-      console.log(blogs, "blogs");
-
       return c.json({
         message: "blogs success",
         blogs: blogs,

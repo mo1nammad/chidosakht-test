@@ -45,7 +45,7 @@ export default function TextEditor({
       Image,
       Link,
     ],
-
+    immediatelyRender: false,
     editorProps: {
       attributes: {
         class:
