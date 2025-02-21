@@ -41,7 +41,7 @@ const DashboardNavbar = ({ className }: Props) => {
       )}
     >
       <div className="flex flex-row-reverse items-center max-w-5xl mx-auto w-full h-full justify-between">
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center gap-x-4">
           <div className="hidden items-center justify-center gap-x-2.5 sm:flex">
             {navigateUrlList.map((navigateItem, index) => (
               <div

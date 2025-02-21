@@ -14,7 +14,6 @@ export default async function BlogPage({ params }: Props) {
   const session = await getSession();
   if (!session || !session.userId) return redirect("/");
   const { blogId } = await params;
-  console.log(blogId);
 
   return (
     <div className="px-6">

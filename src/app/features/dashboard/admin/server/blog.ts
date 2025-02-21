@@ -10,7 +10,7 @@ import { desc, eq } from "drizzle-orm";
 import * as s3 from "@/lib/s3";
 // middleware
 import { authMiddleware } from "@/lib/session-middlware";
-import { createBlogFormSchema } from "../schema";
+import { createBlogFormSchema, editBlogFormSchema } from "../schema";
 
 export default app
   .basePath("/blogs")
@@ -80,9 +80,61 @@ export default app
       return c.json({ error: "دریافت بلاگ ناموفق بود" }, 400);
     }
   })
-  .put("/:id", async (c) => {
-    return c.json({ message: "update blog" });
-  })
+  // update blog
+  .put(
+    "/:id",
+    authMiddleware,
+    zValidator("json", editBlogFormSchema),
+    async (c) => {
+      const role = c.get("role");
+
+      if (role === "user") {
+        return c.json({ error: "شما دسترسی برای این عملیات را ندارید" }, 401);
+      }
+
+      const blogId = Number(c.req.param("id"));
+
+      if (typeof blogId !== "number")
+        return c.json({ error: "آیدی بلاگ برای حذف بلاگ صحیح نیست" }, 403);
+
+      try {
+        const { isPublished, ...body } = c.req.valid("json");
+
+        // check required fields if isPublished is true
+        if (isPublished) {
+          const requiredFields = Object.values(body);
+
+          requiredFields.forEach((field) => {
+            if (!field) {
+              return c.json(
+                {
+                  error: "برای انتشار همه ی فیلد های مطالب باید پر باشند",
+                },
+                403
+              );
+            }
+          });
+        }
+
+        await db.update(blogTable).set({
+          ...body,
+          isPublished,
+        });
+
+        return c.json(
+          {
+            message: "آپدیت بلاگ موفق بود",
+          },
+          403
+        );
+      } catch (error) {
+        console.log(error);
+        return c.json({ error: "آپدیت بلاگ ناموفق بود" }, 400);
+      }
+    }
+  )
+
+  // delete blog
   .delete("/:id", authMiddleware, async (c) => {
     const role = c.get("role");
 
@@ -90,11 +142,11 @@ export default app
       return c.json({ error: "شما دسترسی برای این عملیات را ندارید" }, 401);
     }
 
-    try {
-      const blogId = Number(c.req.param("id"));
-      if (typeof blogId !== "number")
-        return c.json({ error: "آیدی بلاگ برای حذف بلاگ صحیح نیست" }, 403);
+    const blogId = Number(c.req.param("id"));
+    if (typeof blogId !== "number")
+      return c.json({ error: "آیدی بلاگ برای حذف بلاگ صحیح نیست" }, 403);
 
+    try {
       // delete blog and related files to it
       // s3
       s3.deleteFolderFromAws(`blogs/${blogId}`)

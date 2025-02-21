@@ -6,12 +6,7 @@ import { z } from "zod";
 z.setErrorMap(customErrorMap);
 
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-  DialogTitle,
-} from "@/components/ui/dialog";
+
 import { Input } from "@/components/ui/input";
 import {
   Form,
@@ -19,7 +14,6 @@ import {
   FormControl,
   FormItem,
   FormMessage,
-  FormLabel,
 } from "@/components/ui/form";
 import { useCreateBlogInstance } from "../api/use-create-blog-instance";
 import { Loader } from "lucide-react";
@@ -42,41 +36,32 @@ const CreateBlog = () => {
   const handleSubmit = (val: FormValuesSchema) => mutate({ title: val.title });
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className="fade-in">ساخت مطلب</Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogTitle className="sr-only">ایجاد مطلب</DialogTitle>
-        <Form {...form}>
-          <form
-            className="text-right space-y-1.5 mt-5"
-            onSubmit={form.handleSubmit(handleSubmit)}
-          >
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>موضوع مطلب</FormLabel>
-                  <FormControl>
-                    <Input {...field} className="text-right" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" size={"sm"} className="w-21 mt-4">
-              {status === "pending" ? (
-                <Loader className="animate-spin" />
-              ) : (
-                "ایجاد مطلب"
-              )}
-            </Button>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+    <Form {...form}>
+      <form
+        className="text-right space-y-1.5 mt-5"
+        onSubmit={form.handleSubmit(handleSubmit)}
+      >
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input placeholder="موضوع" {...field} className="text-right" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="w-full mt-2.5">
+          {status === "pending" ? (
+            <Loader className="animate-spin" />
+          ) : (
+            "ایجاد مطلب"
+          )}
+        </Button>
+      </form>
+    </Form>
   );
 };
 
