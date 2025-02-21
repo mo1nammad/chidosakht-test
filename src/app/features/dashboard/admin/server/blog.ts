@@ -7,7 +7,7 @@ import { zValidator } from "@hono/zod-validator";
 import { db } from "@/db";
 import { blogCategoryTable, blogTable, usersTable } from "@/db/schema";
 import { desc, eq } from "drizzle-orm";
-
+import * as s3 from "@/lib/s3";
 // middleware
 import { authMiddleware } from "@/lib/session-middlware";
 import { createBlogFormSchema } from "../schema";
@@ -83,13 +83,25 @@ export default app
   .put("/:id", async (c) => {
     return c.json({ message: "update blog" });
   })
-  .delete("/:id", async (c) => {
+  .delete("/:id", authMiddleware, async (c) => {
+    const role = c.get("role");
+
+    if (role === "user") {
+      return c.json({ error: "شما دسترسی برای این عملیات را ندارید" }, 401);
+    }
+
     try {
       const blogId = Number(c.req.param("id"));
       if (typeof blogId !== "number")
         return c.json({ error: "آیدی بلاگ برای حذف بلاگ صحیح نیست" }, 403);
 
-      // delete blog
+      // delete blog and related files to it
+      // s3
+      s3.deleteFolderFromAws(`blogs/${blogId}`)
+        .then(() => console.log("delete was succesfull"))
+        .catch((err) => console.log(err));
+
+      // db
       await db.delete(blogTable).where(eq(blogTable.id, blogId)).execute();
 
       return c.json({ message: "بلاگ با موفقیت حذف شد" });
@@ -122,7 +134,6 @@ export default app
 
         return c.json({
           message: "ایجاد بلاگ موفق بود",
-
           blogId: blog.id,
         });
       } catch (error) {

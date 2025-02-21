@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/lib/rpc";
 import { InferRequestType, InferResponseType } from "hono/client";
 import { useRouter } from "next/navigation";
@@ -8,6 +8,7 @@ type ApiRequest = InferRequestType<PostType>["json"];
 type ApiResponse = InferResponseType<PostType>;
 export const useCreateBlogInstance = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { mutate, status } = useMutation<ApiResponse, Error, ApiRequest>({
     mutationFn: async (req) => {
       const response = await client.api.blogs.create.$post({ json: req });
@@ -21,6 +22,7 @@ export const useCreateBlogInstance = () => {
     },
     onSuccess: (data) => {
       if ("blogId" in data) {
+        queryClient.invalidateQueries({ queryKey: ["blogs"] });
         router.push(`/dashboard/admin/blogs/${data.blogId}`);
       }
     },

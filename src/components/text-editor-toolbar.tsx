@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useDropzone } from "react-dropzone";
 import { Editor } from "@tiptap/react";
 
@@ -49,7 +49,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Input } from "./ui/input";
 import { uploadFileToAws } from "@/actions/s3.action";
 import { toast } from "@/lib/toast";
-import { awsFolderNames } from "@/lib/s3";
+import { TextEditorContext } from "./text-editor";
 
 export type ToolbarProps = {
   className?: string;
@@ -367,7 +367,7 @@ type ImageInputPopoverProps = {
 function ImageInputPopover({ children, handleUpload }: ImageInputPopoverProps) {
   const [open, setOpen] = React.useState(false);
   const [isUploading, setIsUploading] = React.useState(false);
-
+  const { imageS3Path } = useContext(TextEditorContext);
   const { acceptedFiles, getRootProps, getInputProps, isDragReject } =
     useDropzone({
       accept: {
@@ -383,10 +383,7 @@ function ImageInputPopover({ children, handleUpload }: ImageInputPopoverProps) {
       try {
         setIsUploading(true);
 
-        const url = await uploadFileToAws(
-          acceptedFiles[0],
-          awsFolderNames.blogs.content
-        );
+        const url = await uploadFileToAws(acceptedFiles[0], imageS3Path);
 
         setIsUploading(false);
         handleUpload(url);

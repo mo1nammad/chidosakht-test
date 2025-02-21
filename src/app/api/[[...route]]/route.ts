@@ -13,7 +13,14 @@ const app = new Hono().basePath("/api");
 
 // router
 const router = app
-  .use("/*", cors())
+  .use(
+    "/*",
+    cors({
+      allowMethods: ["GET", "POST", "DELETE", "PUT"],
+      origin: ["http://localhost:3000", "https://chidosakht-test.vercel.app"],
+      credentials: true,
+    })
+  )
   .route("/auth", SignUp)
   .route("/auth", Login)
   .route("/auth", Otp)
@@ -21,4 +28,7 @@ const router = app
   .route("/", blog);
 export const GET = handle(router);
 export const POST = handle(router);
+export const PUT = handle(router);
+export const DELETE = handle(router);
+
 export type AppType = typeof router;

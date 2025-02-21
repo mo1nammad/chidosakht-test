@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import Image from "next/image";
 import { UploadCloud } from "lucide-react";
 import { useDropzone } from "react-dropzone";
@@ -21,7 +22,7 @@ export default function ThumbnailDropzone({
 }: Props) {
   const [src, setSrc] = useState(value ?? "");
   const [isUploading, setIsUploading] = useState(false);
-
+  const { blogId } = useParams();
   const { getInputProps, acceptedFiles, getRootProps } = useDropzone({
     accept: {
       "image/png": [".png", ".jpg", ".jpeg", ".webp"],
@@ -32,12 +33,14 @@ export default function ThumbnailDropzone({
 
   useEffect(() => {
     const onUpload = async () => {
+      if (typeof blogId !== "string") return;
+
       try {
         setSrc("");
         setIsUploading(true);
         const url = await uploadFileToAws(
           acceptedFiles[0],
-          awsFolderNames.blogs.thumbnails
+          awsFolderNames(blogId).blogs.thumbnails
         );
         setIsUploading(false);
         setSrc(url);
@@ -51,7 +54,7 @@ export default function ThumbnailDropzone({
     if (acceptedFiles[0]) {
       onUpload();
     }
-  }, [acceptedFiles]);
+  }, [acceptedFiles, blogId]);
 
   useEffect(() => {
     if (onChange) {

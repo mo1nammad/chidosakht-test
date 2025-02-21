@@ -6,6 +6,8 @@ import {
   GetObjectCommand,
   DeleteObjectCommand,
   PutObjectRequest,
+  ListObjectsV2Command,
+  // DeleteObjectsCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -30,14 +32,16 @@ export const getObjectUrl = async (key: string) => {
   return `${domain}/${BUCKET_NAME}/${key}`;
 };
 
-export const awsFolderNames = {
-  blogs: {
-    // TODO add (id) of blogs to addresses
-    thumbnails: "blogs/thumbnails",
-    content: "blogs/content",
-  },
-};
+export const awsFolderNames = (clusterId?: string) => {
+  const clusterPath = clusterId ? `/${clusterId}` : "";
 
+  return {
+    blogs: {
+      thumbnails: `blogs${clusterPath}/thumbnails`,
+      content: `blogs${clusterPath}/content`,
+    },
+  };
+};
 export const UploadFileToAws = async (file: File, filePath: string) => {
   try {
     const arrayBuffer = await file.arrayBuffer();
@@ -98,7 +102,7 @@ export const getFileUrlFromAws = async (key: string, expire?: number) => {
     }
 
     const command = new GetObjectCommand({
-      Bucket: process.env.AWS_BUCKET_NAME!, // Specify the AWS S3 bucket name
+      Bucket: BUCKET_NAME, // Specify the AWS S3 bucket name
       Key: key, // Specify the file name
     });
 
@@ -119,12 +123,61 @@ export const deleteFileFromAws = async (key: string) => {
   try {
     // Configure the parameters for the S3 upload
     const uploadParams = {
-      Bucket: process.env.AWS_BUCKET_NAME!,
+      Bucket: BUCKET_NAME,
       Key: key,
     };
 
     // Upload the file to S3
     await s3Client.send(new DeleteObjectCommand(uploadParams));
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const deleteFolderFromAws = async (folderpath: string) => {
+  if (!folderpath.endsWith("/")) {
+    folderpath += "/"; // Ensure it's treated as a folder
+  }
+
+  const Bucket = BUCKET_NAME;
+
+  try {
+    // Step 1: List all objects in the folder
+    const listCommand = new ListObjectsV2Command({
+      Bucket,
+      Prefix: folderpath, // Folder prefix
+    });
+
+    const listedObjects = await s3Client.send(listCommand);
+
+    if (!listedObjects.Contents || listedObjects.Contents.length === 0) {
+      console.log("Folder is already empty or does not exist.");
+      return;
+    }
+    const objectsToDelete = listedObjects.Contents.map((obj) => ({
+      Key: obj.Key,
+    }));
+
+    console.log(objectsToDelete);
+
+    objectsToDelete.forEach((object) => {
+      if (object.Key) {
+        deleteFileFromAws(object.Key);
+      }
+    });
+
+    /* this solution has issue */
+    // const deleteCommand = new DeleteObjectsCommand({
+    //   Bucket,
+    //   Delete: {
+    //     Objects: objectsToDelete,
+    //   },
+    // });
+
+    // await s3Client.send(deleteCommand,{});
+
+    console.log(`Folder '${folderpath}' and its contents have been deleted.`);
   } catch (error) {
     console.log(error);
     throw error;

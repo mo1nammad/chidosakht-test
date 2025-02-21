@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext } from "react";
 import { useEditor, EditorContent, EditorContentProps } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
@@ -18,8 +18,12 @@ type Props = {
   value?: string;
   onChange: (content: string) => void;
   onBlur: () => void;
+  imageS3Path: string;
 };
 
+export const TextEditorContext = createContext<{ imageS3Path: string }>({
+  imageS3Path: "",
+});
 export default function TextEditor({
   className,
   tipTap,
@@ -27,6 +31,7 @@ export default function TextEditor({
   onBlur,
   value,
   onChange,
+  imageS3Path,
 }: Props) {
   const editor = useEditor({
     content: value,
@@ -53,11 +58,14 @@ export default function TextEditor({
       },
     },
   });
+
   return (
-    <div className={cn("space-y-2.5 focus-visible:ring-0", className)}>
-      <Toolbar {...toolbar} editor={editor} />
-      <Tiptap {...tipTap} editor={editor} />
-    </div>
+    <TextEditorContext value={{ imageS3Path }}>
+      <div className={cn("space-y-2.5 focus-visible:ring-0", className)}>
+        <Toolbar {...toolbar} editor={editor} />
+        <Tiptap {...tipTap} editor={editor} />
+      </div>
+    </TextEditorContext>
   );
 }
 

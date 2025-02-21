@@ -1,5 +1,6 @@
 "use client";
-
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 // form
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +25,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import TextEditor from "@/components/text-editor";
 import { Button } from "@/components/ui/button";
 import { useBlogData } from "../api/use-blog-data";
+import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "@/lib/toast";
+import { awsFolderNames } from "@/lib/s3";
 
 type Props = {
   className?: string;
@@ -31,8 +35,18 @@ type Props = {
 };
 
 export default function BlogForm({ className, blogId }: Props) {
-  const { data } = useBlogData({ id: blogId });
+  // get default values from server
+  const { data, status } = useBlogData({ id: blogId });
+  const router = useRouter();
 
+  useEffect(() => {
+    if ((status === "success" && data === undefined) || status === "error") {
+      toast.error("مشکلی پیش آمده است");
+      router.back();
+    }
+  }, [status, router, data]);
+
+  // form
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(editBlogFormSchema),
     values: {
@@ -48,6 +62,22 @@ export default function BlogForm({ className, blogId }: Props) {
   const submitHandler = (values: FormSchemaType) => {
     console.log(values);
   };
+
+  // show skeletons while pending data
+  if (status === "pending") {
+    return (
+      <div className="flex flex-col sm:flex-row justify-between w-full gap-x-6 mt-9">
+        <Skeleton className="w-full h-60" />
+        <div className="w-full space-y-5">
+          <Skeleton className="w-full h-11" />
+          <Skeleton className="w-full h-11" />
+          <Skeleton className="w-full h-11" />
+          <Skeleton className="w-full h-11" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <Form {...form}>
       <form
@@ -178,6 +208,7 @@ export default function BlogForm({ className, blogId }: Props) {
                     className:
                       "sticky top-18 z-50 bg-muted/60 backdrop-blur-2xl bg-op pt-4",
                   }}
+                  imageS3Path={awsFolderNames(blogId).blogs.content}
                   {...field}
                 />
               </FormControl>
