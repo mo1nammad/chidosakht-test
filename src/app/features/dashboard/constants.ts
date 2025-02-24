@@ -5,6 +5,7 @@ import {
   ShoppingBag,
   BookText,
   LucideIcon,
+  PackageOpen,
 } from "lucide-react";
 
 type Route = {
@@ -50,6 +51,17 @@ export const adminNavData: Route[] = [
       {
         title: "مطلب",
         url: "/dashboard/admin/blogs/*",
+      },
+    ],
+  },
+  {
+    title: "مدیریت محصولات",
+    icon: PackageOpen,
+    url: "/dashboard/admin/products",
+    subRoutes: [
+      {
+        title: "محصول",
+        url: "/dashboard/admin/products/*",
       },
     ],
   },

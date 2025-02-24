@@ -1,7 +1,7 @@
 import React from "react";
 
-import { BlogsTable } from "@/app/features/dashboard/admin/components/blogs-table";
-import { CreateBlogDrawerDialog } from "@/app/features/dashboard/admin/components/create-blog-drawer-dialog";
+import { BlogsTable } from "@/app/features/dashboard/admin/blogs/components/blogs-table";
+import { CreateBlogDrawerDialog } from "@/app/features/dashboard/admin/blogs/components/create-blog-drawer-dialog";
 
 export default async function ManageBlogsPage() {
   // const response = await getAllBlogs();

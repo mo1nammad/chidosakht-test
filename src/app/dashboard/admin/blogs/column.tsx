@@ -20,7 +20,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { useDeleteBlog } from "@/app/features/dashboard/admin/api/use-delete-blog";
+import { useDeleteBlog } from "@/app/features/dashboard/admin/blogs/api/use-delete-blog";
 
 const Action = ({ blogId }: { blogId: number }) => {
   const [open, setOpen] = useState(false);

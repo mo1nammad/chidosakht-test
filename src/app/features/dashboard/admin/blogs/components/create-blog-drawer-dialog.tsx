@@ -25,9 +25,21 @@ import CreateBlog from "./create-blog";
 
 export function CreateBlogDrawerDialog() {
   const [open, setOpen] = React.useState(false);
+
+  const [isClient, setIsClient] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const isDesktop = useMediaQuery({
     query: "(min-width: 768px)",
   });
+
+  if (!isClient) {
+    // Render nothing until mounted on client
+    return null;
+  }
 
   if (isDesktop) {
     return (

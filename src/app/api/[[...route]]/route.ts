@@ -5,7 +5,7 @@ import { SignUp } from "@/app/features/auth/server/sign-up";
 import Login from "@/app/features/auth/server/login";
 import Otp from "@/app/features/auth/server/otp";
 import User from "@/app/features/auth/server/user";
-import blog from "@/app/features/dashboard/admin/server/blog";
+import blog from "@/app/features/dashboard/admin/blogs/server/blog";
 
 // export const runtime = "edge";
 

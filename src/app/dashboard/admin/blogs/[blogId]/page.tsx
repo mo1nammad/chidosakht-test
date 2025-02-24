@@ -1,6 +1,6 @@
 import React from "react";
 
-import BlogForm from "@/app/features/dashboard/admin/components/blog-form";
+import BlogForm from "@/app/features/dashboard/admin/blogs/components/blog-form";
 import { getSession } from "@/app/features/auth/server/actions";
 import { redirect } from "next/navigation";
 
