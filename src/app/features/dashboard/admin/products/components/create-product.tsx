@@ -1,13 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
-// import { Loader } from "lucide-react";
+import { useShallow } from "zustand/react/shallow";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 z.setErrorMap(customErrorMap);
 
-import { useStore } from "../store/product";
+import { useProductStore } from "../store/product";
 import { customErrorMap } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
@@ -26,8 +26,12 @@ const createProductInstanceSchema = z.object({
 type FormValuesSchema = z.infer<typeof createProductInstanceSchema>;
 
 const CreateProduct = () => {
-  const addProduct = useStore((state) => state.addProduct);
-  const products = useStore((state) => state.products);
+  const { getLength, addProduct } = useProductStore(
+    useShallow((state) => ({
+      addProduct: state.addProduct,
+      getLength: state.getLength,
+    }))
+  );
 
   const router = useRouter();
 
@@ -38,7 +42,8 @@ const CreateProduct = () => {
     },
   });
   const handleSubmit = (val: FormValuesSchema) => {
-    const newId = products.length;
+    const newId = getLength();
+    // create new product instance
     addProduct({ id: newId, title: val.title });
     router.push(`/dashboard/admin/products/${newId}`);
   };
