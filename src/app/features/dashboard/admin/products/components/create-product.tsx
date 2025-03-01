@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 z.setErrorMap(customErrorMap);
 
-import { useProductStore } from "../store/product";
+import { useProductsStore } from "../store/product";
 import { customErrorMap } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
@@ -26,7 +26,7 @@ const createProductInstanceSchema = z.object({
 type FormValuesSchema = z.infer<typeof createProductInstanceSchema>;
 
 const CreateProduct = () => {
-  const { getLength, addProduct } = useProductStore(
+  const { getLength, addProduct } = useProductsStore(
     useShallow((state) => ({
       addProduct: state.addProduct,
       getLength: state.getLength,
@@ -44,7 +44,13 @@ const CreateProduct = () => {
   const handleSubmit = (val: FormValuesSchema) => {
     const newId = getLength();
     // create new product instance
-    addProduct({ id: newId, title: val.title });
+    addProduct({
+      id: newId,
+      title: val.title,
+      description: "",
+      gallery: [],
+      galleryAlt: "",
+    });
     router.push(`/dashboard/admin/products/${newId}`);
   };
 

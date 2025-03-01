@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface Product {
+export interface Product {
   id: number;
   title: string;
   // additionals
@@ -22,14 +22,23 @@ type State = {
 type Actions = {
   addProduct: (newProduct: Product) => void;
   getProduct: (productId: number) => Product | undefined;
+  updateProduct: (productId: number, newProduct: Product) => void;
   getLength: () => number;
 };
 
-export const useProductStore = create<State & Actions>((set, get) => ({
+export const useProductsStore = create<State & Actions>((set, get) => ({
   products: [],
   getLength: () => get().products.length,
   getProduct: (productId: number) =>
     get().products.find((product) => product.id === productId),
   addProduct: (newProduct: Product) =>
     set((state) => ({ products: [...state.products, newProduct] })),
+
+  updateProduct: (productId, newProduct) => {
+    set((state) => ({
+      products: state.products.map((product) =>
+        product.id === productId ? newProduct : product
+      ),
+    }));
+  },
 }));
