@@ -5,22 +5,17 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
-import VariantModification from "./variant-modification";
+import VariantModification from "./variant-modifications";
 
-import { Variant, VariantType } from "../types";
+import { VariantType } from "../types";
+import { useVariantsStore } from "../store/variants";
 
 export default function ProductVariants() {
+  // store
+  const createVariant = useVariantsStore((state) => state.addVariant);
+
   const [selectType, setSelectType] = useState<VariantType>("select");
   const [label, setLabel] = useState("");
-  const [variants, setVariants] = useState<Variant[]>([]);
-
-  const handleCreateVariant = () => {
-    if (label === "") return;
-    setVariants((state) => [
-      ...state,
-      { id: state.length, label, type: selectType, options: [] },
-    ]);
-  };
 
   return (
     <div>
@@ -47,7 +42,7 @@ export default function ProductVariants() {
           type="button"
           className="h-8.5"
           variant={"secondary"}
-          onClick={handleCreateVariant}
+          onClick={() => createVariant(label, selectType)}
         >
           اضافه کردن
         </Button>
@@ -55,7 +50,7 @@ export default function ProductVariants() {
 
       {/* modify variants */}
 
-      <VariantModification variants={variants} onChange={setVariants} />
+      <VariantModification />
     </div>
   );
 }

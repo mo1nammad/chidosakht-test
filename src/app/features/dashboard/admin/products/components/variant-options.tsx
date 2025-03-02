@@ -1,4 +1,5 @@
 import React from "react";
+import { Variant } from "../types";
 import {
   Select,
   SelectContent,
@@ -8,14 +9,18 @@ import {
 } from "@/components/ui/select";
 
 type AppProps = {
-  options: { id: number; value: string; label: string }[];
+  options: Variant["options"];
+  value?: string;
+  onChange?: (val: string) => void;
 };
 
-export default function VariantOptions({ options }: AppProps) {
+export default function VariantOptions({ options, onChange, value }: AppProps) {
   if (options.length === 0)
     return <div className="text-sm">هیچ انتخابی وجود ندارد</div>;
+  console.log(options);
+
   return (
-    <Select>
+    <Select value={value} onValueChange={(value) => onChange?.(value)}>
       <SelectTrigger className="w-[180px] bg-background flex-row-reverse">
         <SelectValue placeholder="انتخاب ها" />
       </SelectTrigger>
@@ -23,7 +28,7 @@ export default function VariantOptions({ options }: AppProps) {
         {options.map((option) => (
           <SelectItem
             key={option.id}
-            value={option.value}
+            value={option.id}
             className="flex-row-reverse"
           >
             {option.label}

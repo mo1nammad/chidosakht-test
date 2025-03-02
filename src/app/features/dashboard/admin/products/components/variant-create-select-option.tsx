@@ -17,21 +17,20 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 type AppProps = {
-  defaultValue: string | undefined;
   onUpdate: (value: string) => void;
   open: boolean;
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function VariantModificationInputModal({
-  defaultValue,
+export default function VariantCreateSelectOption({
   onUpdate,
   onOpenChange,
   open,
 }: AppProps) {
-  const [value, setValue] = useState<string | undefined>(defaultValue);
+  const [value, setValue] = useState<string | undefined>("");
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 768px)",
@@ -46,19 +45,23 @@ export default function VariantModificationInputModal({
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="sm:max-w-[425px] gap-y-2.5">
+        <DialogContent className="sm:max-w-[450px] gap-y-2.5">
           <DialogHeader className="mt-6 mb-4">
-            <DialogTitle className="text-right">تغییر نام</DialogTitle>
-            <DialogDescription className="text-right">
-              در این قسمت می توانید نام واریانت ایجاد شده را تغییر دهید
+            <DialogTitle className="text-right">ایجاد یک انتخاب</DialogTitle>
+            <DialogDescription dir="rtl" className="text-right">
+              در این قسمت می توانید یک انتخاب برای واریانت خود ایجاد نمایید.
             </DialogDescription>
           </DialogHeader>
-          <div className="flex flex-row-reverse gap-x-2.5">
-            <Input
-              value={value}
-              onChange={(ev) => setValue(ev.target.value)}
-              className="text-right"
-            />
+          <div className="flex flex-col gap-4">
+            <div className="text-right">
+              <Label>برچسب</Label>
+              <Input
+                value={value}
+                onChange={(ev) => setValue(ev.target.value)}
+                className="text-right"
+              />
+            </div>
+
             <Button onClick={handleUpdate} type="button" className="h-9">
               ثبت
             </Button>
@@ -71,19 +74,23 @@ export default function VariantModificationInputModal({
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="px-4 pb-7">
-        <DrawerHeader className="text-right">
-          <DrawerTitle>تغییر نام</DrawerTitle>
-          <DrawerDescription>
-            در این قسمت می توانید نام واریانت ایجاد شده را تغییر دهید
+        <DrawerHeader className="mt-6 mb-4">
+          <DrawerTitle className="text-right">ایجاد یک انتخاب</DrawerTitle>
+          <DrawerDescription dir="rtl" className="text-right">
+            در این قسمت می توانید یک انتخاب برای واریانت خود ایجاد نمایید.
           </DrawerDescription>
         </DrawerHeader>
         <div className="flex flex-col gap-4">
-          <Input
-            value={value}
-            onChange={(ev) => setValue(ev.target.value)}
-            className="text-right"
-          />
-          <Button onClick={handleUpdate} type="button">
+          <div className="text-right">
+            <Label>برچسب</Label>
+            <Input
+              value={value}
+              onChange={(ev) => setValue(ev.target.value)}
+              className="text-right"
+            />
+          </div>
+
+          <Button onClick={handleUpdate} type="button" className="h-9">
             ثبت
           </Button>
         </div>
