@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { LogIn } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -18,6 +18,7 @@ import { Button, buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 
 export default function ProfileDropdown() {
+  const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
   const { session, isLoading } = useSession();
 
@@ -35,9 +36,14 @@ export default function ProfileDropdown() {
 
   if (isLoading) return null;
   return session ? (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger>
-        <Avatar className="w-12 h-12 cursor-pointer">
+        <Avatar
+          className={cn(
+            "w-12 h-12 cursor-pointer",
+            open && "ring-2 ring-primary"
+          )}
+        >
           <AvatarFallback>{fallback}</AvatarFallback>
           <AvatarImage src="/blank-profile-picture.png" alt="user avatar" />
         </Avatar>

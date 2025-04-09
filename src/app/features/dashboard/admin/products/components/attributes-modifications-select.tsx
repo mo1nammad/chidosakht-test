@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Delete, MoreVertical, Pen, Plus, XCircle } from "lucide-react";
 
-import { useVariantsStore } from "../store/variants";
-import { Variant } from "../types";
+import { useAttributesStore } from "../store/attributes";
+import { Attribute } from "../types";
 
-import VariantOptions from "./variant-options";
+import AttributesOptions from "./attributes-options";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,19 +15,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import VariantModificationInputModal from "./variant-modification-input-modal";
-import VariantCreateSelectOption from "./variant-create-select-option";
+import SimpleInputDrawerDialog from "./simple-input-drawer-dialog";
+
 import { useShallow } from "zustand/react/shallow";
 
-type Props = { variant: Variant };
+type Props = { attribute: Attribute };
 
-export default function VariantModificationsSelect({ variant }: Props) {
+export default function AttributeModificationsSelect({ attribute }: Props) {
   // store
-  const { addOption, deleteVariant, deleteOption, editVariantName } =
-    useVariantsStore(useShallow((state) => ({ ...state })));
+  const { addOption, deleteAttribute, deleteOption, editAttributeName } =
+    useAttributesStore(useShallow((state) => ({ ...state })));
 
   // variant modals states
-  const [openVariantNameModal, setOpenVariantNameModal] = useState(false);
+  const [openAttributeNameModal, setOpenAttributeNameModal] = useState(false);
   const [openCreateOptionModal, setOpenCreateOptionModal] = useState(false);
 
   const [selectedOptionId, setSelectedOptionId] = useState<string | undefined>(
@@ -40,12 +40,12 @@ export default function VariantModificationsSelect({ variant }: Props) {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 100, x: 0 }}
       exit={{ opacity: 0, x: 20 }}
-      key={variant.id}
+      key={attribute.id}
     >
-      <label className="mr-11">{variant.label}</label>
+      <label className="mr-11">{attribute.label}</label>
 
       {/* dropdown */}
-      {variant.type === "select" && (
+      {attribute.type === "select" && (
         <div className="flex flex-row-reverse items-center gap-x-3">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -60,21 +60,21 @@ export default function VariantModificationsSelect({ variant }: Props) {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="text-right min-w-56">
               <DropdownMenuLabel className="font-yekan-semibold">
-                {variant.label}
+                {attribute.label}
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem
-                onClick={() => setOpenVariantNameModal(true)}
+                onClick={() => setOpenAttributeNameModal(true)}
                 className="flex-row-reverse justify-between"
               >
-                <span>تغییر نام واریانت</span>
+                <span>تغییر نام شاخصه</span>
                 <Pen />
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => deleteVariant(variant.id)}
+                onClick={() => deleteAttribute(attribute.id)}
                 className="flex-row-reverse justify-between"
               >
-                <span>حذف واریانت</span>
+                <span>حذف شاخصه</span>
                 <Delete />
               </DropdownMenuItem>
               <DropdownMenuSeparator />
@@ -89,7 +89,7 @@ export default function VariantModificationsSelect({ variant }: Props) {
               <DropdownMenuItem
                 onClick={() => {
                   if (selectedOptionId === undefined) return;
-                  deleteOption(variant.id, selectedOptionId);
+                  deleteOption(attribute.id, selectedOptionId);
                   setSelectedOptionId(undefined);
                 }}
                 disabled={selectedOptionId === undefined}
@@ -101,26 +101,30 @@ export default function VariantModificationsSelect({ variant }: Props) {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <VariantOptions
-            options={variant.options}
+          <AttributesOptions
+            options={attribute.options}
             onChange={setSelectedOptionId}
             value={selectedOptionId}
           />
 
-          {/* edit variant modal */}
-          <VariantModificationInputModal
-            defaultValue={variant.label}
-            onUpdate={(val) => editVariantName(variant.id, val)}
-            open={openVariantNameModal}
-            onOpenChange={setOpenVariantNameModal}
+          {/* edit attribute modal */}
+          <SimpleInputDrawerDialog
+            defaultValue={attribute.label}
+            onUpdate={(val) => editAttributeName(attribute.id, val)}
+            open={openAttributeNameModal}
+            onOpenChange={setOpenAttributeNameModal}
+            title="تغییر نام"
+            description="در این قسمت شما می توانید نام شاخصه ایجاد شده را تغییر دهید"
           />
 
           {/* create-select-option modal  */}
 
-          <VariantCreateSelectOption
-            onUpdate={(val) => addOption(variant.id, val)}
+          <SimpleInputDrawerDialog
+            onUpdate={(val) => addOption(attribute.id, val)}
             open={openCreateOptionModal}
             onOpenChange={setOpenCreateOptionModal}
+            title="ایجاد یک انتخاب"
+            description="در این قسمت شما می توانید یک انتخاب برای شاخصه خود ایجاد کنید"
           />
         </div>
       )}

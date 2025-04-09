@@ -1,25 +1,24 @@
 import React, { useState } from "react";
 
-import ProductVariantsSelect from "./product-variants-select";
+import ProductAttributeSelect from "./product-attributes-select";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
-import VariantModification from "./variant-modifications";
+import AttributeModification from "./attributes-modifications";
 
-import { VariantType } from "../types";
-import { useVariantsStore } from "../store/variants";
+import { AttributeType } from "../types";
+import { useAttributesStore } from "../store/attributes";
 
-export default function ProductVariants() {
+export default function ProductAttributes() {
   // store
-  const createVariant = useVariantsStore((state) => state.addVariant);
+  const createAttribute = useAttributesStore((state) => state.addAttribute);
 
-  const [selectType, setSelectType] = useState<VariantType>("select");
+  const [selectType, setSelectType] = useState<AttributeType>("select");
   const [label, setLabel] = useState("");
 
   return (
     <div>
-      <h5 className="text-2xl font-yekan-semibold">ایجاد واریانت</h5>
       <div className="flex flex-row-reverse mt-5 gap-x-4 items-end">
         <div>
           <Label htmlFor="tag">برچسب</Label>
@@ -32,7 +31,7 @@ export default function ProductVariants() {
         </div>
         <div>
           <Label>نوع</Label>
-          <ProductVariantsSelect
+          <ProductAttributeSelect
             value={selectType}
             onChange={(val) => setSelectType(val)}
           />
@@ -42,15 +41,23 @@ export default function ProductVariants() {
           type="button"
           className="h-8.5"
           variant={"secondary"}
-          onClick={() => createVariant(label, selectType)}
+          onClick={() => {
+            if (!label) return;
+            createAttribute(label, selectType);
+          }}
+          disabled={!label}
         >
           اضافه کردن
         </Button>
       </div>
 
-      {/* modify variants */}
+      {/* modify Attribute */}
 
-      <VariantModification />
+      <AttributeModification />
+
+      <p className="text-sm bg-amber-300 w-fit mt-4 ml-auto mb-4">
+        بعد از ثبت شاخصه ها و فرم مربوط به محصولات وارد قسمت قیمت گذاری شوید
+      </p>
     </div>
   );
 }

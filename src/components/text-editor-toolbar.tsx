@@ -171,8 +171,7 @@ export const Toolbar = ({ className, editor, opt }: ToolbarProps) => {
                     </Toggle>
                     <Toggle
                       onClick={() => {
-                        const x = editor.commands.setTextDirection("rtl");
-                        console.log(x);
+                        editor.commands.setTextDirection("rtl");
                       }}
                       pressed={editor.isActive({ TextDirection: "rtl" })}
                     >

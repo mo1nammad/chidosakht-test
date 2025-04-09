@@ -19,19 +19,23 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 type AppProps = {
-  defaultValue: string | undefined;
+  defaultValue?: string;
   onUpdate: (value: string) => void;
-  open: boolean;
-  onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
+  open?: boolean;
+  onOpenChange?: React.Dispatch<React.SetStateAction<boolean>>;
+  title: string;
+  description: string;
 };
 
-export default function VariantModificationInputModal({
+export default function SimpleInputDrawerDialog({
   defaultValue,
   onUpdate,
   onOpenChange,
   open,
+  description,
+  title,
 }: AppProps) {
-  const [value, setValue] = useState<string | undefined>(defaultValue);
+  const [value, setValue] = useState<string>(defaultValue ?? "");
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 768px)",
@@ -40,7 +44,9 @@ export default function VariantModificationInputModal({
   const handleUpdate = () => {
     if (!value) return;
     onUpdate(value);
-    onOpenChange(false);
+    if (onOpenChange) {
+      onOpenChange(false);
+    }
   };
 
   if (isDesktop) {
@@ -48,12 +54,12 @@ export default function VariantModificationInputModal({
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="sm:max-w-[425px] gap-y-2.5">
           <DialogHeader className="mt-6 mb-4">
-            <DialogTitle className="text-right">تغییر نام</DialogTitle>
+            <DialogTitle className="text-right">{title}</DialogTitle>
             <DialogDescription className="text-right">
-              در این قسمت می توانید نام واریانت ایجاد شده را تغییر دهید
+              {description}
             </DialogDescription>
           </DialogHeader>
-          <div className="flex flex-row-reverse gap-x-2.5">
+          <div className="flex flex-col gap-y-2.5">
             <Input
               value={value}
               onChange={(ev) => setValue(ev.target.value)}
@@ -72,10 +78,8 @@ export default function VariantModificationInputModal({
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="px-4 pb-7">
         <DrawerHeader className="text-right">
-          <DrawerTitle>تغییر نام</DrawerTitle>
-          <DrawerDescription>
-            در این قسمت می توانید نام واریانت ایجاد شده را تغییر دهید
-          </DrawerDescription>
+          <DrawerTitle>{title}</DrawerTitle>
+          <DrawerDescription>{description}</DrawerDescription>
         </DrawerHeader>
         <div className="flex flex-col gap-4">
           <Input

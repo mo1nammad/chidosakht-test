@@ -24,6 +24,7 @@ export const CarouselBullets = ({
       {count > 1 &&
         bulletArray.map((_, index) => (
           <button
+            type="button"
             key={index}
             className={cn(
               "size-1.5 bg-[#DBD3D3] ml-1 inline-block rounded-full transition-[width] duration-300 cursor-pointer",

@@ -1,19 +1,5 @@
 import { create } from "zustand";
-
-export interface Product {
-  id: number;
-  title: string;
-  // additionals
-  description: string | undefined;
-  gallery:
-    | {
-        id: number;
-        url: string;
-      }[]
-    | undefined;
-
-  galleryAlt: string | undefined;
-}
+import { Product } from "../types";
 
 type State = {
   products: Product[];
@@ -24,6 +10,9 @@ type Actions = {
   getProduct: (productId: number) => Product | undefined;
   updateProduct: (productId: number, newProduct: Product) => void;
   getLength: () => number;
+  updateProductV2: (
+    dispatch: (state: State & Actions) => Partial<State & Actions>
+  ) => void;
 };
 
 export const useProductsStore = create<State & Actions>((set, get) => ({
@@ -31,7 +20,7 @@ export const useProductsStore = create<State & Actions>((set, get) => ({
   getLength: () => get().products.length,
   getProduct: (productId: number) =>
     get().products.find((product) => product.id === productId),
-  addProduct: (newProduct: Product) =>
+  addProduct: (newProduct) =>
     set((state) => ({ products: [...state.products, newProduct] })),
 
   updateProduct: (productId, newProduct) => {
@@ -40,5 +29,8 @@ export const useProductsStore = create<State & Actions>((set, get) => ({
         product.id === productId ? newProduct : product
       ),
     }));
+  },
+  updateProductV2(dispatch) {
+    set((state) => dispatch(state));
   },
 }));

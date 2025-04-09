@@ -6,28 +6,43 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
+type CustomInputProps = Omit<React.ComponentProps<"input">, "size"> & {
+  size?: "default" | "sm";
+};
+
 export const ProductCustomInput = ({
   className,
+  size = "default",
   ...props
-}: React.ComponentProps<"input">) => {
+}: CustomInputProps) => {
   const [show, setShow] = React.useState(false);
 
   return (
-    <div className="relative hover:bg-gray-100">
+    <div className="relative hover:bg-gray-100 w-full">
       <div
         onDoubleClick={() => setShow(true)}
-        className={cn("rounded-sm px-1.5 py-3", show && "hidden")}
+        className={cn(
+          "rounded-sm px-1.5 py-3 text-2xl grow",
+          show && "hidden",
+          size === "sm" && "py-2.5 text-xs"
+        )}
       >
         {props.value ? (
-          <span className="pr-13 text-2xl">{props.value}</span>
+          <span className={cn("pr-13", size === "sm" && "pr-8")}>
+            {props.value}
+          </span>
         ) : (
           <span className="pr-13 text-sm">هیچ متنی وجود ندارد </span>
         )}
       </div>
       <Input
         className={cn(
-          "text-right hidden px-1.5 pr-13 h-14 text-base",
+          "text-right hidden px-1.5 w-full",
           show && "block",
+          {
+            "h-8 text-xs pr-9": size === "sm",
+            "h-14 text-base pr-13": size === "default",
+          },
           className
         )}
         {...props}
@@ -37,12 +52,25 @@ export const ProductCustomInput = ({
         size="icon"
         variant="secondary"
         onClick={() => setShow((state) => !state)}
-        className="absolute right-0 top-2 cursor-pointer mr-2.5"
+        className={cn(
+          "absolute right-0 top-2 cursor-pointer mr-2.5",
+          size === "sm" && "size-6 top-1 mr-1.5"
+        )}
       >
         {show ? (
-          <Check className="size-6 text-muted-foreground hover:text-primary transition" />
+          <Check
+            className={cn(
+              "size-6 text-muted-foreground hover:text-primary transition",
+              size === "sm" && "!size-3.5"
+            )}
+          />
         ) : (
-          <Edit className="size-6 text-muted-foreground hover:text-primary transition" />
+          <Edit
+            className={cn(
+              "size-6 text-muted-foreground hover:text-primary transition",
+              size === "sm" && "!size-3.5"
+            )}
+          />
         )}
       </Button>
     </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Variant } from "../types";
+import { Attribute } from "../types";
 import {
   Select,
   SelectContent,
@@ -9,19 +9,31 @@ import {
 } from "@/components/ui/select";
 
 type AppProps = {
-  options: Variant["options"];
+  options: Attribute["options"];
   value?: string;
   onChange?: (val: string) => void;
+  disabled?: boolean;
 };
 
-export default function VariantOptions({ options, onChange, value }: AppProps) {
+export default function AttributeOptions({
+  options,
+  onChange,
+  value,
+  disabled,
+}: AppProps) {
   if (options.length === 0)
-    return <div className="text-sm">هیچ انتخابی وجود ندارد</div>;
-  console.log(options);
+    return (
+      <div className="text-xs text-muted-foreground mt-1.5">
+        هیچ انتخابی وجود ندارد
+      </div>
+    );
 
   return (
     <Select value={value} onValueChange={(value) => onChange?.(value)}>
-      <SelectTrigger className="w-[180px] bg-background flex-row-reverse">
+      <SelectTrigger
+        className="w-[180px] bg-background flex-row-reverse"
+        disabled={disabled}
+      >
         <SelectValue placeholder="انتخاب ها" />
       </SelectTrigger>
       <SelectContent>

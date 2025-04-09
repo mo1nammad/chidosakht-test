@@ -44,13 +44,13 @@ const ProductGalleryCarousel = ({ imageList, alt }: AppProps) => {
 
   if (imageList.length === 0)
     return (
-      <div className="bg-background rounded-md mt-3.5 border w-full h-32 grid place-content-center text-muted-foreground">
+      <div className="bg-background rounded-md mt-3.5 border w-full h-32 my-4 grid place-content-center text-muted-foreground">
         هیچ عکسی موجود نیست
       </div>
     );
 
   return (
-    <div className="bg-muted p-3 rounded-[30px] max-w-[1210px] mx-auto">
+    <div className="bg-background p-3 mx-auto my-4 rounded-[30px] max-w-[1210px] ">
       <Carousel setApi={setApi}>
         <CarouselContent>
           {imageList.map((image) => {

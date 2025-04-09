@@ -2,13 +2,14 @@
 import { useRouter } from "next/navigation";
 import { useShallow } from "zustand/react/shallow";
 
+import { useProductsStore } from "../store/product";
+import { useAttributesStore } from "../store/attributes";
+import { customErrorMap } from "@/lib/utils";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 z.setErrorMap(customErrorMap);
-
-import { useProductsStore } from "../store/product";
-import { customErrorMap } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,13 +26,15 @@ const createProductInstanceSchema = z.object({
 });
 type FormValuesSchema = z.infer<typeof createProductInstanceSchema>;
 
-const CreateProduct = () => {
+export default function CreateProduct() {
+  // store
   const { getLength, addProduct } = useProductsStore(
     useShallow((state) => ({
       addProduct: state.addProduct,
       getLength: state.getLength,
     }))
   );
+  const resetAttributeState = useAttributesStore((state) => state.reset);
 
   const router = useRouter();
 
@@ -44,12 +47,11 @@ const CreateProduct = () => {
   const handleSubmit = (val: FormValuesSchema) => {
     const newId = getLength();
     // create new product instance
+    resetAttributeState();
     addProduct({
       id: newId,
       title: val.title,
-      description: "",
-      gallery: [],
-      galleryAlt: "",
+      isPublished: false,
     });
     router.push(`/dashboard/admin/products/${newId}`);
   };
@@ -78,11 +80,9 @@ const CreateProduct = () => {
           ) : (
             "ایجاد مطلب"
           )} */}
-          ایجاد مطلب
+          ایجاد محصول
         </Button>
       </form>
     </Form>
   );
-};
-
-export default CreateProduct;
+}

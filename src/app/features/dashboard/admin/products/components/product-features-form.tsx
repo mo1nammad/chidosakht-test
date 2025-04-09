@@ -22,13 +22,14 @@ import {
 } from "./product-custom-input";
 import ProductGalleryDropzone from "./product-gallery-dropzone";
 import ProductGalleryCarousel from "./product-gallery-carousel";
-import ProductVariants from "./product-variants";
-// import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/lib/toast";
 
 const formSchema = z.object({
   id: z.number().min(0),
   title: z.string().min(1).max(256),
   description: z.string().min(1).max(256),
+  isPublished: z.boolean().default(false),
   gallery: z
     .array(
       z.object({
@@ -38,6 +39,7 @@ const formSchema = z.object({
     )
     .nonempty("حداقل یک عکس آپلود کنید"),
   galleryAlt: z.string().max(32),
+  uniqeUrl: z.string().max(128),
 });
 type FormSchema = z.infer<typeof formSchema>;
 
@@ -60,15 +62,37 @@ export default function ProductFeaturesForm({ productId }: AppProps) {
       title: product?.title,
       description: product?.description,
       gallery: product?.gallery ?? [],
-      galleryAlt: product?.galleryAlt,
+      galleryAlt: product?.galleryAlt ?? "",
+      isPublished: product?.isPublished,
+      uniqeUrl: product?.uniqeUrl ?? "",
     },
   });
 
-  const handleSubmit = (val: FormSchema) => updateProduct(+productId, val);
+  const handleSubmit = (val: FormSchema) => {
+    updateProduct(+productId, {
+      ...product,
+      ...val,
+    });
+
+    toast.success("ثبت اطلاعات با موفقیت انجام شد");
+  };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="text-right">
+        <FormField
+          control={form.control}
+          name="uniqeUrl"
+          render={({ field }) => (
+            <FormItem className="mb-4">
+              <FormLabel className="text-sm">پیوند یکتا</FormLabel>
+              <FormControl>
+                <ProductCustomInput {...field} size="sm" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="title"
@@ -114,13 +138,16 @@ export default function ProductFeaturesForm({ productId }: AppProps) {
             control={form.control}
             name="galleryAlt"
             render={({ field }) => (
-              <FormItem className="flex flex-row-reverse items-center w-85">
-                <FormLabel className="text-sm mb-0">
-                  نام جایگزین گالری
-                </FormLabel>
-                <FormControl>
-                  <ProductCustomInput {...field} />
-                </FormControl>
+              <FormItem>
+                <div className="flex flex-row-reverse items-center min-w-86">
+                  <FormLabel className="text-sm mb-0 w-50">
+                    نام جایگزین گالری
+                  </FormLabel>
+                  <FormControl>
+                    <ProductCustomInput {...field} size="sm" />
+                  </FormControl>
+                </div>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -131,8 +158,7 @@ export default function ProductFeaturesForm({ productId }: AppProps) {
           imageList={form.watch("gallery")}
           alt={form.watch("galleryAlt")}
         />
-        <Separator className="my-5" />
-        <ProductVariants />
+        <Button>ثبت اطلاعات</Button>
       </form>
     </Form>
   );

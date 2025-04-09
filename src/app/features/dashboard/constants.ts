@@ -8,6 +8,9 @@ import {
   PackageOpen,
 } from "lucide-react";
 
+import ProductPricingForm from "./admin/products/components/product-pricing-form";
+import ProductAttributes from "./admin/products/components/product-attributes";
+
 type Route = {
   title: string;
   icon: LucideIcon;
@@ -74,8 +77,11 @@ export const generateNavigateUrlList = ({
 }: {
   path: string;
   serachList: Route[] | SubRoute[];
-  result: { url: string; title: string }[];
+  result?: { url: string; title: string }[];
 }): { url: string; title: string }[] => {
+  // to store url that matches with Route URL Scheme
+  let urlReference = "";
+
   // routes searching
   const route = serachList.find((data) => {
     // all exceptions
@@ -83,13 +89,14 @@ export const generateNavigateUrlList = ({
       return path === data.url;
     }
 
-    if (data.url.endsWith("/*")) {
+    if (data.url.match(/.*\/\*$/)) {
       if (path.length >= data.url.length) {
         const sliceIndex = path.lastIndexOf("/");
         const slicedPath = path.slice(0, sliceIndex);
 
         if (data.url.includes(slicedPath)) {
-          data.url = path;
+          // wherever ends with (/*) store entire path in result ---can result in some bugs---
+          urlReference = path;
           return true;
         }
         return false;
@@ -100,14 +107,34 @@ export const generateNavigateUrlList = ({
   });
 
   if (route) {
+    const url = urlReference ? urlReference : route.url;
+
     if (route.subRoutes)
       return generateNavigateUrlList({
         path,
-        result: [...result, { title: route.title, url: route.url }],
+        result: [...result, { title: route.title, url }],
         serachList: route.subRoutes,
       });
-    else return [...result, { title: route.title, url: route.url }];
+    else return [...result, { title: route.title, url }];
   }
 
   return result;
 };
+
+export const createProductAdditonalFormsList = [
+  {
+    title: "قیمت گذاری",
+    query: "pricing",
+    component: ProductPricingForm,
+  },
+  {
+    title: "شاخصه ها",
+    query: "attributes",
+    component: ProductAttributes,
+  },
+  {
+    title: "حمل و نقل",
+    query: "transportation",
+    component: ProductPricingForm,
+  },
+];

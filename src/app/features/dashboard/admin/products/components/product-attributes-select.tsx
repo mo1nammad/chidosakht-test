@@ -12,7 +12,7 @@ type AppProps = {
   onChange: (val: "color" | "select") => void;
 };
 
-export default function ProductVariantsSelect({ onChange, value }: AppProps) {
+export default function ProductAttributesSelect({ onChange, value }: AppProps) {
   return (
     <Select value={value as "color" | "select"} onValueChange={onChange}>
       <SelectTrigger className="w-[180px] bg-background flex-row-reverse">

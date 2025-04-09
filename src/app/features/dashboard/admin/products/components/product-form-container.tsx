@@ -7,10 +7,15 @@ import { useProductsStore } from "../store/product";
 
 import { buttonVariants } from "@/components/ui/button";
 import ProductFeaturesForm from "./product-features-form";
+import ProductAdditionals from "./product-additionals";
 
 type Props = {
   productId: string;
 };
+
+// animation wrapper
+
+// component
 export default function ProductForm({ productId }: Props) {
   // retrieve product logic
   const product = useProductsStore((state) =>
@@ -29,8 +34,14 @@ export default function ProductForm({ productId }: Props) {
   }
 
   return (
-    <div>
+    <div className="text-right">
       <ProductFeaturesForm productId={productId} />
+
+      {/* additional forms */}
+      <div className="overflow-hidden mt-12">
+        <h2 className="text-lg mb-6 font-yekan-semibold">فرم های تکمیلی</h2>
+        <ProductAdditionals />
+      </div>
     </div>
   );
 }
