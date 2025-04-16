@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 
 import { useForm } from "react-hook-form";
@@ -21,22 +22,29 @@ import {
 import { Input } from "@/components/ui/input";
 import { useSignUp } from "../api/use-signup";
 import { Loader } from "lucide-react";
+import PasswordInput from "./password-input";
 
 // component
 export default function SignUpForm() {
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
+      fullName: "",
+      phoneNumber: "",
       email: "",
       password: "",
-      name: "",
-      phone: "",
+      rePassword: "",
     },
   });
 
   const { signUpFn, status } = useSignUp();
 
-  const onSubmit = (values: z.infer<typeof signUpSchema>) => signUpFn(values);
+  const onSubmit = (values: z.infer<typeof signUpSchema>) => {
+    if (values.email === "") {
+      return signUpFn({ ...values, email: null });
+    }
+    signUpFn(values);
+  };
 
   return (
     <div className="max-w-[400px] mx-auto h-full">
@@ -62,7 +70,7 @@ export default function SignUpForm() {
             >
               <FormField
                 control={form.control}
-                name="name"
+                name="fullName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="font-yekan-light">
@@ -80,7 +88,7 @@ export default function SignUpForm() {
               />
               <FormField
                 control={form.control}
-                name="phone"
+                name="phoneNumber"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="font-yekan-light">
@@ -112,8 +120,9 @@ export default function SignUpForm() {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className={"rounded-xl border-border"}
                         {...field}
+                        className={"rounded-xl border-border"}
+                        value={field.value ?? ""}
                       />
                     </FormControl>
                     <FormMessage />
@@ -129,7 +138,7 @@ export default function SignUpForm() {
                       <span className="text-destructive">*</span> گذرواژه
                     </FormLabel>
                     <FormControl>
-                      <Input
+                      <PasswordInput
                         className={"rounded-xl border-border"}
                         {...field}
                       />
@@ -138,7 +147,25 @@ export default function SignUpForm() {
                   </FormItem>
                 )}
               />
-
+              <FormField
+                control={form.control}
+                name="rePassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-yekan-light">
+                      <span className="text-destructive">*</span>
+                      تکرار گذرواژه
+                    </FormLabel>
+                    <FormControl>
+                      <PasswordInput
+                        className={"rounded-xl border-border"}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <Button
                 className="w-full py-6 font-yekan-semibold mt-2 cursor-pointer"
                 disabled={status === "pending"}

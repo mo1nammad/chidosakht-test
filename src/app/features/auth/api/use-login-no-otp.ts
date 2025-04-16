@@ -1,29 +1,40 @@
-import { useMutation } from "@tanstack/react-query";
-import { client } from "@/lib/rpc";
-import { InferRequestType, InferResponseType } from "hono/client";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { z } from "zod";
 
-type PostType = (typeof client.api.auth.login)["$post"];
-type ApiRequest = InferRequestType<PostType>["json"];
-type ApiResponse = InferResponseType<PostType>;
+import axiosInstance from "@/lib/axios";
+import { loginNoOtpSchema } from "../schema";
+import { RefreshTokenApiResponse } from "@/types";
+import { storeRefreshTokenCookie } from "@/lib/cookie";
+import { isAxiosError } from "axios";
+
+type ApiRequest = z.infer<typeof loginNoOtpSchema>;
 
 export const useLoginNoOtp = () => {
   const router = useRouter();
-  const { mutateAsync, status } = useMutation<ApiResponse, Error, ApiRequest>({
-    mutationFn: async (req) => {
-      const response = await client.api.auth.login.$post({
-        json: req,
-      });
-      const data = await response.json();
-      if (!response.ok || "error" in data) {
-        throw new Error(
-          "error" in data ? data.error : "An unknown error occurred"
-        );
+
+  const { mutateAsync, status } = useMutation<undefined, Error, ApiRequest>({
+    mutationFn: async (body) => {
+      try {
+        const response = await axiosInstance.post("/Account/login", {
+          ...body,
+          loginType: 1,
+        });
+
+        const { refreshToken, refreshTokenExpireTime } =
+          response.data as RefreshTokenApiResponse;
+
+        await storeRefreshTokenCookie(refreshToken, refreshTokenExpireTime);
+      } catch (error) {
+        console.log(error);
+
+        if (isAxiosError(error) && error.status && error.status >= 400) {
+          throw new Error(error.message);
+        }
       }
-      return data;
     },
     onSuccess: () => {
-      router.push("/dashboard");
+      router.push("/");
     },
   });
   return { mutateAsync, status };

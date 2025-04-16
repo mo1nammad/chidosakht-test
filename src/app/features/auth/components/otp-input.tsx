@@ -1,7 +1,6 @@
 import React from "react";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 
-import { useProtectOtpRoute } from "@/app/features/auth/hooks/use-handle-otp-route";
 import {
   InputOTP,
   InputOTPGroup,
@@ -25,8 +24,6 @@ export default function OtpInput({
   onValueChange,
   value,
 }: AppProps) {
-  useProtectOtpRoute();
-
   return (
     <>
       {error ? <p className="text-destructive text-center">{error}</p> : null}

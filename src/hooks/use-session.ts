@@ -1,25 +1,22 @@
-import { InferResponseType } from "hono";
+import axiosInstance from "@/lib/axios";
+import { Session } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-
-import { client } from "@/lib/rpc";
-
-type Method = typeof client.api.auth.user.$get;
-type ResponseType = InferResponseType<Method>;
+import { useAuthToken } from "./use-auth-token";
 
 export const useSession = () => {
-  const { data, ...others } = useQuery<ResponseType["session"], Error>({
+  const {
+    hasError: hasFetchTokenError,
+    token,
+    isFetching: isFetchingToken,
+  } = useAuthToken();
+  const isTokenInvalid = !token && hasFetchTokenError;
+
+  const { data: session, ...others } = useQuery<Session>({
     queryKey: ["user-session"],
     queryFn: async () => {
-      const response = await client.api.auth.user.$get();
-      const data = await response.json();
-
-      if (response.ok) {
-        return data.session;
-      }
-
-      throw new Error(
-        "error" in data ? (data.error as string) : "Something went wrong"
-      );
+      const response = await axiosInstance.get("/Profile");
+      const data: Session = await response.data;
+      return data;
     },
     staleTime: 1000 * 60 * 5, // ✅ Cache for 5 minutes (reduce network requests)
     gcTime: 1000 * 60 * 10,
@@ -27,5 +24,19 @@ export const useSession = () => {
     refetchOnWindowFocus: false, // ✅ Avoid unnecessary refetching when switching tabs
     refetchOnReconnect: true, // ✅ Refetch when internet reconnects
   });
-  return { session: data, ...others };
+
+  if (isTokenInvalid) {
+    return { isTokenInvalid };
+  }
+
+  if (others.error) {
+    return undefined;
+  }
+
+  return {
+    session,
+    hasFetchTokenError,
+    isFetchingToken,
+    ...others,
+  };
 };

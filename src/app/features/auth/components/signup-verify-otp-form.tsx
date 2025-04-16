@@ -16,7 +16,7 @@ export default function SignupVerifyOtpForm() {
 
   const handleOtpForm = () => {
     const promise = verifyOtp(
-      { otp: value },
+      { code: value },
       {
         onError: (err) => setError(err.message),
       }
@@ -28,11 +28,7 @@ export default function SignupVerifyOtpForm() {
           <Loader className="animate-spin size-4" />
         </div>
       ),
-      success: (data) => {
-        if ("message" in data) {
-          return data.message;
-        } else return "success";
-      },
+
       error: (err: Error) => err.message,
       position: "top-center",
       className: "flex-row-reverse! gap-x-4!",

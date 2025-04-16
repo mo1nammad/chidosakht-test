@@ -28,7 +28,7 @@ export default function LoginForm() {
   const form = useForm<z.infer<typeof loginNoOtpSchema>>({
     resolver: zodResolver(loginNoOtpSchema),
     defaultValues: {
-      phone: "",
+      phoneNumber: "",
       password: "",
     },
   });
@@ -45,11 +45,7 @@ export default function LoginForm() {
           <Loader className="animate-spin size-4" />
         </div>
       ),
-      success: (data) => {
-        if ("message" in data) {
-          return data.message;
-        } else return "success";
-      },
+      success: () => "ورود با موفقیت انجام شد",
       error: (err: Error) => err.message,
       position: "top-center",
       className: "flex-row-reverse! gap-x-4!",
@@ -80,7 +76,7 @@ export default function LoginForm() {
             >
               <FormField
                 control={form.control}
-                name="phone"
+                name="phoneNumber"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="font-yekan-light">
@@ -132,7 +128,11 @@ export default function LoginForm() {
                   </Link>
                 </Button>
 
-                <Button className="flex-1 mt-2" disabled={status === "pending"}>
+                <Button
+                  className="flex-1 mt-2"
+                  disabled={status === "pending"}
+                  type="submit"
+                >
                   {status === "pending" ? (
                     <Loader className="animate-spin size-4" />
                   ) : (

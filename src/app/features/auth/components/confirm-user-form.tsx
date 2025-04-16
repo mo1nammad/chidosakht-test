@@ -5,12 +5,12 @@ import Link from "next/link";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
 
-import { useVerifyLoginOtp } from "@/app/features/auth/api/use-verify-login-otp";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import OtpInput from "./otp-input";
+import { useConfirmUserAccount } from "../api/use-confirm-user-account";
 
-export default function LoginVerifyOtpForm() {
-  const { verifyOtp } = useVerifyLoginOtp();
+export default function ConfirmUserAccountForm() {
+  const { verifyOtp } = useConfirmUserAccount();
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
 

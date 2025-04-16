@@ -199,6 +199,16 @@ input[type="number"]::-webkit-inner-spin-button {
   appearance: none;
 }
 
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Optional: Edge and others that support 'appearance' */
+input[type="number"] {
+  appearance: textfield;
+}
+
 ::selection {
   @apply bg-secondary text-secondary-foreground;
 }

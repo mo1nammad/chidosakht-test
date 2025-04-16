@@ -1,31 +1,56 @@
-import { useRouter } from "next/navigation";
-import { InferRequestType, InferResponseType } from "hono/client";
+import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
+import { AxiosError, isAxiosError } from "axios";
+import queryString from "query-string";
 
-import { client } from "@/lib/rpc";
+import { usePhoneNumber } from "../store/phone-number";
+import { RefreshTokenApiResponse } from "@/types";
+import { storeAllTokens } from "@/lib/cookie";
+import axiosInstance from "@/lib/axios";
 
-type PostType = (typeof client.api.auth.login)["verify-otp"]["$post"];
-type ApiRequest = InferRequestType<PostType>["json"];
-type ApiResponse = InferResponseType<PostType>;
+type ApiRequest = {
+  code: string;
+};
+type ApiResponse = RefreshTokenApiResponse;
 
 export const useVerifyLoginOtp = () => {
   const router = useRouter();
-  const { mutateAsync } = useMutation<ApiResponse, Error, ApiRequest>({
-    mutationFn: async (req) => {
-      const response = await client.api.auth.login["verify-otp"].$post({
-        json: req,
-      });
-      const data = await response.json();
+  const searchParams = useSearchParams();
+  const phoneNumber = usePhoneNumber((state) => state.phoneNumber);
 
-      if (response.ok || "message" in data) {
-        return data; // Extract JSON data and return
+  useEffect(() => {
+    if (!phoneNumber) router.back();
+  }, []);
+
+  const parsed = queryString.parse(searchParams.toString());
+  const { mutateAsync } = useMutation<ApiResponse, AxiosError, ApiRequest>({
+    mutationFn: async (body) => {
+      try {
+        const response = await axiosInstance(`/Account/${<string>parsed.for}`, {
+          data: {
+            ...body,
+            phoneNumber,
+          },
+          method: <string>parsed.httpMethod,
+        });
+
+        if (response.data satisfies RefreshTokenApiResponse) {
+          return response.data;
+        }
+      } catch (error) {
+        if (isAxiosError(error)) {
+          throw Error(
+            error.response?.data.message
+              ? error.response?.data.message
+              : "مشکلی پیش آمد"
+          );
+        }
       }
-
-      throw new Error(
-        "error" in data ? data.error : "مشکلی پیش آمد دوباره تلاش کنید"
-      );
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      storeAllTokens(data);
+
       router.push("/dashboard");
     },
   });

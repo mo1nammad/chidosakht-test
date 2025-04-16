@@ -1,33 +1,79 @@
-import { useRouter } from "next/navigation";
-import { InferRequestType, InferResponseType } from "hono/client";
+import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+
 import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import queryString from "query-string";
+import { useShallow } from "zustand/react/shallow";
 
-import { client } from "@/lib/rpc";
+import { usePhoneNumber } from "../store/phone-number";
+import { SERVER_API_URL } from "@/constant";
 
-type PostType = (typeof client.api.auth.register)["verify-otp"]["$post"];
-type ApiRequest = InferRequestType<PostType>["json"];
-type ApiResponse = InferResponseType<PostType>;
+import { storeAllTokens } from "@/lib/cookie";
+import { toast } from "@/lib/toast";
+import { RefreshTokenApiResponse } from "@/types";
+
+type ApiRequest = {
+  code: string;
+};
 
 export const useVerifySignupOtp = () => {
   const router = useRouter();
-  const { mutateAsync } = useMutation<ApiResponse, Error, ApiRequest>({
-    mutationFn: async (req) => {
-      const response = await client.api.auth.register["verify-otp"].$post({
-        json: req,
-      });
-      const data = await response.json();
+  const searchParams = useSearchParams();
 
-      if (response.ok || "message" in data) {
-        return data; // Extract JSON data and return
+  const { url, httpMethod } = queryString.parse(
+    searchParams.toString()
+  ) as Record<string, string>;
+
+  const { phoneNumber, setPhoneNumber } = usePhoneNumber(
+    useShallow((state) => ({
+      phoneNumber: state.phoneNumber,
+      setPhoneNumber: state.setPhoneNumber,
+    }))
+  );
+
+  useEffect(() => {
+    if (!phoneNumber) router.push("/sign-up");
+  }, []);
+
+  const { mutateAsync } = useMutation<
+    RefreshTokenApiResponse,
+    Error,
+    ApiRequest
+  >({
+    mutationFn: async (body) => {
+      try {
+        const response = await axios({
+          method: httpMethod ?? "POST",
+          url: url ?? `${SERVER_API_URL}/Account/VerifyPhoneNumber`,
+          data: {
+            ...body,
+            phoneNumber,
+          },
+        });
+
+        // reset state
+        setPhoneNumber("");
+
+        // store refresh and bearer roken
+        if (response.data satisfies RefreshTokenApiResponse) {
+          return response.data;
+        }
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          const message = error.response?.data || "خطا در ثبت نام";
+          throw new Error(message);
+        }
+        throw new Error("خطا در ثبت نام");
       }
-
-      throw new Error(
-        "error" in data ? data.error : "مشکلی پیش آمد دوباره تلاش کنید"
-      );
     },
-    onSuccess: () => {
-      router.push(`/login`);
+    onSuccess: (data) => {
+      storeAllTokens(data);
+
+      toast.success("ثبت نام با موفقیت انجام شد");
+      router.push("/");
     },
   });
+
   return { verifyOtp: mutateAsync };
 };

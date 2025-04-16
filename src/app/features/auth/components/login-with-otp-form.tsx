@@ -27,7 +27,7 @@ export default function LoginForm() {
   const form = useForm<z.infer<typeof loginWithOtpSchema>>({
     resolver: zodResolver(loginWithOtpSchema),
     defaultValues: {
-      phone: "",
+      phoneNumber: "",
     },
   });
 
@@ -53,7 +53,7 @@ export default function LoginForm() {
             >
               <FormField
                 control={form.control}
-                name="phone"
+                name="phoneNumber"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="font-yekan-light">
