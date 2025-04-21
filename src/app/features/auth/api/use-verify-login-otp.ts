@@ -8,6 +8,7 @@ import { usePhoneNumber } from "../store/phone-number";
 import { RefreshTokenApiResponse } from "@/types";
 import { storeAllTokens } from "@/lib/cookie";
 import axiosInstance from "@/lib/axios";
+import { useShallow } from "zustand/react/shallow";
 
 type ApiRequest = {
   code: string;
@@ -17,11 +18,13 @@ type ApiResponse = RefreshTokenApiResponse;
 export const useVerifyLoginOtp = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const phoneNumber = usePhoneNumber((state) => state.phoneNumber);
+  const { phoneNumber, setPhoneNumber } = usePhoneNumber(
+    useShallow((state) => state)
+  );
 
   useEffect(() => {
     if (!phoneNumber) router.back();
-  }, []);
+  }, [router]);
 
   const parsed = queryString.parse(searchParams.toString());
   const { mutateAsync } = useMutation<ApiResponse, AxiosError, ApiRequest>({
@@ -50,7 +53,7 @@ export const useVerifyLoginOtp = () => {
     },
     onSuccess: (data) => {
       storeAllTokens(data);
-
+      setPhoneNumber("");
       router.push("/dashboard");
     },
   });
