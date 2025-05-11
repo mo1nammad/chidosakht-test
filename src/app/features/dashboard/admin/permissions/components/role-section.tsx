@@ -42,7 +42,7 @@ export default function RoleSection() {
         </div>
         {/* permissions */}
       </div>
-      {roleId && <PermissionCheckboxSection roleId={roleId} />}
+      {roleId && <PermissionCheckboxSection />}
     </div>
   );
 }

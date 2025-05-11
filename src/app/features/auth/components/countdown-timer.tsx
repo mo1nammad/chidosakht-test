@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import { Loader } from "lucide-react";
 
-import { useResendOtp } from "../api/use-resend-otp";
 import { Button } from "@/components/ui/button";
 
 const CountDownTimer = () => {
   const [timeLeft, setTimeLeft] = useState(120);
   const isResendButtonDisabled = timeLeft !== 0;
 
-  const { resendOtp, status } = useResendOtp();
-  const handleResend = () =>
-    resendOtp(undefined, { onSuccess: () => setTimeLeft(120) });
+  const handleResend = () => {};
 
   useEffect(() => {
     if (timeLeft <= 0) return;

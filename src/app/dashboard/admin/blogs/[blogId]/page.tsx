@@ -1,8 +1,9 @@
 import React from "react";
 
 import BlogForm from "@/app/features/dashboard/admin/blogs/components/blog-form";
-import { getSession } from "@/app/features/auth/server/actions";
+
 import { redirect } from "next/navigation";
+import { getSession } from "@/lib/session";
 
 type Props = {
   params: Promise<{
@@ -12,7 +13,7 @@ type Props = {
 
 export default async function BlogPage({ params }: Props) {
   const session = await getSession();
-  if (!session || !session.userId) return redirect("/");
+  if (!session || !session.id) return redirect("/");
   const { blogId } = await params;
 
   return (

@@ -20,11 +20,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { useDeleteBlog } from "@/app/features/dashboard/admin/blogs/api/use-delete-blog";
 
 const Action = ({ blogId }: { blogId: number }) => {
   const [open, setOpen] = useState(false);
-  const { mutate, status } = useDeleteBlog();
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -42,9 +40,7 @@ const Action = ({ blogId }: { blogId: number }) => {
         <Button
           size="sm"
           variant="destructive"
-          onClick={() =>
-            mutate({ id: `${blogId}` }, { onSuccess: () => setOpen(false) })
-          }
+          onClick={() => {}}
           disabled={status === "pending"}
         >
           {/* todo add delete files api in server */}

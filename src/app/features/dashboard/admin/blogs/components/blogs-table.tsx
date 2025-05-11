@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
-import { DataTable } from "@/app/dashboard/admin/blogs/data-table";
-import { columns } from "@/app/dashboard/admin/blogs/column";
-import { useGetBlogs } from "../api/use-get-blogs";
-import { Loader2, Ghost } from "lucide-react";
+// import React from "react";
+// import { DataTable } from "@/app/dashboard/admin/blogs/data-table";
+// import { columns } from "@/app/dashboard/admin/blogs/column";
+// import { useGetBlogs } from "../api/use-get-blogs";
+// import { Loader2, Ghost } from "lucide-react";
 
 export const BlogsTable = () => {
   // const { data, status } = useGetBlogs();
