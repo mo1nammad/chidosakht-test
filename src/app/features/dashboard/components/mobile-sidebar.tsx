@@ -9,15 +9,24 @@ import {
 import SidebarNavigation from "./sidebar-navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 type Props = {
   className?: string;
 };
 
 const MobileSidebar = ({ className }: Props) => {
+  const pathname = usePathname();
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    setShow(false);
+  }, [pathname]);
+
   return (
     <div className={cn("flex items-center justify-center", className)}>
-      <Sheet>
+      <Sheet open={show} onOpenChange={setShow}>
         <SheetTrigger asChild>
           <Button variant={"ghost"}>
             <Menu className="size-8!" />

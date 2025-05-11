@@ -47,9 +47,10 @@ export const storeAccessTokenCookie = async (
   });
 };
 
-export const removeRefreshToken = async () => {
+export const removeAllToken = async () => {
   const cookieStore = await cookies();
   cookieStore.delete(REFRESH_TOKEN_COOKIE_NAME);
+  cookieStore.delete(ACCESS_TOKEN_COOKIE_NAME);
 };
 
 export const storeAllTokens = async (data: RefreshTokenApiResponse) => {

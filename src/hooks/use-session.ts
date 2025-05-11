@@ -4,12 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuthToken } from "./use-auth-token";
 
 export const useSession = () => {
-  const {
-    hasError: hasFetchTokenError,
-    token,
-    isFetching: isFetchingToken,
-  } = useAuthToken();
-  const isTokenInvalid = !token && hasFetchTokenError;
+  const { token } = useAuthToken();
 
   const { data: session, ...others } = useQuery<Session>({
     queryKey: ["user-session"],
@@ -25,18 +20,9 @@ export const useSession = () => {
     refetchOnReconnect: true, // ✅ Refetch when internet reconnects
   });
 
-  if (isTokenInvalid) {
-    return { isTokenInvalid };
-  }
+  if (!token) return undefined;
 
-  if (others.error) {
-    return undefined;
-  }
+  if (others.error) return undefined;
 
-  return {
-    session,
-    hasFetchTokenError,
-    isFetchingToken,
-    ...others,
-  };
+  return session;
 };

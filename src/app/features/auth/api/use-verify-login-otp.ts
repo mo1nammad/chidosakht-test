@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError, isAxiosError } from "axios";
 import queryString from "query-string";
 
@@ -18,6 +18,8 @@ type ApiResponse = RefreshTokenApiResponse;
 export const useVerifyLoginOtp = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const queryClient = useQueryClient();
+
   const { phoneNumber, setPhoneNumber } = usePhoneNumber(
     useShallow((state) => state)
   );
@@ -54,6 +56,7 @@ export const useVerifyLoginOtp = () => {
     onSuccess: (data) => {
       storeAllTokens(data);
       setPhoneNumber("");
+      queryClient.invalidateQueries({ queryKey: ["user-session"] });
       router.push("/dashboard");
     },
   });

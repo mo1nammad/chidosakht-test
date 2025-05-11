@@ -1,7 +1,6 @@
 import React from "react";
 import { redirect } from "next/navigation";
-
-import { getSession } from "../features/auth/server/actions";
+import { getSession } from "@/lib/session";
 
 export default async function DashboardPage() {
   const session = await getSession();

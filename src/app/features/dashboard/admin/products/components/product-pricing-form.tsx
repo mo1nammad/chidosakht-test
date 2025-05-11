@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useParams } from "next/navigation";
 
 import { useAttributesStore } from "../store/attributes";
 import { Attribute } from "../types";
@@ -32,10 +31,6 @@ type PriceMappingStateType = {
 };
 
 export default function ProductPricingForm() {
-  const { productId } = useParams<{
-    productId: string;
-  }>();
-
   const attributes = useAttributesStore((state) => state.attributes);
 
   // states
@@ -51,13 +46,6 @@ export default function ProductPricingForm() {
 
   const updateCurrent = (fieldId: keyof PriceMappingStateType, val: string) =>
     setCurrentPriceMapping((state) => ({ ...state, [fieldId]: val }));
-
-  const removeFieldFromCurrent = (fieldId: string) =>
-    setCurrentPriceMapping((state) => {
-      const current = state;
-      delete current[fieldId];
-      return current;
-    });
 
   const isFormValidToSubmit = validateFormPricing(currentPriceMapping);
 

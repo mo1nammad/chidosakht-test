@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LogIn } from "lucide-react";
-// import { useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
-// import { useSession } from "@/hooks/use-session";
-// import { logoutSession } from "@/app/features/auth/server/actions";
-
+import { useSession } from "@/hooks/use-session";
+import axiosInstance from "@/lib/axios";
+import { removeAllToken } from "@/lib/cookie";
 import {
   Popover,
   PopoverContent,
@@ -16,86 +17,78 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { useAuthToken } from "@/hooks/use-auth-token";
 
 export default function ProfileDropdown() {
   const [open, setOpen] = useState(false);
-  // const queryClient = useQueryClient();
-  // const { session, isLoading } = useSession();
+  const router = useRouter();
+  const session = useSession();
 
-  // const invalidateSession = async () => {
-  //   await logoutSession();
-  //   queryClient.removeQueries({
-  //     queryKey: ["user-session"],
-  //   });
-  //   await queryClient.refetchQueries({
-  //     queryKey: ["user-session"],
-  //   });
-  // };
+  const { removeToken } = useAuthToken();
 
-  // const fallback = session?.name.slice(0, 2);
+  const { mutate: logoutFn } = useMutation({
+    mutationFn: async () => {
+      await axiosInstance.get("/Account/Logout");
+      await removeAllToken();
+      removeToken();
+    },
+    onSuccess: async () => {
+      router.push("/");
+    },
+  });
+
+  if (!session)
+    return (
+      <Link
+        href="/sign-up"
+        className={cn(
+          buttonVariants({
+            variant: "outline",
+          })
+        )}
+      >
+        <span>ورود | ثبت‌نام</span>
+        <LogIn className="size-5!" />
+      </Link>
+    );
+
+  const fallback = session?.fullName.slice(0, 2);
 
   return (
-    <Link
-      href="/sign-up"
-      className={cn(
-        buttonVariants({
-          variant: "outline",
-        })
-      )}
-    >
-      <span>ورود | ثبت‌نام</span>
-      <LogIn className="size-5!" />
-    </Link>
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger>
+        <Avatar
+          className={cn(
+            "w-12 h-12 cursor-pointer",
+            open && "ring-2 ring-primary"
+          )}
+        >
+          <AvatarFallback>{fallback}</AvatarFallback>
+          <AvatarImage src="/blank-profile-picture.png" alt="user avatar" />
+        </Avatar>
+      </PopoverTrigger>
+      <PopoverContent>
+        <div className="w-full h-full flex items-center justify-between">
+          <Avatar className="w-16 h-16 cursor-pointer">
+            <AvatarFallback className="text-lg">{fallback}</AvatarFallback>{" "}
+            <AvatarImage src="/blank-profile-picture.png" alt="user avatar" />
+          </Avatar>
+          <div className="max-w-40">
+            <h6 className="truncate">{session.fullName}</h6>
+            <p className="text-sm font-yekan-regular text-muted-foreground truncate">
+              {session.email}
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-col-reverse mt-4 gap-3">
+          <Button onClick={() => logoutFn()} variant="destructive" size="sm">
+            خروج از حساب
+          </Button>
+          <Button asChild variant="accent" size="sm">
+            <Link href={"/dashboard"}>داشبورد</Link>
+          </Button>
+        </div>
+      </PopoverContent>
+    </Popover>
   );
-
-  // if (isLoading) return null;
-  // return session ? (
-  //   <Popover open={open} onOpenChange={setOpen}>
-  //     <PopoverTrigger>
-  //       <Avatar
-  //         className={cn(
-  //           "w-12 h-12 cursor-pointer",
-  //           open && "ring-2 ring-primary"
-  //         )}
-  //       >
-  //         <AvatarFallback>{fallback}</AvatarFallback>
-  //         <AvatarImage src="/blank-profile-picture.png" alt="user avatar" />
-  //       </Avatar>
-  //     </PopoverTrigger>
-  //     <PopoverContent>
-  //       <div className="w-full h-full flex items-center justify-center gap-x-8">
-  //         <Avatar className="w-16 h-16 cursor-pointer">
-  //           <AvatarFallback className="text-lg">{fallback}</AvatarFallback>{" "}
-  //           <AvatarImage src="/blank-profile-picture.png" alt="user avatar" />
-  //         </Avatar>
-  //         <div>
-  //           <h6>{session.name}</h6>
-  //           <p className="text-sm font-yekan-regular text-muted-foreground">
-  //             {session.email}
-  //           </p>
-  //         </div>
-  //       </div>
-  //       <div className="flex flex-col-reverse mt-4 gap-3">
-  //         <Button onClick={invalidateSession} variant="destructive" size="sm">
-  //           خروج از حساب
-  //         </Button>
-  //         <Button asChild variant="accent" size="sm">
-  //           <Link href={"/dashboard"}>داشبورد</Link>
-  //         </Button>
-  //       </div>
-  //     </PopoverContent>
-  //   </Popover>
-  // ) : (
-  //   <Link
-  //     href="/sign-up"
-  //     className={cn(
-  //       buttonVariants({
-  //         variant: "outline",
-  //       })
-  //     )}
-  //   >
-  //     <span>ورود | ثبت‌نام</span>
-  //     <LogIn className="size-5!" />
-  //   </Link>
-  // );
 }

@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { useSession } from "@/hooks/use-session";
 import { adminNavData, navigationData } from "../constants";
 
 type Props = {
@@ -14,11 +13,6 @@ type Props = {
 
 const SidebarNavigation = ({ className }: Props) => {
   const pathname = usePathname();
-
-  const { session } = useSession();
-  const showModeratorNav =
-    session?.role === "admin" || session?.role === "moderator";
-  // const showAdminNav = session?.role === "moderator";
 
   return (
     <div className={cn("flex flex-col h-full px-2 py-6 text-right", className)}>
@@ -34,7 +28,7 @@ const SidebarNavigation = ({ className }: Props) => {
       <ul className="px-2 py-4 space-y-1">
         {/* Navigation Links */}
         {navigationData.map((route) => (
-          <a
+          <Link
             href={route.url}
             key={route.title}
             className={cn(
@@ -53,42 +47,40 @@ const SidebarNavigation = ({ className }: Props) => {
                   : "text-muted-foreground/80"
               )}
             />
-          </a>
+          </Link>
         ))}
       </ul>
-      {showModeratorNav && (
-        <div className="py-2">
-          <h5 className="text-sm px-4 text-muted-foreground">
-            دسترسی های ادمین
-          </h5>
-          <ul className="px-2 mt-2.5 space-y-1">
-            {adminNavData.map((route) => {
-              const activeRoute =
-                pathname === "/dashboard"
-                  ? route.url === pathname
-                  : pathname.includes(route.url);
-              return (
-                <a
-                  href={route.url}
-                  key={route.title}
+      {/* {showModeratorNav && ( */}
+      <div className="py-2">
+        <h5 className="text-sm px-4 text-muted-foreground">دسترسی های ادمین</h5>
+        <ul className="px-2 mt-2.5 space-y-1">
+          {adminNavData.map((route) => {
+            const activeRoute =
+              pathname === "/dashboard"
+                ? route.url === pathname
+                : pathname.includes(route.url);
+            return (
+              <Link
+                href={route.url}
+                key={route.title}
+                className={cn(
+                  "flex justify-end items-center gap-x-3 px-2 py-2 text-base font-medium rounded-md hover:bg-muted",
+                  activeRoute ? "text-primary bg-accent/60" : "text-slate-950"
+                )}
+              >
+                <li>{route.title}</li>
+                <route.icon
                   className={cn(
-                    "flex justify-end items-center gap-x-3 px-2 py-2 text-base font-medium rounded-md hover:bg-muted",
-                    activeRoute ? "text-primary bg-accent/60" : "text-slate-950"
+                    "size-5 ",
+                    activeRoute ? "text-primary" : "text-muted-foreground/80"
                   )}
-                >
-                  <li>{route.title}</li>
-                  <route.icon
-                    className={cn(
-                      "size-5 ",
-                      activeRoute ? "text-primary" : "text-muted-foreground/80"
-                    )}
-                  />
-                </a>
-              );
-            })}
-          </ul>
-        </div>
-      )}
+                />
+              </Link>
+            );
+          })}
+        </ul>
+      </div>
+      {/* )} */}
 
       {/* back to landing page */}
       <div className="mt-auto">

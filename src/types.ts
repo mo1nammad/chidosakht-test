@@ -17,3 +17,14 @@ export type Session = {
 export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
 }
+
+export type Role = {
+  id: string;
+  name: string;
+  description: string;
+  links: {
+    url: string;
+    for: string;
+    httpMethod: string;
+  }[];
+};

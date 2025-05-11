@@ -1,5 +1,5 @@
 import { useRouter, useSearchParams } from "next/navigation";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError, isAxiosError } from "axios";
 import queryString from "query-string";
 
@@ -26,6 +26,7 @@ type ApiResponse = RefreshTokenApiResponse;
 export const useConfirmUserAccount = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const queryClient = useQueryClient();
 
   const phoneNumber = (<string>searchParams.get("url")).split(
     "/ConfirmPhoneNumber/"
@@ -95,7 +96,7 @@ export const useConfirmUserAccount = () => {
     },
     onSuccess: (data) => {
       storeAllTokens(data);
-
+      queryClient.invalidateQueries({ queryKey: ["user-session"] });
       router.push("/dashboard");
     },
   });

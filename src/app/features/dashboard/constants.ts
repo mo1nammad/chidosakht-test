@@ -6,6 +6,7 @@ import {
   BookText,
   LucideIcon,
   PackageOpen,
+  UserLock,
 } from "lucide-react";
 
 import ProductPricingForm from "./admin/products/components/product-pricing-form";
@@ -67,6 +68,11 @@ export const adminNavData: Route[] = [
         url: "/dashboard/admin/products/*",
       },
     ],
+  },
+  {
+    title: "مدیریت دسترسی ها",
+    icon: UserLock,
+    url: "/dashboard/admin/permissions",
   },
 ];
 

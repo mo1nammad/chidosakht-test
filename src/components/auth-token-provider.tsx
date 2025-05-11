@@ -1,42 +1,43 @@
 import React, {
   createContext,
-  Dispatch,
   PropsWithChildren,
-  SetStateAction,
   useCallback,
   useLayoutEffect,
   useState,
 } from "react";
-import axios, { AxiosError, isAxiosError } from "axios";
-import { getRefreshTokenCookie, storeAllTokens } from "@/lib/cookie";
+import { useQueryClient } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
+
+import {
+  getAccessTokenCookie,
+  getRefreshTokenCookie,
+  storeAllTokens,
+} from "@/lib/cookie";
 import axiosInstance from "@/lib/axios";
 import { CustomAxiosRequestConfig, RefreshTokenApiResponse } from "@/types";
 import { SERVER_API_URL } from "@/constant";
-import { useRouter } from "next/navigation";
 
 export const TokenContext = createContext<{
   token: string | null;
-  setToken: Dispatch<SetStateAction<null | string>>;
+  removeToken: () => void;
   isFetching: boolean;
-  hasError: boolean;
 }>({
   token: null,
-  setToken: () => {},
+  removeToken: () => {},
   isFetching: false,
-  hasError: false,
 });
 
 export default function AuthTokenProvider({ children }: PropsWithChildren) {
-  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [isFetching, setIsFetching] = useState<boolean>(false);
-  const [hasError, setHasError] = useState<boolean>(false);
+
+  const removeToken = () => setAccessToken(null);
 
   const refreshTokenAsync = useCallback(async () => {
     try {
       setIsFetching(true);
-      setHasError(false);
       const refreshToken = await getRefreshTokenCookie();
 
       if (!refreshToken) throw new Error("no refresh token");
@@ -51,28 +52,21 @@ export default function AuthTokenProvider({ children }: PropsWithChildren) {
       setAccessToken(data.token);
       await storeAllTokens(data);
       return data.token;
-    } catch (error) {
-      if (isAxiosError(error) && error.status === 401) {
-        router.push("/login");
-      }
-
+    } catch {
       setAccessToken(null);
-      setHasError(true);
     } finally {
       setIsFetching(false);
     }
-  }, [router]);
-
-  useLayoutEffect(() => {
-    refreshTokenAsync();
-  }, [refreshTokenAsync]);
+  }, []);
 
   useLayoutEffect(() => {
     const requestInterceptor = axiosInstance.interceptors.request.use(
-      (config) => {
-        config.headers.Authorization = accessToken
-          ? `Bearer ${accessToken}`
-          : config.headers.Authorization;
+      async (config) => {
+        const accessToken = await getAccessTokenCookie();
+        if (accessToken) {
+          config.headers.Authorization = `Bearer ${accessToken}`;
+          setAccessToken(accessToken);
+        }
 
         return config;
       }
@@ -87,6 +81,7 @@ export default function AuthTokenProvider({ children }: PropsWithChildren) {
     const responseInterceptor = axiosInstance.interceptors.response.use(
       (response) => response,
       async (error: AxiosError) => {
+        setAccessToken(null);
         const originalRequest = error.config as CustomAxiosRequestConfig;
 
         if (error.response?.status === 401 && !originalRequest?._retry) {
@@ -97,7 +92,7 @@ export default function AuthTokenProvider({ children }: PropsWithChildren) {
           // Retry original request with new token
           if (newToken) {
             originalRequest.headers.Authorization = `Bearer ${newToken}`;
-            return axiosInstance(originalRequest);
+            return axios(originalRequest);
           }
         }
 
@@ -109,13 +104,16 @@ export default function AuthTokenProvider({ children }: PropsWithChildren) {
     };
   }, [refreshTokenAsync]);
 
+  useLayoutEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ["user-session"] });
+  }, [accessToken, queryClient]);
+
   return (
     <TokenContext
       value={{
         token: accessToken,
-        setToken: setAccessToken,
         isFetching,
-        hasError,
+        removeToken,
       }}
     >
       {children}

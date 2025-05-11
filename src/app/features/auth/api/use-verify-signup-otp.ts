@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import queryString from "query-string";
 import { useShallow } from "zustand/react/shallow";
@@ -20,6 +20,7 @@ type ApiRequest = {
 export const useVerifySignupOtp = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const queryClient = useQueryClient();
 
   const { url, httpMethod } = queryString.parse(
     searchParams.toString()
@@ -69,7 +70,7 @@ export const useVerifySignupOtp = () => {
     },
     onSuccess: (data) => {
       storeAllTokens(data);
-
+      queryClient.invalidateQueries({ queryKey: ["user-session"] });
       toast.success("ثبت نام با موفقیت انجام شد");
       router.push("/");
     },
