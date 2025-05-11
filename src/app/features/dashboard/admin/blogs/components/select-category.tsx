@@ -38,7 +38,7 @@ export default function SelectCategory({ className, onChange, value }: Props) {
       <SelectContent className="border-border">
         <SelectGroup>
           <SelectLabel className="text-right text-xs">دسته بندی</SelectLabel>
-          {data.categories.map((category) => (
+          {/* {data.categories.map((category) => (
             <SelectItem
               key={category.id}
               className="[&_span]:left-2 flex-row-reverse pl-8 pr-2 text-xs"
@@ -46,7 +46,13 @@ export default function SelectCategory({ className, onChange, value }: Props) {
             >
               {category.title}
             </SelectItem>
-          ))}
+          ))} */}
+          <SelectItem
+            className="[&_span]:left-2 flex-row-reverse pl-8 pr-2 text-xs"
+            value={"x"}
+          >
+            x
+          </SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

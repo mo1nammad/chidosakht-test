@@ -15,7 +15,6 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { useCreateBlogInstance } from "../api/use-create-blog-instance";
 import { Loader } from "lucide-react";
 import { customErrorMap } from "@/lib/utils";
 
@@ -25,15 +24,13 @@ const createBlogInstanceSchema = z.object({
 type FormValuesSchema = z.infer<typeof createBlogInstanceSchema>;
 
 const CreateBlog = () => {
-  const { mutate, status } = useCreateBlogInstance();
-
   const form = useForm<FormValuesSchema>({
     resolver: zodResolver(createBlogInstanceSchema),
     defaultValues: {
       title: "",
     },
   });
-  const handleSubmit = (val: FormValuesSchema) => mutate({ title: val.title });
+  const handleSubmit = () => {};
 
   return (
     <Form {...form}>

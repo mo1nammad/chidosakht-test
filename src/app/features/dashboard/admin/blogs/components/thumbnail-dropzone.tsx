@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+
 import Image from "next/image";
 import { UploadCloud } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 
-import { uploadFileToAws } from "@/actions/s3.action";
-
 import { cn } from "@/lib/utils";
-import { toast } from "@/lib/toast";
-import { awsFolderNames } from "@/lib/s3";
 
 type Props = {
   className?: string;
@@ -20,41 +16,16 @@ export default function ThumbnailDropzone({
   onChange,
   value,
 }: Props) {
-  const [src, setSrc] = useState(value ?? "");
-  const [isUploading, setIsUploading] = useState(false);
-  const { blogId } = useParams();
-  const { getInputProps, acceptedFiles, getRootProps } = useDropzone({
+  const [src] = useState(value ?? "");
+  const [isUploading] = useState(false);
+
+  const { getInputProps, getRootProps } = useDropzone({
     accept: {
       "image/png": [".png", ".jpg", ".jpeg", ".webp"],
     },
     maxSize: 1024000,
     maxFiles: 1,
   });
-
-  useEffect(() => {
-    const onUpload = async () => {
-      if (typeof blogId !== "string") return;
-
-      try {
-        setSrc("");
-        setIsUploading(true);
-        const url = await uploadFileToAws(
-          acceptedFiles[0],
-          awsFolderNames(blogId).blogs.thumbnails
-        );
-        setIsUploading(false);
-        setSrc(url);
-      } catch (_e) {
-        console.log(_e);
-        toast.error("مشکلی در آپلودپیش آمده است با پشتیبانی تماس بگیرید");
-        setIsUploading(false);
-      }
-    };
-
-    if (acceptedFiles[0]) {
-      onUpload();
-    }
-  }, [acceptedFiles, blogId]);
 
   useEffect(() => {
     if (onChange) {

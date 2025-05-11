@@ -1,6 +1,4 @@
 "use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 
 // form
 import { useForm } from "react-hook-form";
@@ -18,10 +16,8 @@ import { z } from "zod";
 type FormSchemaType = z.infer<typeof editBlogFormSchema>;
 
 // components & utils
-import { awsFolderNames } from "@/lib/s3";
+
 import { cn } from "@/lib/utils";
-import { useBlogData } from "../api/use-blog-data";
-import { toast } from "@/lib/toast";
 import SelectCategory from "./select-category";
 import ThumbnailDropzone from "./thumbnail-dropzone";
 import { Input } from "@/components/ui/input";
@@ -36,28 +32,19 @@ type Props = {
   blogId: string;
 };
 
-export default function BlogForm({ className, blogId }: Props) {
+export default function BlogForm({ className }: Props) {
   // get default values from server
-  const { data, status } = useBlogData({ id: blogId });
-  const router = useRouter();
-
-  useEffect(() => {
-    if ((status === "success" && data === undefined) || status === "error") {
-      toast.error("مشکلی پیش آمده است");
-      router.back();
-    }
-  }, [status, router, data]);
 
   // form
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(editBlogFormSchema),
     values: {
-      title: data?.blog.title ?? "",
-      timeToRead: data?.blog.timeToRead ?? "",
-      categoryId: data?.blog.categoryId ?? undefined,
-      content: data?.blog.content ?? "",
-      isPublished: data?.blog.isPublished ?? false,
-      thumbnail: data?.blog.thumbnail ?? "",
+      title: "",
+      timeToRead: "",
+      categoryId: undefined,
+      content: "",
+      isPublished: false,
+      thumbnail: "",
     },
   });
 
@@ -210,7 +197,6 @@ export default function BlogForm({ className, blogId }: Props) {
                     className:
                       "sticky top-18 z-50 bg-muted/60 backdrop-blur-2xl bg-op pt-4",
                   }}
-                  imageS3Path={awsFolderNames(blogId).blogs.content}
                   {...field}
                 />
               </FormControl>

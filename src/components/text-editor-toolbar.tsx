@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useDropzone } from "react-dropzone";
 import { Editor } from "@tiptap/react";
 
@@ -47,9 +47,6 @@ import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Input } from "./ui/input";
-import { uploadFileToAws } from "@/actions/s3.action";
-import { toast } from "@/lib/toast";
-import { TextEditorContext } from "./text-editor";
 
 export type ToolbarProps = {
   className?: string;
@@ -279,13 +276,13 @@ export const Toolbar = ({ className, editor, opt }: ToolbarProps) => {
                     </Toggle>
 
                     <ImageInputPopover
-                      handleUpload={(url) =>
-                        editor
-                          .chain()
-                          .focus()
-                          .setImage({ src: url, alt: "blog image" })
-                          .run()
-                      }
+                    // handleUpload={(url) =>
+                    //   editor
+                    //     .chain()
+                    //     .focus()
+                    //     .setImage({ src: url, alt: "blog image" })
+                    //     .run()
+                    // }
                     >
                       <ImageUp />
                     </ImageInputPopover>
@@ -360,13 +357,13 @@ export const Toolbar = ({ className, editor, opt }: ToolbarProps) => {
 };
 type ImageInputPopoverProps = {
   children: React.ReactNode;
-  handleUpload: (url: string) => void;
+  // handleUpload: (url: string) => void;
 };
 
-function ImageInputPopover({ children, handleUpload }: ImageInputPopoverProps) {
+function ImageInputPopover({ children }: ImageInputPopoverProps) {
   const [open, setOpen] = React.useState(false);
-  const [isUploading, setIsUploading] = React.useState(false);
-  const { imageS3Path } = useContext(TextEditorContext);
+  const [isUploading] = React.useState(false);
+
   const { acceptedFiles, getRootProps, getInputProps, isDragReject } =
     useDropzone({
       accept: {
@@ -379,19 +376,6 @@ function ImageInputPopover({ children, handleUpload }: ImageInputPopoverProps) {
   const onUpload = async () => {
     if (acceptedFiles[0]) {
       // convertToBase64(acceptedFiles[0], handleUpload);
-      try {
-        setIsUploading(true);
-
-        const url = await uploadFileToAws(acceptedFiles[0], imageS3Path);
-
-        setIsUploading(false);
-        handleUpload(url);
-        setOpen(false);
-      } catch (_e) {
-        console.log(_e);
-        toast.error("مشکلی در آپلودپیش آمده است با پشتیبانی تماس بگیرید");
-        setIsUploading(false);
-      }
     }
   };
 
