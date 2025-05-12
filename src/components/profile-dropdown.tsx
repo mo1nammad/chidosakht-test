@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { LogIn } from "lucide-react";
+import { Loader2, LogIn } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 
 import { useSession } from "@/hooks/use-session";
@@ -22,7 +22,7 @@ import { useAuthToken } from "@/hooks/use-auth-token";
 export default function ProfileDropdown() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const session = useSession();
+  const { session, isLoading } = useSession();
 
   const { removeToken } = useAuthToken();
 
@@ -36,6 +36,10 @@ export default function ProfileDropdown() {
       router.push("/");
     },
   });
+
+  if (isLoading) {
+    return <Loader2 className="animate-spin text-muted-foreground/60" />;
+  }
 
   if (!session)
     return (

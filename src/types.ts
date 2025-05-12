@@ -28,3 +28,11 @@ export type Role = {
     httpMethod: string;
   }[];
 };
+
+export type Permission = {
+  id: number;
+  area: string;
+  controller: string;
+  action: string;
+  description: string;
+};

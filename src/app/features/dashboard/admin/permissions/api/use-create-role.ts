@@ -7,7 +7,7 @@ export function useCreateRole() {
   const queryClient = useQueryClient();
   const mutation = useMutation<
     undefined,
-    AxiosError<string>,
+    AxiosError<{ title: string }>,
     { name: string; description: string }
   >({
     mutationFn: async (req) => {
@@ -19,7 +19,9 @@ export function useCreateRole() {
       toast.success("نقش با موقیت اضافه شد");
     },
     onError: (err) => {
-      toast.error(err.response?.data);
+      console.log(err);
+
+      toast.error(err.response?.data.title);
     },
   });
 

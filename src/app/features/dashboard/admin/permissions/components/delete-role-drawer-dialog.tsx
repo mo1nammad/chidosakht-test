@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { Delete, Loader2 } from "lucide-react";
+
+import { Role } from "@/types";
+import { useDeleteRole } from "../api/use-delete-role";
 
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -21,21 +24,17 @@ import {
 } from "@/components/ui/drawer";
 
 import { Button } from "@/components/ui/button";
-import { Delete, Loader2 } from "lucide-react";
-import { useDeleteRole } from "../api/use-delete-role";
 
 type AppProps = {
   title: string;
   description: string;
-  roleName: string | undefined;
-  roleId: string;
+  selectedRole: Role;
 };
 
 export default function DeleteRoleDrawerDialog({
   description,
   title,
-  roleId,
-  roleName,
+  selectedRole,
 }: AppProps) {
   const { mutate: deleteRole, isPending } = useDeleteRole();
 
@@ -46,10 +45,14 @@ export default function DeleteRoleDrawerDialog({
 
   const isDesktop = useMediaQuery({ query: "(min-width: 768px)" });
 
-  const handleClick = () => {
-    if (!roleId) return;
+  const { id, name } = selectedRole;
 
-    deleteRole(roleId, {
+  const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
+    ev.preventDefault();
+
+    if (!id) return;
+
+    deleteRole(id, {
       onSuccess: () => setShow(false),
     });
   };
@@ -59,27 +62,39 @@ export default function DeleteRoleDrawerDialog({
     return (
       <AlertDialog open={show} onOpenChange={setShow}>
         <AlertDialogTrigger asChild>
-          <Button disabled={!roleName} variant="destructive" size="icon">
+          <Button disabled={!name} variant="destructive" size="icon">
             <Delete />
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent className="sm:max-w-[425px] gap-y-2.5">
-          <AlertDialogHeader className="mt-6 mb-4 space-y-1.5">
-            <AlertDialogTitle className="text-right">{title}</AlertDialogTitle>
+          <form onSubmit={handleSubmit}>
+            <AlertDialogHeader className="mt-6 mb-4">
+              <AlertDialogTitle className="text-right">
+                {title}
+              </AlertDialogTitle>
 
-            <AlertDialogDescription className="text-right">
-              {description}
-            </AlertDialogDescription>
-            <div dir="rtl" className="flex text-sm font-medium mt-3 gap-x-0.5">
-              <p>نقش مورد نظر:</p>
-              <p className="font-bold text-fuchsia-800">‍‍‍ {roleName}</p>
+              <AlertDialogDescription className="text-right">
+                {description}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+
+            <div dir="rtl" className="font-medium my-5">
+              <div className="flex gap-x-0.5 mb-0.5">
+                <p>نقش مورد نظر:</p>
+                <p className="font-bold text-fuchsia-800">‍‍‍ {name}</p>
+              </div>
+              <p className="text-right text-sm text-muted-foreground">
+                {selectedRole.description}
+              </p>
             </div>
-          </AlertDialogHeader>
 
-          <AlertDialogAction disabled={isPending} onClick={() => handleClick}>
-            {isPending ? <Loader2 className="animate-spin" /> : "حذف"}
-          </AlertDialogAction>
-          <AlertDialogCancel disabled={isPending}>لغو</AlertDialogCancel>
+            <div className="flex flex-col gap-y-1.5">
+              <Button type="submit" disabled={isPending}>
+                {isPending ? <Loader2 className="animate-spin" /> : "حذف"}
+              </Button>
+              <AlertDialogCancel type="button">لغو</AlertDialogCancel>
+            </div>
+          </form>
         </AlertDialogContent>
       </AlertDialog>
     );
@@ -88,33 +103,38 @@ export default function DeleteRoleDrawerDialog({
   return (
     <Drawer open={show} onOpenChange={setShow}>
       <DrawerTrigger asChild>
-        <Button disabled={!roleName} variant="destructive" size="icon">
+        <Button disabled={!name} variant="destructive" size="icon">
           <Delete />
         </Button>
       </DrawerTrigger>
 
       <DrawerContent className="px-4 pb-7">
-        <DrawerHeader className="text-right">
-          <DrawerTitle>{title}</DrawerTitle>
-          <DrawerDescription>{description}</DrawerDescription>
-          <div dir="rtl" className="flex text-sm font-medium mt-1.5 gap-x-0.5">
-            <p>نقش مورد نظر:</p>
-            <p className="font-bold text-fuchsia-800">‍‍‍ {roleName}</p>
+        <form onSubmit={handleSubmit}>
+          <DrawerHeader className="text-right">
+            <DrawerTitle>{title}</DrawerTitle>
+            <DrawerDescription>{description}</DrawerDescription>
+            <div
+              dir="rtl"
+              className="flex text-sm font-medium mt-1.5 gap-x-0.5"
+            >
+              <p>نقش مورد نظر:</p>
+              <p className="font-bold text-fuchsia-800">‍‍‍ {name}</p>
+            </div>
+          </DrawerHeader>
+          <div className="flex flex-col gap-y-2.5 mt-2.5">
+            <Button type="submit" disabled={isPending}>
+              {isPending ? <Loader2 className="animate-spin" /> : "حذف"}
+            </Button>
+            <Button
+              type="button"
+              disabled={isPending}
+              variant="outline"
+              onClick={() => setShow(false)}
+            >
+              لغو
+            </Button>
           </div>
-        </DrawerHeader>
-
-        <div className="flex flex-col gap-y-2.5 mt-2.5">
-          <Button onClick={handleClick} disabled={isPending}>
-            {isPending ? <Loader2 className="animate-spin" /> : "حذف"}
-          </Button>
-          <Button
-            disabled={isPending}
-            variant="outline"
-            onClick={() => setShow(false)}
-          >
-            لغو
-          </Button>
-        </div>
+        </form>
       </DrawerContent>
     </Drawer>
   );
