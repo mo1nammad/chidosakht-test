@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export function useRolePermissions(roleId: string) {
   const query = useQuery<number[]>({
-    queryKey: ["role-permission-list"],
+    queryKey: ["role-permission-list", roleId],
     queryFn: async () => {
       const response = await axiosInstance.get(
         `/Admin/RolePermission/${roleId}`

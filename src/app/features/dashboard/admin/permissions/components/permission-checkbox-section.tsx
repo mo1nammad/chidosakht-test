@@ -23,6 +23,7 @@ export default function PermissionCheckboxSection({ roleId }: AppProps) {
   const [currentRolePermissions, setCurrentRolePermissions] = useState<
     Set<number>
   >(new Set());
+
   useEffect(() => {
     const settenPermissions = new Set(rolePermissions);
     setCurrentRolePermissions(settenPermissions);
