@@ -11,7 +11,7 @@ export type Session = {
   id: string;
   phoneNumber: string;
   fullName: string;
-  email: string;
+  email: string | null;
 };
 
 export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {

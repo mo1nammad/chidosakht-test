@@ -29,12 +29,14 @@ type AppProps = {
   title: string;
   description: string;
   selectedRole: Role;
+  onDelete?: () => void;
 };
 
 export default function DeleteRoleDrawerDialog({
   description,
   title,
   selectedRole,
+  onDelete,
 }: AppProps) {
   const { mutate: deleteRole, isPending } = useDeleteRole();
 
@@ -53,7 +55,10 @@ export default function DeleteRoleDrawerDialog({
     if (!id) return;
 
     deleteRole(id, {
-      onSuccess: () => setShow(false),
+      onSuccess: () => {
+        onDelete?.();
+        setShow(false);
+      },
     });
   };
 
