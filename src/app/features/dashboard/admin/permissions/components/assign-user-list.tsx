@@ -3,10 +3,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Session as User } from "@/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import AssignUserIdentity from "./assign-user-identity";
 
-type AppProps = { users: User[] | undefined; show?: boolean };
+type AppProps = {
+  users: User[] | undefined;
+  show?: boolean;
+  onAssign: (user: User) => void;
+};
 
-export default function AssignUserList({ users, show = false }: AppProps) {
+export default function AssignUserList({
+  users,
+  show = false,
+  onAssign,
+}: AppProps) {
   return (
     <AnimatePresence>
       {show && (
@@ -21,25 +30,17 @@ export default function AssignUserList({ users, show = false }: AppProps) {
           transition={{
             duration: 0.1,
           }}
-          className="absolute w-full top-10"
+          className="absolute w-full top-10 min-w-102"
         >
-          {" "}
           <ScrollArea className="h-125">
             <Card className="w-full rounded-sm p-3 flex flex-col">
               {users && users.length > 0 ? (
                 users.map((user) => (
-                  <button
+                  <AssignUserIdentity
                     key={user.id}
-                    className="flex justify-between hover:bg-muted gap-y-3.5 rounded-lg p-3 cursor-pointer"
-                  >
-                    <div className="text-left">{user.fullName}</div>
-                    <div className="flex flex-col text-right">
-                      <span>{user.phoneNumber}</span>
-                      <span className="text-sm">
-                        {user.email ?? "بدون ایمیل"}
-                      </span>
-                    </div>
-                  </button>
+                    onAssign={onAssign}
+                    user={user}
+                  />
                 ))
               ) : (
                 <p className="text-xs m-auto py-2.5">

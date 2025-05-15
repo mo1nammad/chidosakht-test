@@ -8,12 +8,13 @@ import CreateRoleInputDrawerDialog from "./create-role-input-drawer-dialog";
 import RoleSelectList from "./role-select-list";
 import DeleteRoleDrawerDialog from "./delete-role-drawer-dialog";
 import PermissionCheckboxSection from "./permission-checkbox-section";
-import { Button } from "@/components/ui/button";
+
 import AssignUserRole from "./assign-user-role";
 
 export default function RoleSection() {
   const { data: roles, isLoading } = useRoles();
   const [roleId, setRoleId] = useState(roles?.[0]?.id || "");
+  console.log(roleId);
 
   const selectedRole = roles?.find((role) => role.id === roleId);
 
@@ -47,7 +48,7 @@ export default function RoleSection() {
         </div>
         {roleId && <PermissionCheckboxSection roleId={roleId} />}
       </div>
-      {roleId && <AssignUserRole />}
+      {roleId && <AssignUserRole roleId={roleId} />}
     </div>
   );
 }
