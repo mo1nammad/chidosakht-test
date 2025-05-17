@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Search, X } from "lucide-react";
 
 import { useUsers } from "../api/use-users";
 import { useDebounce } from "@/hooks/use-debounced";
+import { useAssignUserRole } from "../api/use-assign-role";
+import { Session as User } from "@/types";
 
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import AssignUserList from "./assign-user-list";
-import { Session as User } from "@/types";
 import { Card } from "@/components/ui/card";
-import { useAssignUserRole } from "../api/use-assign-role";
 
 type AppProps = {
   roleId: string;
@@ -17,10 +22,14 @@ type AppProps = {
 
 export default function AssignUserRole({ roleId }: AppProps) {
   const { data: users } = useUsers();
-  const { mutate: assignUserFn, isPending } = useAssignUserRole();
-  const [value, setValue] = useState<string>("");
-  const [showList, setShowList] = useState(false);
+  const { mutate: assignUserFn, isPending } = useAssignUserRole(roleId);
 
+  const [showList, setShowList] = useState(false);
+  console.log(showList);
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const [value, setValue] = useState<string>("");
   const debouncedValue = useDebounce({
     milliSeconds: 400,
     value,
@@ -48,7 +57,7 @@ export default function AssignUserRole({ roleId }: AppProps) {
   };
 
   return (
-    <div className="mt-14 grow">
+    <div className="md:mt-14 grow">
       <div className="flex gap-x-4.5">
         <Button
           disabled={!assignedUser || isPending}
@@ -59,34 +68,44 @@ export default function AssignUserRole({ roleId }: AppProps) {
           اختصاص دادن کاربر
         </Button>
 
-        {/* overlay for assignUserList component */}
+        {/* Custom Overlay to close on outside click */}
         {showList && (
-          <button
+          <div
+            className="fixed inset-0 z-10"
             onClick={() => setShowList(false)}
-            className="absolute inset-0"
           />
         )}
-        <div className="relative w-full h-fit">
-          <Search className="absolute top-1/2 -translate-y-1/2 left-2 size-4 text-muted-foreground" />
-          <Input
-            dir="rtl"
-            className="grow bg-background"
-            placeholder="شماره موبایل را وارد کنید"
-            value={value}
-            onChange={(ev) => setValue(ev.target.value)}
-            onClick={() => setShowList(true)}
-          />
+        <Popover open={showList}>
+          <PopoverTrigger asChild>
+            <div
+              className="relative w-full h-fit"
+              onClick={() => inputRef.current?.focus()}
+            >
+              <Search className="absolute top-1/2 -translate-y-1/2 left-2 size-4 text-muted-foreground" />
+              <Input
+                ref={inputRef}
+                dir="rtl"
+                className="grow bg-background relative z-20 text-xs sm:text-base"
+                placeholder="شماره موبایل را وارد کنید"
+                value={value}
+                onChange={(ev) => setValue(ev.target.value)}
+                onFocus={() => setShowList(true)}
+              />
+            </div>
+          </PopoverTrigger>
 
-          {/* users list */}
-          <AssignUserList
-            users={filteredUsers}
-            show={showList}
-            onAssign={(user) => {
-              setAssignedUser(user);
-              setShowList(false);
-            }}
-          />
-        </div>
+          <PopoverContent className="w-fit md:min-w-106 p-1">
+            <AssignUserList
+              users={filteredUsers}
+              onAssign={(user) => {
+                setAssignedUser(user);
+                setShowList(false);
+              }}
+            />
+          </PopoverContent>
+        </Popover>
+
+        {/* users list */}
       </div>
 
       {assignedUser ? (
@@ -99,13 +118,17 @@ export default function AssignUserRole({ roleId }: AppProps) {
             >
               <X className="size-4 mr-3.5" />
             </button>
-            <Card className="flex justify-between gap-y-3.5 rounded-lg p-3 grow">
+            <Card className="flex justify-between gap-y-3.5 rounded-lg p-3 grow overflow-x-auto">
               <div className="text-left flex flex-col">
-                <span>{assignedUser.fullName}</span>
+                <p className="text-sm sm:text-base text-primary font-semibold">
+                  {assignedUser.fullName}
+                </p>
               </div>
               <div className="flex flex-col text-right">
-                <span>{assignedUser.phoneNumber}</span>
-                <span className="text-sm">
+                <span className="text-xs sm:text-sm">
+                  {assignedUser.phoneNumber}
+                </span>
+                <span className="text-xs sm:text-sm">
                   {assignedUser.email ?? "بدون ایمیل"}
                 </span>
               </div>

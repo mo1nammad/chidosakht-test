@@ -1,9 +1,10 @@
 import axiosInstance from "@/lib/axios";
 import { toast } from "@/lib/toast";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
-export function useAssignUserRole() {
+export function useAssignUserRole(roleId: string) {
+  const queryClient = useQueryClient();
   const mutation = useMutation<
     undefined,
     AxiosError,
@@ -14,7 +15,7 @@ export function useAssignUserRole() {
       return response.data;
     },
     onSuccess: () => {
-      //   queryClient.invalidateQueries({ queryKey: ["roles-list"] }); TODO : users with same Role
+      queryClient.invalidateQueries({ queryKey: ["users-role-list", roleId] });
       toast.success("کاربر با موفقیت به نقش اضافه شد");
     },
     onError: (err) => {
