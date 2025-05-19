@@ -6,17 +6,15 @@ const toastKeys = ["success", "error"] as const;
 type ToastKey = (typeof toastKeys)[number];
 
 // edit this object for static configurations on sonner toaster
+const Options: ExternalToast = {
+  position: "top-center",
+  richColors: true,
+  className: "flex-row-reverse! gap-x-4!",
+};
+
 const preferedConfig: Record<ToastKey, ExternalToast> = {
-  error: {
-    position: "top-center",
-    richColors: true,
-    className: "flex-row-reverse! gap-x-4!",
-  },
-  success: {
-    position: "top-center",
-    richColors: true,
-    className: "flex-row-reverse! gap-x-4!",
-  },
+  error: Options,
+  success: Options,
 };
 
 export function toaster(

@@ -1,54 +1,86 @@
 "use client";
-
-import { useState } from "react";
-import Link from "next/link";
 import { ColumnDef } from "@tanstack/react-table";
-import { EllipsisVertical, Loader } from "lucide-react";
 
 import type { Session as User } from "@/types";
+import { Loader, X } from "lucide-react";
 
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogFooter,
+} from "@/components/ui/alert-dialog";
+import { useRemoveUserRole } from "../api/use-remove-user-role";
+import { toast } from "sonner";
 
-export const Action = ({ blogId }: { blogId: number }) => {
-  const [open, setOpen] = useState(false);
+const RemoveUserAction = ({
+  username,
+  roleId,
+  userId,
+}: {
+  username: string;
+  userId: string;
+  roleId: string;
+}) => {
+  const { mutateAsync } = useRemoveUserRole();
+
+  const removeFn = () =>
+    toast.promise(() => mutateAsync({ roleIds: [roleId], userId }), {
+      loading: (
+        <div className="flex gap-x-4 items-center">
+          <p className="text-sm"> در حال پردازش</p>
+          <Loader className="animate-spin size-4" />
+        </div>
+      ),
+      success: () => "حذف نقش کاربر با موفقیت انجام شد",
+      error: (err) => err.message,
+      position: "top-center",
+      className: "flex-row-reverse! gap-x-4!",
+    });
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button size="icon" variant="ghost">
-          <EllipsisVertical />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="flex flex-row-reverse w-fit gap-x-2.5">
-        <Link href={`/dashboard/admin/blogs/${blogId}`}>
-          <Button size="sm" variant="secondary" disabled={status === "pending"}>
-            ویرایش
-          </Button>
-        </Link>
-        <Button
-          size="sm"
-          variant="destructive"
-          onClick={() => {}}
-          disabled={status === "pending"}
-        >
-          {/* todo add delete files api in server */}
-          {status === "pending" ? (
-            <Loader className="animate-spin size-6" />
-          ) : (
-            " حذف"
-          )}
-        </Button>
-      </PopoverContent>
-    </Popover>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <button className="active:text-muted-foreground">
+          <X className="size-4" />
+        </button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle className="text-right">
+            از حذف کاربر <span className="text-purple-600">{username}</span>{" "}
+            اطمینان دارید
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-right">
+            با این کار عضویت این کاربر از این نقش باطل می شود
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogAction onClick={removeFn}>حذف</AlertDialogAction>
+          <AlertDialogCancel>لغو</AlertDialogCancel>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
 
-export const columns: ColumnDef<User>[] = [
+export const columns: (roleId: string) => ColumnDef<User>[] = (roleId) => [
+  {
+    accessorKey: "actions",
+    header: undefined,
+    cell: ({ row }) => (
+      <RemoveUserAction
+        username={row.getValue("fullName")}
+        roleId={roleId}
+        userId={row.getValue("id")}
+      />
+    ),
+  },
   {
     accessorKey: "id",
     header: "شناسه",

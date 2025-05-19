@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 
 import { useRoles } from "../api/use-roles";
-import { useUserRoles } from "../api/use-user-role";
+import { useUserByRoles } from "../api/use-users-by-role";
 
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -20,7 +20,7 @@ export default function RoleSection() {
   const { data: roles, isLoading } = useRoles();
   const [roleId, setRoleId] = useState(roles?.[0]?.id || "");
 
-  const { data: UsersByRole, status } = useUserRoles(roleId);
+  const { data: UsersByRole, status } = useUserByRoles(roleId);
 
   const selectedRole = roles?.find((role) => role.id === roleId);
 
@@ -61,7 +61,7 @@ export default function RoleSection() {
       {/* users table section */}
       <section className="mt-24">
         {roleId && status === "success" ? (
-          <UsersDataTable columns={columns} data={UsersByRole!} />
+          <UsersDataTable columns={columns(roleId)} data={UsersByRole!} />
         ) : roleId && status === "pending" ? (
           <Skeleton className="w-full h-60" />
         ) : null}

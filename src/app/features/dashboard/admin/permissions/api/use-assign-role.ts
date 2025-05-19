@@ -15,7 +15,9 @@ export function useAssignUserRole(roleId: string) {
       return response.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users-role-list", roleId] });
+      queryClient.invalidateQueries({
+        queryKey: ["users-by-role-list", roleId],
+      });
       toast.success("کاربر با موفقیت به نقش اضافه شد");
     },
     onError: (err) => {
