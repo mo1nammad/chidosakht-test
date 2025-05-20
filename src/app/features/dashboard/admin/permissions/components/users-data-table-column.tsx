@@ -46,7 +46,7 @@ const RemoveUserAction = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <button className="active:text-muted-foreground">
+        <button className="active:text-muted-foreground cursor-pointer flex items-center justify-center w-full">
           <X className="size-4" />
         </button>
       </AlertDialogTrigger>
@@ -61,8 +61,8 @@ const RemoveUserAction = ({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction onClick={removeFn}>حذف</AlertDialogAction>
           <AlertDialogCancel>لغو</AlertDialogCancel>
+          <AlertDialogAction onClick={removeFn}>حذف</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

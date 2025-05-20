@@ -36,3 +36,9 @@ export type Permission = {
   action: string;
   description: string;
 };
+
+export type Category = {
+  id: number;
+  name: string;
+  childCategories: Category[];
+};

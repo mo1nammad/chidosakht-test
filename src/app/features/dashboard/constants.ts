@@ -7,6 +7,7 @@ import {
   LucideIcon,
   PackageOpen,
   UserLock,
+  SendToBack,
 } from "lucide-react";
 
 import ProductPricingForm from "./admin/products/components/product-pricing-form";
@@ -73,6 +74,11 @@ export const adminNavData: Route[] = [
     title: "مدیریت دسترسی ها",
     icon: UserLock,
     url: "/dashboard/admin/permissions",
+  },
+  {
+    title: "مدیریت دسته بندی ها",
+    icon: SendToBack,
+    url: "/dashboard/admin/categories",
   },
 ];
 
