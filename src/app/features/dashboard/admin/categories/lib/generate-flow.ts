@@ -6,7 +6,7 @@ export const generateFlow = (categories: Category[]) => {
   const nodes: Node<{ label: string }>[] = [
     {
       id: "0",
-      data: { label: "کتگوری ها" },
+      data: { label: "دسته بندی ها" },
       position: { x: 0, y: 0 },
       type: "category",
     },

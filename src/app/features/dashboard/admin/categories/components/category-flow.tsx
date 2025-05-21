@@ -1,47 +1,39 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { use, useEffect, useMemo } from "react";
 
 import { generateFlow } from "../lib/generate-flow";
 import { getFlowLayout } from "../lib/layout-flow";
-import { useCategories } from "../api/use-categories";
-import {
-  Background,
-  Controls,
-  MiniMap,
-  ReactFlow,
-  useEdgesState,
-  useNodesState,
-  Node,
-  Edge,
-} from "@xyflow/react";
+
+import { Background, Controls, MiniMap, ReactFlow } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import flowCategoryNode from "./flow-category-node";
+import { CategoryContext } from "./category-context";
 
 export default function CategoryFlow() {
-  const { data } = useCategories();
-  const [nodes, setNodes, onNodesChange] = useNodesState<
-    Node<{ label: string }>
-  >([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const { categories, edgesApi, nodesApi } = use(CategoryContext);
+  const [nodes, setNodes, onNodesChange] = nodesApi;
+  const [edges, setEdges, onEdgesChange] = edgesApi;
 
   useEffect(() => {
-    if (data) {
-      const flowResult = generateFlow(data.allCategories);
+    if (categories) {
+      const flowResult = generateFlow(categories.allCategories);
       const { edges: layoutedEdges, nodes: layoutedNodes } = getFlowLayout(
         flowResult.nodes,
         flowResult.edges,
-        "TB"
+        "LR"
       );
       setNodes(layoutedNodes);
       setEdges(layoutedEdges);
     }
-  }, [data, setEdges, setNodes]);
+  }, [categories, setEdges, setNodes]);
 
-  const nodeTypes = {
-    category: flowCategoryNode,
-  };
-
+  const nodeTypes = useMemo(
+    () => ({
+      category: flowCategoryNode,
+    }),
+    []
+  );
   return (
     <div className="w-full h-100 bg-background border rounded-lg overflow-hidden">
       <ReactFlow
