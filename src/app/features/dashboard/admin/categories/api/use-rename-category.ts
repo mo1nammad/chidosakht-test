@@ -16,11 +16,7 @@ export function useRenameCategory() {
   const { setCategoryId } = use(CategoryContext);
 
   const queryClient = useQueryClient();
-  const mutation = useMutation<
-    undefined,
-    AxiosError<{ title: string }>,
-    ApiRequest
-  >({
+  const mutation = useMutation<undefined, AxiosError<string>, ApiRequest>({
     mutationFn: async (req) => {
       const response = await axiosInstance.put("/Admin/Category", req);
       return response.data;
@@ -31,7 +27,7 @@ export function useRenameCategory() {
       setCategoryId("");
     },
     onError: (err) => {
-      toast.error(err.response?.data.title);
+      toast.error(err.response?.data);
     },
   });
 
