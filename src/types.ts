@@ -42,3 +42,11 @@ export type Category = {
   name: string;
   childCategories: Category[];
 };
+
+export type Product = {
+  id: number;
+  name: string;
+  productType: number;
+  nameIndexImage: string | null;
+  urlNameIndexImage: string | null;
+};

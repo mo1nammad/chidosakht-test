@@ -54,7 +54,7 @@ export function CreateProductDrawerDialog() {
               جزییات ان را در ادامه تغییر دهید
             </DialogDescription>
           </DialogHeader>
-          <CreateProduct />
+          <CreateProduct setOpenDialog={setOpen} />
         </DialogContent>
       </Dialog>
     );
@@ -73,7 +73,7 @@ export function CreateProductDrawerDialog() {
             جزییات ان را وارد کنید
           </DrawerDescription>
         </DrawerHeader>
-        <CreateProduct />
+        <CreateProduct setOpenDialog={setOpen} />
       </DrawerContent>
     </Drawer>
   );
