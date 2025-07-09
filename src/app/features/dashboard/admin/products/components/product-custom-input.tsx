@@ -1,18 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Check, Edit } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import TextEditor from "@/components/text-editor";
 import { Button } from "@/components/ui/button";
 
 type CustomInputProps = Omit<React.ComponentProps<"input">, "size"> & {
   size?: "default" | "sm";
 };
 
-export const ProductCustomInput = ({
+export const ProductBodyCustomInput = ({
   className,
   size = "default",
+  disabled,
   ...props
 }: CustomInputProps) => {
   const [show, setShow] = React.useState(false);
@@ -22,7 +23,7 @@ export const ProductCustomInput = ({
       <div
         onDoubleClick={() => setShow(true)}
         className={cn(
-          "rounded-sm px-1.5 py-3 text-2xl grow",
+          "rounded-sm px-1.5 py-3 text-lg grow",
           show && "hidden",
           size === "sm" && "py-2.5 text-xs"
         )}
@@ -48,9 +49,10 @@ export const ProductCustomInput = ({
         {...props}
       />
       <Button
-        type="button"
+        type={!show ? "submit" : "button"}
         size="icon"
         variant="secondary"
+        disabled={disabled}
         onClick={() => setShow((state) => !state)}
         className={cn(
           "absolute right-0 top-2 cursor-pointer mr-2.5",
@@ -77,46 +79,51 @@ export const ProductCustomInput = ({
   );
 };
 
-export const ProductCustomTextarea = (
-  props: React.ComponentProps<"textarea">
-) => {
-  const [show, setShow] = React.useState(false);
+type ProductTextEditorType = {
+  onChange: (val: string) => void;
+  value?: string;
+  onBlur?: () => void;
+};
+export const ProductBodyCustomTextEditor = ({
+  onChange,
+  ...props
+}: ProductTextEditorType) => {
+  const [isEdited, setIsEdited] = useState(false);
 
   return (
-    <div className="relative hover:bg-gray-100">
-      <div
-        onDoubleClick={() => setShow(true)}
-        className={cn("rounded-sm px-1.5 py-3 w-full", show && "hidden")}
-      >
-        {props.value ? (
-          <div className="pr-13 text-base max-w-[1024px] break-words whitespace-pre-wrap">
-            {props.value}
-          </div>
-        ) : (
-          <span className="pr-13 text-sm">هیچ متنی وجود ندارد </span>
-        )}
-      </div>
-
-      <Textarea
-        className={cn(
-          "text-right hidden px-1.5 pr-13 min-h-36 text-base",
-          show && "block"
-        )}
+    <div className="relative">
+      <TextEditor
+        toolbar={{
+          className: "bg-muted/60 backdrop-blur-2xl -mb-2",
+          opt: {
+            lists: false,
+            headings: true,
+            textAlignment: true,
+            textFormatting: true,
+            undoRedo: true,
+          },
+        }}
+        onChange={(val) => {
+          onChange(val);
+          setIsEdited(true);
+        }}
         {...props}
       />
-
       <Button
-        type="button"
-        size="icon"
-        variant="secondary"
-        onClick={() => setShow((state) => !state)}
-        className="absolute right-0 top-2 cursor-pointer mr-2.5"
+        type="submit"
+        onClick={() => {
+          // immidiate changing state results in submition cancelling
+
+          setTimeout(() => {
+            setIsEdited(false);
+          }, 0.5);
+        }}
+        size={"icon"}
+        disabled={!isEdited}
+        variant={"secondary"}
+        className="w-full mt-2"
       >
-        {show ? (
-          <Check className="size-6 text-muted-foreground hover:text-primary transition" />
-        ) : (
-          <Edit className="size-6 text-muted-foreground hover:text-primary transition" />
-        )}
+        <Check />
       </Button>
     </div>
   );

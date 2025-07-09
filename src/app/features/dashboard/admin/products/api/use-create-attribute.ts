@@ -1,0 +1,36 @@
+import { useParams } from "next/navigation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AxiosError, AxiosResponse } from "axios";
+
+import axiosInstance from "@/lib/axios";
+import { toast } from "@/lib/toast";
+
+type RequestBody = {
+  name: string;
+  attributeType: 1 | 2;
+};
+
+export function useCreateAttribute() {
+  const { productId } = useParams();
+  const queryClient = useQueryClient();
+  const mutation = useMutation<
+    AxiosResponse,
+    AxiosError<{ title: string }>,
+    RequestBody
+  >({
+    mutationFn: async (req) =>
+      await axiosInstance.post("/Admin/ProductAttribute", {
+        ...req,
+        productId,
+        useForVariant: true,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-product-attributes"] });
+
+      toast.success("شاخصه جدید با موفقیت اضافه شد");
+    },
+    onError: (err) => toast.error(err.response?.data.title),
+  });
+
+  return mutation;
+}

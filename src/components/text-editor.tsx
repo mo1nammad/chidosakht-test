@@ -1,5 +1,10 @@
 import React from "react";
-import { useEditor, EditorContent, EditorContentProps } from "@tiptap/react";
+import {
+  useEditor,
+  EditorContent,
+  EditorContentProps,
+  EditorEvents,
+} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
 import TextDirection from "tiptap-text-direction";
@@ -17,7 +22,7 @@ type Props = {
   tipTap?: Omit<EditorContentProps, "editor">;
   value?: string;
   onChange: (content: string) => void;
-  onBlur: () => void;
+  onBlur?: ((props: EditorEvents["blur"]) => void) | undefined;
 };
 
 export default function TextEditor({

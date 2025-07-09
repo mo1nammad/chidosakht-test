@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import queryString from "query-string";
-import { Product } from "@/types";
 import axiosInstance from "@/lib/axios";
 
 type ApiResponse = {
@@ -8,7 +7,13 @@ type ApiResponse = {
   countInPage: number;
   countAllPages: number;
   countAllItems: number;
-  products: Product[];
+  products: {
+    id: number;
+    name: string;
+    productType: number;
+    nameIndexImage: string | null;
+    urlNameIndexImage: string | null;
+  }[];
 };
 
 type QueryProps = {

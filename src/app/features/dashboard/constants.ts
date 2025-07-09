@@ -137,6 +137,7 @@ export const createProductAdditonalFormsList = [
   {
     title: "قیمت گذاری",
     query: "pricing",
+    default: true,
     component: ProductPricingForm,
   },
   {

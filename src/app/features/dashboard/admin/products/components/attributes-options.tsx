@@ -1,5 +1,5 @@
 import React from "react";
-import { Attribute } from "../types";
+import { AttributeValue } from "../types";
 import {
   Select,
   SelectContent,
@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 
 type AppProps = {
-  options: Attribute["options"];
+  options: AttributeValue[];
   value?: string;
   onChange?: (val: string) => void;
   disabled?: boolean;
@@ -39,11 +39,11 @@ export default function AttributeOptions({
       <SelectContent>
         {options.map((option) => (
           <SelectItem
-            key={option.id}
-            value={option.id}
+            key={option.productAttributeValueId}
+            value={option.productAttributeValueId.toString()}
             className="flex-row-reverse"
           >
-            {option.label}
+            {option.value}
           </SelectItem>
         ))}
       </SelectContent>

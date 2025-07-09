@@ -1,21 +1,28 @@
 import React, { useState } from "react";
 
+import { useCreateAttribute } from "../api/use-create-attribute";
+
 import ProductAttributeSelect from "./product-attributes-select";
+import AttributeModification from "./attributes-modifications";
+
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-
-import AttributeModification from "./attributes-modifications";
-
-import { AttributeType } from "../types";
-import { useAttributesStore } from "../store/attributes";
+import { Loader } from "@/components/loader";
 
 export default function ProductAttributes() {
-  // store
-  const createAttribute = useAttributesStore((state) => state.addAttribute);
+  const { mutate: postAttribute, isPending } = useCreateAttribute();
+  const [attributeType, setAttributeType] = useState<"1" | "2">("1");
+  const [name, setName] = useState("");
 
-  const [selectType, setSelectType] = useState<AttributeType>("select");
-  const [label, setLabel] = useState("");
+  const handleCreateAttribute = () => {
+    if (!name) return;
+
+    postAttribute({
+      name,
+      attributeType: Number(attributeType) as 1 | 2,
+    });
+  };
 
   return (
     <div>
@@ -23,8 +30,8 @@ export default function ProductAttributes() {
         <div>
           <Label htmlFor="tag">برچسب</Label>
           <Input
-            value={label}
-            onChange={(ev) => setLabel(ev.target.value)}
+            value={name}
+            onChange={(ev) => setName(ev.target.value)}
             className="bg-white max-w-65 text-right"
             id="tag"
           />
@@ -32,8 +39,8 @@ export default function ProductAttributes() {
         <div>
           <Label>نوع</Label>
           <ProductAttributeSelect
-            value={selectType}
-            onChange={(val) => setSelectType(val)}
+            value={attributeType}
+            onChange={(val) => setAttributeType(val)}
           />
         </div>
 
@@ -41,13 +48,10 @@ export default function ProductAttributes() {
           type="button"
           className="h-8.5"
           variant={"secondary"}
-          onClick={() => {
-            if (!label) return;
-            createAttribute(label, selectType);
-          }}
-          disabled={!label}
+          onClick={handleCreateAttribute}
+          disabled={!name}
         >
-          اضافه کردن
+          {isPending ? <Loader /> : "اضافه کردن"}
         </Button>
       </div>
 

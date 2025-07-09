@@ -2,8 +2,14 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Delete, MoreVertical, Pen, Plus, XCircle } from "lucide-react";
 
-import { useAttributesStore } from "../store/attributes";
 import { Attribute } from "../types";
+
+// api
+import { useDeleteAttribute } from "../api/use-delete-attribute";
+import { useEditAttribute } from "../api/use-edit-attribute";
+import useCreateAttributeValue from "../api/use-create-attribute-value";
+import { useGetAttributeValues } from "../api/use-get-attribute-values";
+import useDeleteAttributeValue from "../api/use-delete-attribute-value";
 
 import AttributesOptions from "./attributes-options";
 import { Button } from "@/components/ui/button";
@@ -16,16 +22,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import SimpleInputDrawerDialog from "./simple-input-drawer-dialog";
-
-import { useShallow } from "zustand/react/shallow";
+import { Loader } from "@/components/loader";
 
 type Props = { attribute: Attribute };
 
 export default function AttributeModificationsSelect({ attribute }: Props) {
-  // store
-  const { addOption, deleteAttribute, deleteOption, editAttributeName } =
-    useAttributesStore(useShallow((state) => ({ ...state })));
-
   // variant modals states
   const [openAttributeNameModal, setOpenAttributeNameModal] = useState(false);
   const [openCreateOptionModal, setOpenCreateOptionModal] = useState(false);
@@ -34,100 +35,132 @@ export default function AttributeModificationsSelect({ attribute }: Props) {
     undefined
   );
 
+  // APIs
+  const { data: attributeValues, status: attributeValues_fetchStatus } =
+    useGetAttributeValues(attribute.productAttributeId);
+  const { mutate: deleteAttribute } = useDeleteAttribute();
+  const { mutate: editAttributeName } = useEditAttribute();
+  const { mutate: createAttributeValue } = useCreateAttributeValue(
+    attribute.name
+  );
+  const { mutate: deleteAttributeValue } = useDeleteAttributeValue();
+
+  const attributeOptionsComponentRender = {
+    success: (
+      <AttributesOptions
+        options={attributeValues ?? []}
+        onChange={setSelectedOptionId}
+        value={selectedOptionId}
+      />
+    ),
+    pending: <Loader />,
+    error: (
+      <div className="text-sm text-destructive">
+        مشکلی در بارگیری اطلاعات پیش آمده است
+      </div>
+    ),
+  };
+
   return (
     <motion.div
       dir="ltr"
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 100, x: 0 }}
       exit={{ opacity: 0, x: 20 }}
-      key={attribute.id}
+      key={attribute.productAttributeId}
     >
-      <label className="mr-11">{attribute.label}</label>
+      <label className="mr-11">{attribute.name}</label>
 
       {/* dropdown */}
-      {attribute.type === "select" && (
-        <div className="flex flex-row-reverse items-center gap-x-3">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                type="button"
-                size={"icon"}
-                variant={"ghost"}
-                className="size-8"
-              >
-                <MoreVertical />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="text-right min-w-56">
-              <DropdownMenuLabel className="font-yekan-semibold">
-                {attribute.label}
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => setOpenAttributeNameModal(true)}
-                className="flex-row-reverse justify-between"
-              >
-                <span>تغییر نام شاخصه</span>
-                <Pen />
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => deleteAttribute(attribute.id)}
-                className="flex-row-reverse justify-between"
-              >
-                <span>حذف شاخصه</span>
-                <Delete />
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => setOpenCreateOptionModal(true)}
-                className="flex-row-reverse justify-between"
-              >
-                <span>اضافه کردن یک انتخاب</span>
-                <Plus />
-              </DropdownMenuItem>
 
-              <DropdownMenuItem
-                onClick={() => {
-                  if (selectedOptionId === undefined) return;
-                  deleteOption(attribute.id, selectedOptionId);
-                  setSelectedOptionId(undefined);
-                }}
-                disabled={selectedOptionId === undefined}
-                className="flex-row-reverse justify-between"
-              >
-                <span>حذف این انتخاب</span>
-                <XCircle />
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+      <div className="flex flex-row-reverse items-center gap-x-3">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              type="button"
+              size={"icon"}
+              variant={"ghost"}
+              className="size-8"
+            >
+              <MoreVertical />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="text-right min-w-56">
+            <DropdownMenuLabel className="font-yekan-semibold">
+              {attribute.name}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => setOpenAttributeNameModal(true)}
+              className="flex-row-reverse justify-between"
+            >
+              <span>تغییر نام شاخصه</span>
+              <Pen />
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => deleteAttribute(attribute.productAttributeId)}
+              className="flex-row-reverse justify-between"
+            >
+              <span>حذف شاخصه</span>
+              <Delete />
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => setOpenCreateOptionModal(true)}
+              className="flex-row-reverse justify-between"
+            >
+              <span>اضافه کردن یک انتخاب</span>
+              <Plus />
+            </DropdownMenuItem>
 
-          <AttributesOptions
-            options={attribute.options}
-            onChange={setSelectedOptionId}
-            value={selectedOptionId}
-          />
+            <DropdownMenuItem
+              onClick={() => {
+                if (selectedOptionId === undefined) return;
+                deleteAttributeValue(selectedOptionId);
+                setSelectedOptionId("");
+              }}
+              disabled={!selectedOptionId}
+              className="flex-row-reverse justify-between"
+            >
+              <span>حذف این انتخاب</span>
+              <XCircle />
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-          {/* edit attribute modal */}
-          <SimpleInputDrawerDialog
-            defaultValue={attribute.label}
-            onUpdate={(val) => editAttributeName(attribute.id, val)}
-            open={openAttributeNameModal}
-            onOpenChange={setOpenAttributeNameModal}
-            title="تغییر نام"
-            description="در این قسمت شما می توانید نام شاخصه ایجاد شده را تغییر دهید"
-          />
+        {/* renders attribute options based on fetching status  */}
+        {attributeOptionsComponentRender[attributeValues_fetchStatus]}
 
-          {/* create-select-option modal  */}
+        {/* edit attribute modal */}
+        <SimpleInputDrawerDialog
+          defaultValue={attribute.name}
+          onUpdate={(val) =>
+            editAttributeName({
+              name: val,
+              productAttributeId: attribute.productAttributeId,
+            })
+          }
+          open={openAttributeNameModal}
+          onOpenChange={setOpenAttributeNameModal}
+          title="تغییر نام"
+          description="در این قسمت شما می توانید نام شاخصه ایجاد شده را تغییر دهید"
+        />
 
-          <SimpleInputDrawerDialog
-            onUpdate={(val) => addOption(attribute.id, val)}
-            open={openCreateOptionModal}
-            onOpenChange={setOpenCreateOptionModal}
-            title="ایجاد یک انتخاب"
-            description="در این قسمت شما می توانید یک انتخاب برای شاخصه خود ایجاد کنید"
-          />
-        </div>
-      )}
+        {/* create-select-option modal  */}
+
+        <SimpleInputDrawerDialog
+          onUpdate={(val) => {
+            createAttributeValue({
+              productAttributeId: attribute.productAttributeId,
+              value: val,
+            });
+          }}
+          open={openCreateOptionModal}
+          onOpenChange={setOpenCreateOptionModal}
+          title="ایجاد یک انتخاب"
+          description="در این قسمت شما می توانید یک انتخاب برای شاخصه خود ایجاد کنید"
+        />
+      </div>
     </motion.div>
   );
 }

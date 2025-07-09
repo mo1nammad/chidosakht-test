@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { useAttributesStore } from "../store/attributes";
-import { Attribute } from "../types";
+import { Attribute, Product, simpleProduct } from "../types";
 
 import ImagePicker from "./product-pricing-image-picker";
 
@@ -30,7 +30,11 @@ type PriceMappingStateType = {
   [x: string]: string;
 };
 
-export default function ProductPricingForm() {
+type AppProps = {
+  productType: Product["productType"];
+};
+
+export default function ProductPricingForm({ productType }: AppProps) {
   const attributes = useAttributesStore((state) => state.attributes);
 
   // states
@@ -42,15 +46,13 @@ export default function ProductPricingForm() {
       ...generatePriceMappingObject(attributes),
     });
 
-  console.log(currentPriceMapping);
-
   const updateCurrent = (fieldId: keyof PriceMappingStateType, val: string) =>
     setCurrentPriceMapping((state) => ({ ...state, [fieldId]: val }));
 
   const isFormValidToSubmit = validateFormPricing(currentPriceMapping);
 
   // simple product
-  if (attributes.length === 0) {
+  if (productType === simpleProduct) {
     return <div>محصول ساده</div>;
   }
 

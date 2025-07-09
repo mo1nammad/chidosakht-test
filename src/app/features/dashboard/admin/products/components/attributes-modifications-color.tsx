@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { useShallow } from "zustand/react/shallow";
 import { AnimatePresence, motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import { Delete, MoreVertical, Pen, Plus, XCircle } from "lucide-react";
 
-import { useAttributesStore } from "../store/attributes";
 import { Attribute } from "../types";
+
+// api
+import { useDeleteAttribute } from "../api/use-delete-attribute";
+import { useEditAttribute } from "../api/use-edit-attribute";
+import useCreateAttributeValue from "../api/use-create-attribute-value";
+import { useGetAttributeValues } from "../api/use-get-attribute-values";
+import useDeleteAttributeValue from "../api/use-delete-attribute-value";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -29,20 +34,28 @@ import AttributeColorList from "./attributes-color-list";
 type Props = { attribute: Attribute };
 
 export default function AttributeModificationsColor({ attribute }: Props) {
-  // store
-  const { addOption, deleteAttribute, deleteOption, editAttributeName } =
-    useAttributesStore(useShallow((state) => ({ ...state })));
-
   // attribute modals states
   const [openAttributeNameModal, setOpenAttributeNameModal] = useState(false);
   const [openColorPopover, setOpenColorPopover] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
 
-  const [selectedColorId, setSelectedColorId] = useState<string | undefined>(
+  const [selectedColorId, setSelectedColorId] = useState<number | undefined>(
     undefined
   );
 
   const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
+
+  // APIs
+  const { data: attributeValues, status: attributeValues_fetchStatus } =
+    useGetAttributeValues(attribute.productAttributeId);
+
+  const { mutate: deleteAttribute } = useDeleteAttribute();
+  const { mutate: editAttributeName } = useEditAttribute();
+  const { mutate: createAttributeValue } = useCreateAttributeValue(
+    attribute.name
+  );
+
+  const { mutate: deleteAttributeValue } = useDeleteAttributeValue();
 
   return (
     <motion.div
@@ -50,7 +63,7 @@ export default function AttributeModificationsColor({ attribute }: Props) {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 100, x: 0 }}
       exit={{ opacity: 0, x: 20 }}
-      key={attribute.id}
+      key={attribute.productAttributeId}
       className="sm:col-span-3 flex items-center flex-row-reverse gap-x-2.5 w-full"
     >
       {/* dropdown */}
@@ -68,7 +81,7 @@ export default function AttributeModificationsColor({ attribute }: Props) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="text-right min-w-56">
             <DropdownMenuLabel className="font-yekan-semibold">
-              {attribute.label}
+              {attribute.name}
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
@@ -79,7 +92,7 @@ export default function AttributeModificationsColor({ attribute }: Props) {
               <Pen />
             </DropdownMenuItem>
             <DropdownMenuItem
-              onClick={() => deleteAttribute(attribute.id)}
+              onClick={() => deleteAttribute(attribute.productAttributeId)}
               className="flex-row-reverse justify-between"
             >
               <span>حذف شاخصه</span>
@@ -104,8 +117,10 @@ export default function AttributeModificationsColor({ attribute }: Props) {
               >
                 <AttributeColorPicker
                   onUpdate={(val) => {
-                    const id = addOption(attribute.id, val);
-                    setSelectedColorId(id);
+                    createAttributeValue({
+                      productAttributeId: attribute.productAttributeId,
+                      value: val,
+                    });
                     setOpenColorPopover(false);
                   }}
                 />
@@ -115,7 +130,7 @@ export default function AttributeModificationsColor({ attribute }: Props) {
             <DropdownMenuItem
               onClick={() => {
                 if (selectedColorId === undefined) return;
-                deleteOption(attribute.id, selectedColorId); // color list as option[]
+                deleteAttributeValue(selectedColorId);
                 setSelectedColorId(undefined);
               }}
               disabled={selectedColorId === undefined}
@@ -129,23 +144,28 @@ export default function AttributeModificationsColor({ attribute }: Props) {
 
         {/* edit attribute modal */}
         <SimpleInputDrawerDialog
-          defaultValue={attribute.label}
-          onUpdate={(val) => editAttributeName(attribute.id, val)}
+          defaultValue={attribute.name}
+          onUpdate={(val) =>
+            editAttributeName({
+              name: val,
+              productAttributeId: attribute.productAttributeId,
+            })
+          }
           open={openAttributeNameModal}
           onOpenChange={setOpenAttributeNameModal}
           title="تغییر نام"
           description="در این قسمت شما می توانید نام شاخصه ایجاد شده را تغییر دهید"
         />
       </div>
-      <h4 className="text-sm">{attribute.label}</h4>
+      <h4 className="text-sm">{attribute.name}</h4>
       {/* TODO add color list */}
 
       <AnimatePresence>
-        {attribute.options.length > 0 ? (
+        {attributeValues_fetchStatus === "success" ? (
           <AttributeColorList
             selectedColorId={selectedColorId}
             setSelectedColorId={setSelectedColorId}
-            attribute={attribute}
+            attributeOptions={attributeValues}
             className="p-4 w-full flex flex-row-reverse"
           />
         ) : (

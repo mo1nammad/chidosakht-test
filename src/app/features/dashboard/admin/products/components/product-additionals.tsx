@@ -5,10 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { createProductAdditonalFormsList as additionalsList } from "@/app/features/dashboard/constants";
 import { Button } from "@/components/ui/button";
-
-type AppProps = {
-  disableFields?: Record<string, boolean>;
-};
+import { Product } from "../types";
 
 const MotionWrapper = ({ children }: PropsWithChildren) => (
   <motion.div
@@ -30,20 +27,22 @@ const MotionWrapper = ({ children }: PropsWithChildren) => (
   </motion.div>
 );
 
-export default function ProductAdditionals({ disableFields }: AppProps) {
+type AppProps = {
+  product: Product;
+};
+
+export default function ProductAdditionals({ product }: AppProps) {
   const { productId } = useParams();
   const router = useRouter();
-  const searchingForm = useSearchParams().get("form");
+  const formSearchParam = useSearchParams().get("form");
 
   return (
     <>
       <div className="flex flex-row-reverse gap-x-4 p-1">
         {additionalsList.map((form) => {
-          const disabled = disableFields?.[form.query];
-          const isActive =
-            form.query === "pricing"
-              ? searchingForm === form.query || searchingForm === null
-              : searchingForm === form.query;
+          const isActive = formSearchParam
+            ? form.query === formSearchParam
+            : form.default;
 
           return (
             <Button
@@ -60,7 +59,6 @@ export default function ProductAdditionals({ disableFields }: AppProps) {
                   { scroll: false }
                 )
               }
-              disabled={disabled}
             >
               {form.title}
             </Button>
@@ -69,15 +67,14 @@ export default function ProductAdditionals({ disableFields }: AppProps) {
       </div>
       <AnimatePresence mode="wait">
         {additionalsList.map((form) => {
-          const showComponent =
-            form.query === "pricing"
-              ? searchingForm === form.query || searchingForm === null
-              : searchingForm === form.query;
+          const showComponent = formSearchParam
+            ? form.query === formSearchParam
+            : form.default;
 
           if (showComponent) {
             return (
               <MotionWrapper key={form.query}>
-                <form.component />
+                <form.component productType={product.productType} />
               </MotionWrapper>
             );
           }

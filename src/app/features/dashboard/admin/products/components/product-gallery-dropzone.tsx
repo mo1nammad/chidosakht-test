@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import { Check, Plus, Upload } from "lucide-react";
+import { useParams } from "next/navigation";
+import { Check, Loader2, Plus, Upload } from "lucide-react";
 import { useDropzone } from "react-dropzone";
+
+import { usePostProductImage } from "../api/use-post-product-images";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,20 +14,19 @@ import {
   AlertDialogHeader,
   AlertDialogDescription,
   AlertDialogCancel,
-  // AlertDialogAction,
   AlertDialogFooter,
 } from "@/components/ui/alert-dialog";
-import { convertToBase64 } from "@/lib/utils";
 
-type AppProps = {
-  value: { url: string; id: number }[];
-  onChange: (value: { url: string; id: number }[]) => void;
-};
+export default function ProductGalleryDropzone() {
+  const { productId } = useParams();
+  const {
+    mutateAsync: postImage,
+    isPending,
+    isError,
+  } = usePostProductImage(productId as string);
 
-export default function ProductGalleryDropzone({ onChange, value }: AppProps) {
   const [open, setOpen] = useState(false);
-
-  const { getInputProps, getRootProps, acceptedFiles } = useDropzone({
+  const { getInputProps, getRootProps, acceptedFiles, inputRef } = useDropzone({
     accept: {
       "image/png": [".png", ".jpg", ".jpeg", ".webp"],
     },
@@ -32,27 +34,23 @@ export default function ProductGalleryDropzone({ onChange, value }: AppProps) {
   });
 
   const handleFiles = async () => {
-    // asynchronize convert images to base64 and add them to list
-    const filePromises = acceptedFiles.map(
-      (image, index) =>
-        new Promise<{ id: number; url: string }>((resolve) => {
-          convertToBase64(image, (url) =>
-            resolve({ id: index + value.length, url })
-          );
-        })
+    await Promise.all(
+      acceptedFiles.map((file) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        return postImage(formData);
+      })
     );
 
-    const newList = await Promise.all(filePromises);
-    const _imagesList = [...value, ...newList];
+    if (!isError) inputRef.current.value = "";
+
     // update
 
-    onChange(_imagesList);
     setOpen(false);
   };
 
   return (
     <div className="flex flex-row-reverse items-center gap-x-3 ">
-      <h5 className="text-lg">گالری</h5>
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>
           <Button size="sm" variant="secondary">
@@ -90,9 +88,15 @@ export default function ProductGalleryDropzone({ onChange, value }: AppProps) {
           </div>
 
           <AlertDialogFooter>
-            <Button type="button" onClick={handleFiles}>
-              ادامه
-            </Button>
+            {isPending ? (
+              <div className="grid place-content-center mr-1.5">
+                <Loader2 className="animate-spin" />
+              </div>
+            ) : (
+              <Button type="button" onClick={handleFiles}>
+                ادامه
+              </Button>
+            )}
             <AlertDialogCancel type="button">انصراف</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -10,11 +10,11 @@ export default function AttributeColorPicker({ onUpdate }: AppProps) {
   const [color, setColor] = useState("rgba(255,255,255,1)");
 
   return (
-    <div className="bg-[#202020]">
+    <div className="bg-[#202020] w-[340px]">
       <ColorPicker
         value={color}
         onChange={setColor}
-        className="min-w-fit rounded-md p-3.5 font-sans"
+        className="mx-auto w-fit rounded-md p-3.5 font-sans"
         hidePresets
         hideColorGuide
         hideAdvancedSliders

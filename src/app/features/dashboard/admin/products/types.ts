@@ -1,31 +1,33 @@
+export const simpleProduct = 1 as const;
+export const variantProduct = 2 as const;
 export interface Product {
   id: number;
-  title: string;
+  name: string;
+  productType: typeof simpleProduct | typeof variantProduct;
+  description: string | undefined;
+  uniqeLink: string | undefined;
+  imageAltText: string | undefined;
+  nameIndexImage: string | undefined;
+  urlNameIndexImage: string | undefined;
+  uniCode: string | undefined;
+  categoryId: string | undefined;
+  categoryName: string | undefined;
   isPublished: boolean;
-  // additionals
-  description?: string;
-  gallery?:
-    | {
-        id: number;
-        url: string;
-      }[];
-
-  galleryAlt?: string;
-  attributes?: Attribute[];
-  uniqeUrl?: string;
-  variants?: {
-    price: string;
-    offPrice: string;
-    imageIndex: string;
-    [x: string]: string;
-  }[];
+  infoForSampleProduct: undefined;
+  createTime: Date | string | number;
+  lastUpdateTime: Date | string | number;
 }
 
-export type AttributeType = "select" | "color";
+export const colorAttribute = 2 as const;
+export const selectAttribute = 1 as const;
 export type Attribute = {
-  id: string;
-  label: string;
-  type: AttributeType;
+  productAttributeId: number;
+  name: string;
+  attributeType: typeof colorAttribute | typeof selectAttribute;
+  useForVariant: true;
+};
 
-  options: { id: string; label: string }[];
+export type AttributeValue = {
+  productAttributeValueId: number;
+  value: string;
 };

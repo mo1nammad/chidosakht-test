@@ -1,18 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-import { Attribute } from "../types";
+import { AttributeValue } from "../types";
 import { cn } from "@/lib/utils";
 
 type AppProps = {
-  attribute: Attribute;
-  selectedColorId: string | undefined;
-  setSelectedColorId: (colorId: string) => void;
+  attributeOptions: AttributeValue[];
+  selectedColorId: number | undefined;
+  setSelectedColorId: (colorId: number) => void;
 
   className?: string;
 };
 export default function AttributesColorList({
-  attribute,
+  attributeOptions,
   selectedColorId,
   setSelectedColorId,
   className,
@@ -20,7 +20,7 @@ export default function AttributesColorList({
   return (
     <div className={cn("overflow-x-auto mr-6 w-54", className)}>
       <div className="flex flex-row-reverse gap-x-4 w-max">
-        {attribute.options.map((color) => (
+        {attributeOptions.map((color) => (
           <motion.button
             type="button"
             initial={{ scale: 0.8, opacity: 0.5, boxShadow: "0" }}
@@ -28,13 +28,15 @@ export default function AttributesColorList({
               scale: 1,
               opacity: 1,
               boxShadow:
-                selectedColorId === color.id ? "0 0 0 4px #2379FF" : undefined,
+                selectedColorId === color.productAttributeValueId
+                  ? "0 0 0 4px #2379FF"
+                  : undefined,
             }}
             exit={{ scale: 0.8, opacity: 0 }}
-            key={color.id}
-            onClick={() => setSelectedColorId(color.id)}
+            key={color.productAttributeValueId}
+            onClick={() => setSelectedColorId(color.productAttributeValueId)}
             className="size-6 rounded-full cursor-pointer "
-            style={{ background: color.label }}
+            style={{ background: color.value }}
           />
         ))}
       </div>

@@ -16,10 +16,9 @@ type AppProps = {
     id: number;
     url: string;
   }[];
-  alt: string;
 };
 
-const ProductGalleryCarousel = ({ imageList, alt }: AppProps) => {
+const ProductGalleryCarousel = ({ imageList }: AppProps) => {
   const [api, setApi] = useState<CarouselApi>();
 
   const [current, setCurrent] = useState(0);
@@ -61,7 +60,7 @@ const ProductGalleryCarousel = ({ imageList, alt }: AppProps) => {
               >
                 <Image
                   src={image.url}
-                  alt={alt}
+                  alt="admin-product-image"
                   width={127}
                   height={179}
                   className="w-full rounded-lg"
