@@ -1,7 +1,7 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 
-import type { Product } from "@/types";
+import type { Product } from "../types";
 import { SquareArrowOutUpRight, X } from "lucide-react";
 
 import {
@@ -53,7 +53,9 @@ const RemoveProductAction = ({ name, id }: RemoveProductActionType) => {
   );
 };
 
-export const columns: ColumnDef<Product>[] = [
+type ProductColumns = Pick<Product, "productType" | "name" | "id">;
+
+export const columns: ColumnDef<ProductColumns>[] = [
   {
     accessorKey: "actions",
     header: undefined,

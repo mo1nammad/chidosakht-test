@@ -31,7 +31,7 @@ type AppProps = {
   product: Product;
 };
 
-export default function ProductAdditionals({ product }: AppProps) {
+export default function ProductAdditionals({}: AppProps) {
   const { productId } = useParams();
   const router = useRouter();
   const formSearchParam = useSearchParams().get("form");
@@ -74,7 +74,7 @@ export default function ProductAdditionals({ product }: AppProps) {
           if (showComponent) {
             return (
               <MotionWrapper key={form.query}>
-                <form.component productType={product.productType} />
+                <form.component />
               </MotionWrapper>
             );
           }

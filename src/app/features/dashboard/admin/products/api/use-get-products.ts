@@ -10,7 +10,7 @@ type ApiResponse = {
   products: {
     id: number;
     name: string;
-    productType: number;
+    productType: 1 | 2;
     nameIndexImage: string | null;
     urlNameIndexImage: string | null;
   }[];

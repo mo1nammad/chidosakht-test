@@ -10,7 +10,7 @@ import {
   SendToBack,
 } from "lucide-react";
 
-import ProductPricingForm from "./admin/products/components/product-pricing-form";
+// import ProductPricingForm from "./admin/products/components/product-pricing-form";
 import ProductAttributes from "./admin/products/components/product-attributes";
 
 type Route = {
@@ -134,20 +134,21 @@ export const generateNavigateUrlList = ({
 };
 
 export const createProductAdditonalFormsList = [
-  {
-    title: "قیمت گذاری",
-    query: "pricing",
-    default: true,
-    component: ProductPricingForm,
-  },
+  // {
+  //   title: "قیمت گذاری",
+  //   query: "pricing",
+  //   default: true,
+  //   component: ProductPricingForm,
+  // },
   {
     title: "شاخصه ها",
     query: "attributes",
     component: ProductAttributes,
+    default: true,
   },
   {
     title: "حمل و نقل",
     query: "transportation",
-    component: ProductPricingForm,
+    component: ProductAttributes,
   },
 ];

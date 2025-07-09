@@ -5,6 +5,7 @@ import axiosInstance from "@/lib/axios";
 import { toast } from "@/lib/toast";
 import { AttributeValue } from "../types";
 import { productAttributeValuesKey } from "./use-get-attribute-values";
+
 type RequestBody = {
   productAttributeId: number;
   value: string;
@@ -14,7 +15,7 @@ type RequestBody = {
 const postAttributeValues = async (req: RequestBody) =>
   await axiosInstance.post("/Admin/ProductAttributeValue", req);
 
-// react query hook
+// react query hook with optimistic ui
 export default function useCreateAttributeValue(attributeName: string) {
   const queryClient = useQueryClient();
 
