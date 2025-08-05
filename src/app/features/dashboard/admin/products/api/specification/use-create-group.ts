@@ -4,6 +4,7 @@ import { AxiosError, AxiosResponse } from "axios";
 
 import axiosInstance from "@/lib/axios";
 import { toast } from "@/lib/toast";
+import { generateGroupAndSpecQueryKey } from "./use-get-group-and-spec";
 
 type RequestBody = {
   titile: string;
@@ -24,7 +25,9 @@ export function useCreateSpecGroup() {
       }),
     onSuccess: () => {
       //   TODO update queryClient
-
+      queryClient.invalidateQueries({
+        queryKey: generateGroupAndSpecQueryKey(productId as string),
+      });
       toast.success("شاخصه جدید با موفقیت اضافه شد");
     },
     onError: (err) => toast.error(err.response?.data.title),

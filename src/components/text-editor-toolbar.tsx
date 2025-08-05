@@ -129,7 +129,7 @@ export const Toolbar = ({ className, editor, opt }: ToolbarProps) => {
                     </Toggle>
                   </Card>
                 </TooltipTrigger>
-                <TooltipContent variant="secondary">فرمت متن</TooltipContent>
+                <TooltipContent>فرمت متن</TooltipContent>
               </Tooltip>
             ) : null}
             {opt?.textAlignment || !opt ? (
@@ -176,7 +176,7 @@ export const Toolbar = ({ className, editor, opt }: ToolbarProps) => {
                     </Toggle>
                   </Card>
                 </TooltipTrigger>
-                <TooltipContent variant="secondary">چینش متن</TooltipContent>
+                <TooltipContent>چینش متن</TooltipContent>
               </Tooltip>
             ) : null}
             {opt?.headings || !opt ? (
@@ -241,9 +241,7 @@ export const Toolbar = ({ className, editor, opt }: ToolbarProps) => {
                     </Toggle>
                   </Card>
                 </TooltipTrigger>
-                <TooltipContent variant="secondary">
-                  سرفصل و پاراگراف
-                </TooltipContent>
+                <TooltipContent>سرفصل و پاراگراف</TooltipContent>
               </Tooltip>
             ) : null}
             {opt?.lists || !opt ? (
@@ -308,9 +306,7 @@ export const Toolbar = ({ className, editor, opt }: ToolbarProps) => {
                     </Toggle>
                   </Card>
                 </TooltipTrigger>
-                <TooltipContent variant="secondary">
-                  دسترسی های تکمیلی
-                </TooltipContent>
+                <TooltipContent>دسترسی های تکمیلی</TooltipContent>
               </Tooltip>
             ) : null}
             {opt?.undoRedo || !opt ? (
@@ -337,9 +333,7 @@ export const Toolbar = ({ className, editor, opt }: ToolbarProps) => {
                     </Button>
                   </Card>
                 </TooltipTrigger>
-                <TooltipContent variant="secondary">
-                  برگشت به عملیات قبل یا بعد
-                </TooltipContent>
+                <TooltipContent>برگشت به عملیات قبل یا بعد</TooltipContent>
               </Tooltip>
             ) : null}
 
