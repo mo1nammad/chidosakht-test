@@ -1,33 +1,40 @@
-import { useParams } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError, AxiosResponse } from "axios";
 
 import axiosInstance from "@/lib/axios";
 import { toast } from "@/lib/toast";
+import { useParams } from "next/navigation";
+import { attributeAndValuesKey } from "./use-get-both-attribute-value";
+import { attributesKey } from "./use-get-attributes";
 
 type RequestBody = {
+  productAttributeId: number;
   name: string;
-  attributeType: 1 | 2;
 };
 
-export function useCreateAttribute() {
+export function useEditAttribute() {
   const { productId } = useParams();
   const queryClient = useQueryClient();
+
   const mutation = useMutation<
     AxiosResponse,
     AxiosError<{ title: string }>,
     RequestBody
   >({
     mutationFn: async (req) =>
-      await axiosInstance.post("/Admin/ProductAttribute", {
+      await axiosInstance.put("/Admin/ProductAttribute", {
         ...req,
-        productId,
         useForVariant: true,
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-product-attributes"] });
+      queryClient.invalidateQueries({
+        queryKey: attributeAndValuesKey(Number(productId)),
+      });
+      queryClient.invalidateQueries({
+        queryKey: attributesKey(Number(productId)),
+      });
 
-      toast.success("شاخصه جدید با موفقیت اضافه شد");
+      toast.success("نام شاخصه با موفقیت تغییر یافت");
     },
     onError: (err) => toast.error(err.response?.data.title),
   });

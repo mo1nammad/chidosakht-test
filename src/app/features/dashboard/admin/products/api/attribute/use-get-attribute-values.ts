@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@/lib/axios";
-import { AttributeValue as AttributeOptions } from "../types";
+import { AttributeValue as AttributeOptions } from "../../types";
 
 type ApiResponse = AttributeOptions[];
 
-export const productAttributeValuesKey = (id: number) =>
-  ["admin-product-attribute-values", id] as const;
+export const productAttributeValuesKey = (attributeId: number) =>
+  ["admin-product-attribute-values", attributeId] as const;
 
 export function useGetAttributeValues(attributeId: number) {
   const query = useQuery<ApiResponse>({

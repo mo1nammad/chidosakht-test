@@ -9,6 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 import ProductBodyForm from "./product-body-form";
 import ProductGalleryContainer from "./product-gallery-container";
 import ProductAdditionals from "./product-additionals";
+import ProductCategory from "./product-category";
 
 // component
 export default function ProductForm() {
@@ -107,9 +108,11 @@ export default function ProductForm() {
           {/* gallery form */}
           <ProductGalleryContainer />
 
+          {/* category */}
+          <ProductCategory productCategoryId={product.categoryId} />
           {/* additional forms */}
 
-          <div className="overflow-hidden mt-12">
+          <div className="overflow-hidden mt-12 relative">
             <h2 className="text-lg mb-6 font-yekan-semibold">فرم های تکمیلی</h2>
             <ProductAdditionals product={product} />
           </div>

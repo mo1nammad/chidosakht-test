@@ -6,11 +6,11 @@ import { Delete, MoreVertical, Pen, Plus, XCircle } from "lucide-react";
 import { Attribute } from "../types";
 
 // api
-import { useDeleteAttribute } from "../api/use-delete-attribute";
-import { useEditAttribute } from "../api/use-edit-attribute";
-import useCreateAttributeValue from "../api/use-create-attribute-value";
-import { useGetAttributeValues } from "../api/use-get-attribute-values";
-import useDeleteAttributeValue from "../api/use-delete-attribute-value";
+import { useDeleteAttribute } from "../api/attribute/use-delete-attribute";
+import { useEditAttribute } from "../api/attribute/use-edit-attribute";
+import useCreateAttributeValue from "../api/attribute/use-create-attribute-value";
+import { useGetAttributeValues } from "../api/attribute/use-get-attribute-values";
+import useDeleteAttributeValue from "../api/attribute/use-delete-attribute-value";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -38,6 +38,9 @@ export default function AttributeModificationsColor({ attribute }: Props) {
   const [openAttributeNameModal, setOpenAttributeNameModal] = useState(false);
   const [openColorPopover, setOpenColorPopover] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
+  // APIs
+  const { data: attributeValues, status: attributeValues_fetchStatus } =
+    useGetAttributeValues(attribute.productAttributeId);
 
   const [selectedColorId, setSelectedColorId] = useState<number | undefined>(
     undefined
@@ -45,17 +48,15 @@ export default function AttributeModificationsColor({ attribute }: Props) {
 
   const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
 
-  // APIs
-  const { data: attributeValues, status: attributeValues_fetchStatus } =
-    useGetAttributeValues(attribute.productAttributeId);
-
   const { mutate: deleteAttribute } = useDeleteAttribute();
   const { mutate: editAttributeName } = useEditAttribute();
   const { mutate: createAttributeValue } = useCreateAttributeValue(
     attribute.name
   );
 
-  const { mutate: deleteAttributeValue } = useDeleteAttributeValue();
+  const { mutate: deleteAttributeValue } = useDeleteAttributeValue(
+    attribute.productAttributeId
+  );
 
   return (
     <motion.div
@@ -163,8 +164,8 @@ export default function AttributeModificationsColor({ attribute }: Props) {
       <AnimatePresence>
         {attributeValues_fetchStatus === "success" ? (
           <AttributeColorList
-            selectedColorId={selectedColorId}
-            setSelectedColorId={setSelectedColorId}
+            selectedColor={selectedColorId}
+            setSelectedColor={setSelectedColorId}
             attributeOptions={attributeValues}
             className="p-4 w-full flex flex-row-reverse"
           />

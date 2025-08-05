@@ -6,16 +6,15 @@ import { cn } from "@/lib/utils";
 
 type AppProps = {
   attributeOptions: AttributeValue[];
-  selectedColorId: number | undefined;
-  setSelectedColorId: (colorId: number) => void;
-
+  selectedColor: number | undefined;
+  setSelectedColor: (id: number) => void;
   className?: string;
 };
 export default function AttributesColorList({
   attributeOptions,
-  selectedColorId,
-  setSelectedColorId,
   className,
+  selectedColor,
+  setSelectedColor,
 }: AppProps) {
   return (
     <div className={cn("overflow-x-auto mr-6 w-54", className)}>
@@ -28,13 +27,13 @@ export default function AttributesColorList({
               scale: 1,
               opacity: 1,
               boxShadow:
-                selectedColorId === color.productAttributeValueId
+                selectedColor === color.productAttributeValueId
                   ? "0 0 0 4px #2379FF"
                   : undefined,
             }}
             exit={{ scale: 0.8, opacity: 0 }}
             key={color.productAttributeValueId}
-            onClick={() => setSelectedColorId(color.productAttributeValueId)}
+            onClick={() => setSelectedColor(color.productAttributeValueId)}
             className="size-6 rounded-full cursor-pointer "
             style={{ background: color.value }}
           />

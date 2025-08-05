@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Loader2, LogIn } from "lucide-react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useSession } from "@/hooks/use-session";
 import axiosInstance from "@/lib/axios";
@@ -23,6 +23,7 @@ export default function ProfileDropdown() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const { session, isLoading } = useSession();
+  const queryClient = useQueryClient();
 
   const { removeToken } = useAuthToken();
 
@@ -35,6 +36,10 @@ export default function ProfileDropdown() {
     onSuccess: async () => {
       router.push("/");
     },
+    onSettled: () =>
+      queryClient.removeQueries({
+        queryKey: ["user-session"],
+      }),
   });
 
   if (isLoading) {

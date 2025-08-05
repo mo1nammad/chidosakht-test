@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "next/navigation";
 
-import { useGetProductImages } from "../api/use-get-product-images";
+import { useGetProductImages } from "../api/image/use-get-product-images";
 
 import ProductGalleryCarousel from "./product-gallery-carousel";
 import ProductGalleryDropzone from "./product-gallery-dropzone";

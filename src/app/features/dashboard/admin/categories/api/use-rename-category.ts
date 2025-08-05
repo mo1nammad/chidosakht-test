@@ -22,7 +22,7 @@ export function useRenameCategory() {
       return response.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["category-list"] });
+      queryClient.invalidateQueries({ queryKey: ["category-tree"] });
       toast.success("نقش با موفقیت تغییر یافت");
       setCategoryId("");
     },

@@ -25,7 +25,6 @@ export default function AssignUserRole({ roleId }: AppProps) {
   const { mutate: assignUserFn, isPending } = useAssignUserRole(roleId);
 
   const [showList, setShowList] = useState(false);
-  console.log(showList);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 

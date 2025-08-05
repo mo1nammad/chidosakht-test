@@ -6,9 +6,9 @@ type ApiResponse = { allCategories: Category[] };
 
 export function useCategories() {
   const query = useQuery<ApiResponse>({
-    queryKey: ["category-list"],
+    queryKey: ["category-tree"],
     queryFn: async () => {
-      const response = await axiosInstance.get("/Admin/Category");
+      const response = await axiosInstance.get("/Category");
       return response.data;
     },
   });

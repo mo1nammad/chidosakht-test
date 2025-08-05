@@ -1,18 +1,18 @@
-import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@/lib/axios";
-import { Attribute } from "../types";
+import { ProductVariant } from "../../types";
+import { useParams } from "next/navigation";
 
-type ApiResponse = Attribute[];
+type ApiResponse = ProductVariant[];
 
-export function useGetAttributes() {
+export function useGetProductVariants() {
   const { productId } = useParams();
 
   const query = useQuery<ApiResponse>({
-    queryKey: ["admin-product-attributes", productId],
+    queryKey: ["admin-product-variants", Number(productId)],
     queryFn: async () => {
       const response = await axiosInstance.get(
-        `/Admin/ProductAttribute/${productId}`
+        `/Admin/ProductVariant/${productId}`
       );
       return response.data;
     },

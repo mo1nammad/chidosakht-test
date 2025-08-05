@@ -44,8 +44,54 @@ export const customErrorMap: z.ZodErrorMap = (error, ctx) => {
   return { message: ctx.defaultError };
 };
 
-export function convertToBase64(file: File, cb: (url: string) => void) {
-  const reader = new FileReader();
-  reader.onloadend = () => cb(reader.result as string);
-  reader.readAsDataURL(file);
+const placeValueMap: { [index: number]: string } = {
+  0: "",
+  1: "هزار",
+  2: "میلیون",
+  3: "میلیارد",
+};
+export function convertRialToTuman(rial: number) {
+  const rialStringified = rial.toString().slice(0, -1);
+  const tumanArray = [];
+  const placeValueSeperator = 3;
+
+  if (rialStringified && rialStringified.length < placeValueSeperator) {
+    tumanArray.push(rialStringified);
+  }
+
+  for (let i = 1; i <= rialStringified.length; i++) {
+    if (i % placeValueSeperator === 0) {
+      const value = `${rialStringified.at(-i)}${rialStringified.at(
+        -i + 1
+      )}${rialStringified.at(-i + 2)}`;
+
+      tumanArray.push(removeZeroBehind(value));
+
+      if (rialStringified.at(-i - 1)) {
+        tumanArray.push(placeValueMap[i / placeValueSeperator]);
+      }
+
+      if (
+        rialStringified.length - i < placeValueSeperator &&
+        rialStringified.length - i > 0
+      ) {
+        const rest = rialStringified.slice(0, rialStringified.length - i);
+        tumanArray.push(rest);
+      }
+    }
+  }
+
+  return tumanArray.filter((data) => data !== "");
 }
+
+const removeZeroBehind = (data: string) => {
+  let index = 0;
+
+  for (let i = 0; i < data.length; i++) {
+    if (data[i] === "0") {
+      index = i + 1;
+    } else break;
+  }
+
+  return data.slice(index);
+};

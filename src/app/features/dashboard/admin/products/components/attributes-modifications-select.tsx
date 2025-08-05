@@ -5,11 +5,11 @@ import { Delete, MoreVertical, Pen, Plus, XCircle } from "lucide-react";
 import { Attribute } from "../types";
 
 // api
-import { useDeleteAttribute } from "../api/use-delete-attribute";
-import { useEditAttribute } from "../api/use-edit-attribute";
-import useCreateAttributeValue from "../api/use-create-attribute-value";
-import { useGetAttributeValues } from "../api/use-get-attribute-values";
-import useDeleteAttributeValue from "../api/use-delete-attribute-value";
+import { useDeleteAttribute } from "../api/attribute/use-delete-attribute";
+import { useEditAttribute } from "../api/attribute/use-edit-attribute";
+import useCreateAttributeValue from "../api/attribute/use-create-attribute-value";
+import { useGetAttributeValues } from "../api/attribute/use-get-attribute-values";
+import useDeleteAttributeValue from "../api/attribute/use-delete-attribute-value";
 
 import AttributesOptions from "./attributes-options";
 import { Button } from "@/components/ui/button";
@@ -30,6 +30,7 @@ export default function AttributeModificationsSelect({ attribute }: Props) {
   // variant modals states
   const [openAttributeNameModal, setOpenAttributeNameModal] = useState(false);
   const [openCreateOptionModal, setOpenCreateOptionModal] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false);
 
   const [selectedOptionId, setSelectedOptionId] = useState<string | undefined>(
     undefined
@@ -43,7 +44,9 @@ export default function AttributeModificationsSelect({ attribute }: Props) {
   const { mutate: createAttributeValue } = useCreateAttributeValue(
     attribute.name
   );
-  const { mutate: deleteAttributeValue } = useDeleteAttributeValue();
+  const { mutate: deleteAttributeValue } = useDeleteAttributeValue(
+    attribute.productAttributeId
+  );
 
   const attributeOptionsComponentRender = {
     success: (
@@ -74,7 +77,7 @@ export default function AttributeModificationsSelect({ attribute }: Props) {
       {/* dropdown */}
 
       <div className="flex flex-row-reverse items-center gap-x-3">
-        <DropdownMenu>
+        <DropdownMenu open={openDropdown} onOpenChange={setOpenDropdown}>
           <DropdownMenuTrigger asChild>
             <Button
               type="button"
@@ -106,7 +109,10 @@ export default function AttributeModificationsSelect({ attribute }: Props) {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => setOpenCreateOptionModal(true)}
+              onClick={() => {
+                setOpenCreateOptionModal(true);
+                setOpenDropdown(false);
+              }}
               className="flex-row-reverse justify-between"
             >
               <span>اضافه کردن یک انتخاب</span>

@@ -1,38 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { usePermissions } from "../api/use-permissions";
 
 import { Loader2 } from "lucide-react";
 import PermissionSingleCheckbox from "./permission-single-checkbox";
-import { useRolePermissions } from "../api/use-role-permissions";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { useUpdateCurrentRolePermission } from "../api/use-update-current-role-permission";
+import { useRolePermissionState } from "../hooks/useRolePermissionState";
 
 type AppProps = {
   roleId: string;
 };
 
 export default function PermissionCheckboxSection({ roleId }: AppProps) {
-  // static checkbox labels
+  // fetch permission list from database
   const { data: permissions, status: checkboxesStatus } = usePermissions();
 
-  // current role permissions
-  const { data: rolePermissions } = useRolePermissions(roleId);
-
-  const [currentRolePermissions, setCurrentRolePermissions] = useState<
-    Set<number>
-  >(new Set());
-
-  useEffect(() => {
-    const settenPermissions = new Set(rolePermissions);
-    setCurrentRolePermissions(settenPermissions);
-  }, [rolePermissions]);
-
+  // update this the role permissions api
   const { mutate: updateRolePermissions, isPending: isUpdatePending } =
     useUpdateCurrentRolePermission();
 
-  // checkbox render first
+  // state for editing permissions for the role
+  const { addPermissionToRole, currentRolePermissions, selectAllCheckBox } =
+    useRolePermissionState(roleId);
+
   if (checkboxesStatus === "pending")
     return (
       <div className="w-full relative mt-8">
@@ -48,19 +41,21 @@ export default function PermissionCheckboxSection({ roleId }: AppProps) {
             <PermissionSingleCheckbox
               permission={permission}
               key={permission.id}
-              onUpdate={(id) => {
-                setCurrentRolePermissions((prev) => {
-                  const newSet = new Set(prev);
-                  if (newSet.has(id)) newSet.delete(id);
-                  else newSet.add(id);
-                  return newSet;
-                });
-              }}
+              onUpdate={addPermissionToRole}
               value={currentRolePermissions.has(permission.id)}
             />
           ))}
         </div>
       </ScrollArea>
+      <Button
+        onClick={() => selectAllCheckBox(permissions)}
+        variant="tertiary"
+        size={"sm"}
+        className="mr-3"
+      >
+        انتخاب همه
+      </Button>
+
       <Button
         onClick={() =>
           updateRolePermissions({

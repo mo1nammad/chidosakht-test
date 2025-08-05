@@ -1,9 +1,12 @@
+import { useRouter } from "next/navigation";
 import axiosInstance from "@/lib/axios";
 import { toast } from "@/lib/toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
 export function usePostProductImage(productId: string) {
+  const router = useRouter();
+
   const queryClient = useQueryClient();
 
   const mutation = useMutation<undefined, AxiosError<string>, FormData>({
@@ -16,8 +19,9 @@ export function usePostProductImage(productId: string) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["admin-products-images", productId],
+        queryKey: ["admin-product-images", Number(productId)],
       });
+      router.refresh();
     },
     onError: (err) => toast.error(err.response?.data),
   });

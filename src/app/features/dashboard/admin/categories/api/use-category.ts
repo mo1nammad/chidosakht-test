@@ -14,7 +14,7 @@ type ApiResponse = {
 
 export function useCategory(categoryId: string) {
   const query = useQuery<ApiResponse>({
-    queryKey: ["category-data", categoryId],
+    queryKey: ["admin-category-data", categoryId],
     queryFn: async () => {
       const response = await axiosInstance.get(`/Admin/Category/${categoryId}`);
       return response.data;

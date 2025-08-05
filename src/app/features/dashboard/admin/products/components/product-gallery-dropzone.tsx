@@ -3,7 +3,7 @@ import { useParams } from "next/navigation";
 import { Check, Loader2, Plus, Upload } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 
-import { usePostProductImage } from "../api/use-post-product-images";
+import { usePostProductImage } from "../api/image/use-post-product-images";
 
 import { Button } from "@/components/ui/button";
 import {

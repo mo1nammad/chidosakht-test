@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useCreateAttribute } from "../api/use-create-attribute";
+import { useCreateAttribute } from "../api/attribute/use-create-attribute";
 
 import ProductAttributeSelect from "./product-attributes-select";
 import AttributeModification from "./attributes-modifications";

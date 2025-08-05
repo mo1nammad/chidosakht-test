@@ -1,10 +1,12 @@
+import { useParams } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError, AxiosResponse } from "axios";
 
+import { attributeAndValuesKey } from "./use-get-both-attribute-value";
+import { productAttributeValuesKey } from "./use-get-attribute-values";
+import { AttributeValue } from "../../types";
 import axiosInstance from "@/lib/axios";
 import { toast } from "@/lib/toast";
-import { AttributeValue } from "../types";
-import { productAttributeValuesKey } from "./use-get-attribute-values";
 
 type RequestBody = {
   productAttributeId: number;
@@ -18,6 +20,7 @@ const postAttributeValues = async (req: RequestBody) =>
 // react query hook with optimistic ui
 export default function useCreateAttributeValue(attributeName: string) {
   const queryClient = useQueryClient();
+  const { productId } = useParams();
 
   const mutation = useMutation<
     AxiosResponse,
@@ -57,16 +60,22 @@ export default function useCreateAttributeValue(attributeName: string) {
       );
     },
     onError: (err, req, context) => {
-      toast.error(err.response?.data);
+      console.log(err);
+
+      // toast.error(err.response?.data);
       queryClient.setQueryData<AttributeValue[]>(
         productAttributeValuesKey(req.productAttributeId),
         context?.previousValues
       );
     },
-    onSettled: (_data, _err, vrb) =>
+    onSettled: (_data, _err, vrb) => {
       queryClient.invalidateQueries({
         queryKey: productAttributeValuesKey(vrb.productAttributeId),
-      }),
+      });
+      queryClient.invalidateQueries({
+        queryKey: attributeAndValuesKey(Number(productId)),
+      });
+    },
   });
 
   return mutation;

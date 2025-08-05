@@ -17,7 +17,7 @@ export function useDeleteCategory(categoryId: string | number) {
       return response.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["category-list"] });
+      queryClient.invalidateQueries({ queryKey: ["category-tree"] });
       setCategoryId("");
     },
   });
