@@ -65,7 +65,7 @@ export default function SpecField({ field }: AppProps) {
               <FormControl>
                 <Textarea
                   dir="rtl"
-                  className="min-h-20 text-xs md:text-xs"
+                  className="min-h-20 text-[0.625rem] md:text-xs"
                   {...field}
                 />
               </FormControl>
@@ -84,7 +84,7 @@ export default function SpecField({ field }: AppProps) {
                   <Input
                     dir="rtl"
                     placeholder="کلید"
-                    className="max-w-64 text-xs md:text-sm"
+                    className="max-w-64 text-[0.7rem] sm:text-sm"
                     {...field}
                   />
                 </FormControl>
@@ -101,22 +101,22 @@ export default function SpecField({ field }: AppProps) {
     <>
       <div
         dir="rtl"
-        className="text-xs col-span-3 pb-2.5 border-b border-b-gray-200"
+        className="text-[0.625rem] md:text-xs col-span-3 pb-2.5 border-b border-b-gray-200"
       >
         {field.value}
       </div>
-      <div dir="rtl" className="text-sm flex justify-between">
-        <p>{field.key}</p>
+      <div dir="rtl" className="flex flex-col md:flex-row justify-between">
+        <p className="text-[0.7rem] sm:text-sm">{field.key}</p>
         <div className="space-x-1.5">
           <button
             onClick={() => deleteSpec(field.id)}
-            className="size-3.5 active:opacity-65 cursor-pointer"
+            className="size-3 md:size-3.5 active:opacity-65 cursor-pointer"
           >
             <Trash className="size-full" />
           </button>
           <button
             onClick={() => setIsEditingField((prev) => !prev)}
-            className="size-3.5 active:opacity-65 cursor-pointer"
+            className="size-3 md:size-3.5 active:opacity-65 cursor-pointer"
           >
             <SquarePen className="size-full" />
           </button>

@@ -1,10 +1,10 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 
-import type { ProductVariant } from "../types";
+import type { ProductVariant } from "../../types";
 import { Edit, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useDeleteVariant } from "../api/variant/use-delete-variant";
+import { useDeleteVariant } from "../../api/variant/use-delete-variant";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 

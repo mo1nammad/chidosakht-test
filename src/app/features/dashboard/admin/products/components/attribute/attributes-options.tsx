@@ -1,5 +1,5 @@
 import React from "react";
-import { AttributeValue } from "../types";
+import { AttributeValue } from "../../types";
 import {
   Select,
   SelectContent,

@@ -53,7 +53,11 @@ export default function SpecFieldForm({ className, groupId }: AppProps) {
           render={({ field }) => (
             <FormItem className="col-span-3">
               <FormControl>
-                <Textarea className="min-h-20" {...field} />
+                <Textarea
+                  dir="rtl"
+                  className="min-h-20 text-[0.625rem] md:text-xs"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -67,7 +71,12 @@ export default function SpecFieldForm({ className, groupId }: AppProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="کلید" className="max-w-64" {...field} />
+                  <Input
+                    dir="rtl"
+                    placeholder="کلید"
+                    className="max-w-64 text-[0.7rem] sm:text-sm"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

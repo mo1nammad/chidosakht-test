@@ -1,15 +1,11 @@
 import React from "react";
-import { useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { editProductVariantScheme, EditProductVariantScheme } from "../scheme";
+import { productSimpleScheme, ProductSimpleSchemeType } from "../scheme";
 
 import { convertRialToTuman } from "@/lib/utils";
-import { useEditVariant } from "../hooks/use-edit-variant";
 
-import { MoveRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,47 +17,39 @@ import {
   FormMessage,
   FormDescription,
 } from "@/components/ui/form";
-import { useUpdateProductVariant } from "../api/variant/use-update-variant";
+import { Product } from "../types";
 
-export default function ProductEditVariantForm() {
-  const router = useRouter();
-  const { variant } = useEditVariant();
+type AppProps = {
+  product: Product;
+};
 
-  const { mutate: updateVariant, isPending } = useUpdateProductVariant();
+export default function ProductSimplePricingForm({ product }: AppProps) {
+  //   const { mutate: createVariant, status: createVariantStatus } =
+  //     useCreateVariant();
 
-  const form = useForm<z.infer<typeof editProductVariantScheme>>({
-    resolver: zodResolver(editProductVariantScheme),
+  const form = useForm<ProductSimpleSchemeType>({
+    resolver: zodResolver(productSimpleScheme),
     defaultValues: {
-      productVariantId: variant?.productVariantId,
-      price: variant?.price,
-      specialPrice: variant?.specialPrice,
-
-      stock: variant?.stock,
-      weight: variant?.weight,
-      width: variant?.width,
-      height: variant?.height,
-      length: variant?.length,
+      productId: product.id,
+      price: 0,
+      specialPrice: 0,
+      stock: 1,
+      weight: 0,
+      width: 0,
+      height: 0,
+      length: 0,
     },
   });
 
-  const handleSubmitForm = (value: EditProductVariantScheme) =>
-    updateVariant(value);
-
-  if (!variant) return null;
+  const handleSubmitForm = (value: ProductSimpleSchemeType) => {
+    console.log(value);
+  };
 
   return (
     <Form {...form}>
-      <Button
-        onClick={() => router.back()}
-        variant="link"
-        className="absolute right-0"
-      >
-        <p className="text-sm">بازگشت به جدول</p>
-        <MoveRight className="size-4" />
-      </Button>
       <form
         dir="rtl"
-        className="my-6 flex flex-col w-full pt-5"
+        className="my-6 flex flex-col w-full"
         onSubmit={form.handleSubmit(handleSubmitForm)}
       >
         {/* input group */}
@@ -220,7 +208,10 @@ export default function ProductEditVariantForm() {
             />
           </div>
         </div>
-        <Button disabled={isPending} className="w-full sm:w-16 mt-3">
+        <Button
+          //   disabled={createVariantStatus === "pending"}
+          className="w-full sm:w-16 mt-3"
+        >
           ثبت
         </Button>
       </form>

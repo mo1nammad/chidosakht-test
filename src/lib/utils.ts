@@ -61,21 +61,22 @@ export function convertRialToTuman(rial: number) {
 
   for (let i = 1; i <= rialStringified.length; i++) {
     if (i % placeValueSeperator === 0) {
-      const value = `${rialStringified.at(-i)}${rialStringified.at(
+      let value = `${rialStringified.at(-i)}${rialStringified.at(
         -i + 1
       )}${rialStringified.at(-i + 2)}`;
 
-      tumanArray.push(removeZeroBehind(value));
+      value = removeZeroBehind(value);
 
-      if (rialStringified.at(-i - 1)) {
-        tumanArray.push(placeValueMap[i / placeValueSeperator]);
-      }
+      if (value) tumanArray.push(placeValueMap[i / placeValueSeperator - 1]);
+
+      tumanArray.push(value);
 
       if (
         rialStringified.length - i < placeValueSeperator &&
         rialStringified.length - i > 0
       ) {
         const rest = rialStringified.slice(0, rialStringified.length - i);
+        tumanArray.push(placeValueMap[i / placeValueSeperator]);
         tumanArray.push(rest);
       }
     }
@@ -94,4 +95,11 @@ const removeZeroBehind = (data: string) => {
   }
 
   return data.slice(index);
+};
+
+export const formatRIAL = (amount: number) => {
+  return new Intl.NumberFormat("fa-IR", {
+    style: "currency",
+    currency: "IRR",
+  }).format(amount);
 };

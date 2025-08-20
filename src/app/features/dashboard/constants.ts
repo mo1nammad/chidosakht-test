@@ -10,10 +10,14 @@ import {
   SendToBack,
 } from "lucide-react";
 
-import ProductAttributes from "./admin/products/components/product-attributes";
-import ProductVariantForm from "./admin/products/components/product-variant-form";
-import ProductVariantsData from "./admin/products/components/product-variants-data";
+import { simpleProduct, variantProduct } from "./admin/products/types";
+
+import ProductAttributes from "./admin/products/components/attribute/product-attributes";
+import ProductVariantForm from "./admin/products/components/variant/product-variant-form";
+import ProductVariantsData from "./admin/products/components/variant/product-variants-data";
 import ProductSpecifications from "./admin/products/components/specification/product-specifications";
+import RelatedProducts from "./admin/products/components/related-products/related-products";
+import React from "react";
 
 type Route = {
   title: string;
@@ -135,32 +139,40 @@ export const generateNavigateUrlList = ({
   return result;
 };
 
-export const createProductAdditonalFormsList = [
-  // {
-  //   title: "قیمت گذاری",
-  //   query: "pricing",
-  //   default: true,
-  //   component: ProductPricingForm,
-  // },
+export const createProductAdditonalFormsList: {
+  title: string;
+  query: string;
+  component: () => React.ReactNode;
+  productType: (1 | 2)[];
+}[] = [
   {
     title: "شاخصه ها",
     query: "attributes",
     component: ProductAttributes,
-    default: true,
+    productType: [variantProduct],
   },
   {
     title: "قیمت گذاری",
     query: "pricing",
     component: ProductVariantForm,
+    productType: [variantProduct],
   },
   {
     title: "جدول واریانت ها",
     query: "variants",
     component: ProductVariantsData,
+    productType: [variantProduct],
   },
   {
     title: "توضیحات تکمیلی",
     query: "specifications",
     component: ProductSpecifications,
+    productType: [simpleProduct, variantProduct],
+  },
+  {
+    title: "محصولات مرتبط",
+    query: "related-products",
+    component: RelatedProducts,
+    productType: [simpleProduct, variantProduct],
   },
 ];

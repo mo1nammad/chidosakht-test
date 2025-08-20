@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 
 import { Attribute, AttributeValue, selectAttribute as SELECT } from "../types";
 
-import AttributesColorList from "./attributes-color-list";
-import AttributeOptions from "./attributes-options";
+import AttributesColorList from "./attribute/attributes-color-list";
+import AttributeOptions from "./attribute/attributes-options";
 
 type AppProps = {
   attributeAndValues: Attribute & {

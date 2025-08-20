@@ -18,6 +18,18 @@ export interface Product {
   lastUpdateTime: Date | string | number | null;
 }
 
+export type ProductToPick = {
+  id: number;
+  name: string;
+  uniqeLink: string;
+  imageAltText: string;
+  nameIndexImage: string;
+  urlNameIndexImage: string;
+  price: number;
+  specialPrice: number;
+  percentDiscount: number;
+};
+
 export const colorAttribute = 2 as const;
 export const selectAttribute = 1 as const;
 

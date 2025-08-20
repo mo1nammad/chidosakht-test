@@ -44,3 +44,15 @@ export const editSpecificationScheme = z.object({
 export type EditSpecificationSchemeType = z.infer<
   typeof editSpecificationScheme
 >;
+
+export const productSimpleScheme = z.object({
+  productId: z.coerce.number().min(0),
+  price: z.coerce.number().min(0),
+  specialPrice: z.coerce.number(),
+  stock: z.coerce.number().min(1).max(2147483647),
+  length: z.coerce.number(),
+  width: z.coerce.number(),
+  height: z.coerce.number(),
+  weight: z.coerce.number(),
+});
+export type ProductSimpleSchemeType = z.infer<typeof productSimpleScheme>;

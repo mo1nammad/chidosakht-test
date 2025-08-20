@@ -26,7 +26,7 @@ const NavigationMenu = ({ className }: Props) => {
         return (
           <li
             className={cn(
-              "hover:text-blue-900",
+              "hover:text-blue-900 font-semibold",
               pathname === item.route && !searchParams.get("modal")
                 ? "text-primary"
                 : "text-accent-foreground"
@@ -40,6 +40,7 @@ const NavigationMenu = ({ className }: Props) => {
       {/* contact us modal routuing */}
       <li
         className={cn(
+          "font-medium",
           searchParams.get("modal") === "contact-us"
             ? "text-primary"
             : "text-accent-foreground"

@@ -34,7 +34,6 @@ type AppProps = {
 };
 
 export default function ProductCategory({ productCategoryId }: AppProps) {
-  const [open, setOpen] = React.useState(false);
   const [selectedId, setSelectedId] = React.useState(productCategoryId);
 
   const { data: categories } = useGetCategories();
@@ -54,7 +53,6 @@ export default function ProductCategory({ productCategoryId }: AppProps) {
           <Button
             variant="outline"
             role="combobox"
-            aria-expanded={open}
             className="w-[250px] justify-between flex-row-reverse"
           >
             {selectedId
@@ -84,7 +82,6 @@ export default function ProductCategory({ productCategoryId }: AppProps) {
                     updateProductCategory({
                       categoryId: category.id,
                     });
-                    setOpen(false);
                   }}
                 >
                   {category.value}

@@ -19,7 +19,11 @@ import { Button, buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { useAuthToken } from "@/hooks/use-auth-token";
 
-export default function ProfileDropdown() {
+type AppProps = {
+  className?: string;
+};
+
+export default function ProfileDropdown({ className }: AppProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const { session, isLoading } = useSession();
@@ -43,7 +47,11 @@ export default function ProfileDropdown() {
   });
 
   if (isLoading) {
-    return <Loader2 className="animate-spin text-muted-foreground/60" />;
+    return (
+      <Loader2
+        className={cn("animate-spin text-muted-foreground/60", className)}
+      />
+    );
   }
 
   if (!session)
@@ -53,10 +61,11 @@ export default function ProfileDropdown() {
         className={cn(
           buttonVariants({
             variant: "outline",
+            className,
           })
         )}
       >
-        <span>ورود | ثبت‌نام</span>
+        <span className="font-semibold">ورود | ثبت‌نام</span>
         <LogIn className="size-5!" />
       </Link>
     );
@@ -69,6 +78,7 @@ export default function ProfileDropdown() {
         <Avatar
           className={cn(
             "w-12 h-12 cursor-pointer",
+            className,
             open && "ring-2 ring-primary"
           )}
         >

@@ -3,14 +3,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import { Delete, MoreVertical, Pen, Plus, XCircle } from "lucide-react";
 
-import { Attribute } from "../types";
+import { Attribute } from "../../types";
 
 // api
-import { useDeleteAttribute } from "../api/attribute/use-delete-attribute";
-import { useEditAttribute } from "../api/attribute/use-edit-attribute";
-import useCreateAttributeValue from "../api/attribute/use-create-attribute-value";
-import { useGetAttributeValues } from "../api/attribute/use-get-attribute-values";
-import useDeleteAttributeValue from "../api/attribute/use-delete-attribute-value";
+import { useDeleteAttribute } from "../../api/attribute/use-delete-attribute";
+import { useEditAttribute } from "../../api/attribute/use-edit-attribute";
+import useCreateAttributeValue from "../../api/attribute/use-create-attribute-value";
+import { useGetAttributeValues } from "../../api/attribute/use-get-attribute-values";
+import useDeleteAttributeValue from "../../api/attribute/use-delete-attribute-value";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/popover";
 
 import AttributeColorPicker from "./attributes-color-picker";
-import SimpleInputDrawerDialog from "./simple-input-drawer-dialog";
+import SimpleInputDrawerDialog from "../simple-input-drawer-dialog";
 import AttributeColorList from "./attributes-color-list";
 
 type Props = { attribute: Attribute };

@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-import { AttributeValue } from "../types";
+import { AttributeValue } from "../../types";
 import { cn } from "@/lib/utils";
 
 type AppProps = {

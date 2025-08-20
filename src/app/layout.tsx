@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-import { fontList } from "./fonts/font-webhook";
+import { fontList } from "@/fonts/font-webhook";
 import Providers from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 

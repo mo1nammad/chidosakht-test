@@ -81,7 +81,7 @@ const ProductGalleryCarousel = ({ imageList }: AppProps) => {
                   alt="admin-product-image"
                   width={127}
                   height={179}
-                  className="w-full h-full rounded-lg object-cover"
+                  className="w-full h-full rounded-lg object-cover max-w-34"
                 />
                 <div className="absolute top-0.5 right-0.5 flex items-center gap-x-1">
                   <Tooltip>

@@ -18,6 +18,7 @@ function ContactUsModal({ className }: AppProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const modalParam = searchParams.get("modal");
+  const isOpen = modalParam === "contact-us";
 
   useEffect(() => {
     if (modalParam === "contact-us") {
@@ -29,9 +30,9 @@ function ContactUsModal({ className }: AppProps) {
     <>
       {/* overlay */}
       <AnimatePresence>
-        {modalParam && (
+        {isOpen && (
           <motion.div
-            className="fixed z-30 inset-0 bg-black transition duration-500 ease-out mt-20 md:mt-[110px] xl:mt-0"
+            className="fixed z-50 inset-0 bg-black transition duration-500 ease-out mt-20 md:mt-[110px] xl:mt-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.6 }}
             exit={{ opacity: 0 }}
@@ -41,37 +42,48 @@ function ContactUsModal({ className }: AppProps) {
         )}
       </AnimatePresence>
 
-      <div
-        className={cn(
-          "fixed inset-x-0 h-full lg:h-fit overflow-y-scroll lg:overflow-auto top-0 z-40 bg-muted rounded-b-xl max-w-(--breakpoint-xl) mx-auto transition-[top] duration-500 ease-out",
-          modalParam === "contact-us"
-            ? "top-0"
-            : "-top-[1170px] lg:-top-[630px]",
-          className
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className={cn(
+              "fixed inset-x-0 h-full lg:h-fit overflow-y-scroll lg:overflow-auto top-0 z-60 bg-muted rounded-xl max-w-(--breakpoint-xl) mx-auto",
+              className
+            )}
+            initial={{ y: -700, opacity: 0 }}
+            animate={{
+              y: 0,
+              opacity: 1,
+            }}
+            exit={{ y: -700, opacity: 0 }}
+            transition={{
+              duration: 1.5,
+              type: "spring",
+            }}
+          >
+            <Button
+              variant={"link"}
+              className="absolute left-4 top-10 text-xs text-muted-foreground"
+              onClick={() => router.back()}
+            >
+              <MoveLeft className="size-2" />
+              بازگشت
+            </Button>
+            <div className="flex h-fit flex-col lg:flex-row p-12">
+              <div className="lg:grow">
+                <ContactUsForm />
+              </div>
+              {/* seperator */}
+              <div className="lg:w-1 lg:h-[400px] w-full h-1 my-12 self-center lg:border-e border-t border-gray-300 lg:mx-12" />
+              {/* separator */}
+              <div className="h-fit lg:basis-[500px] text-right font-light flex flex-col items-end">
+                <p className="font-yekan-light text-sm mb-2">سوالات اطلاعاتی</p>
+                <h3 className="text-xl text-black">سوالات متداول</h3>
+                <FAQSection className="min-h-[500px] lg:min-h-max" />
+              </div>
+            </div>
+          </motion.div>
         )}
-      >
-        <Button
-          variant={"link"}
-          className="absolute left-4 top-10 text-xs text-muted-foreground"
-          onClick={() => router.back()}
-        >
-          <MoveLeft className="size-2" />
-          بازگشت
-        </Button>
-        <div className="flex h-fit flex-col lg:flex-row p-12">
-          <div className="lg:grow">
-            <ContactUsForm />
-          </div>
-          {/* seperator */}
-          <div className="lg:w-1 lg:h-[400px] w-full h-1 my-12 self-center lg:border-e border-t border-gray-300 lg:mx-12" />
-          {/* separator */}
-          <div className="h-fit lg:basis-[500px] text-right font-light flex flex-col items-end">
-            <p className="font-yekan-light text-sm mb-2">سوالات اطلاعاتی</p>
-            <h3 className="text-xl text-black">سوالات متداول</h3>
-            <FAQSection className="min-h-[500px] lg:min-h-max" />
-          </div>
-        </div>
-      </div>
+      </AnimatePresence>
     </>
   );
 }

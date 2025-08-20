@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Delete, MoreVertical, Pen, Plus, XCircle } from "lucide-react";
 
-import { Attribute } from "../types";
+import { Attribute } from "../../types";
 
 // api
-import { useDeleteAttribute } from "../api/attribute/use-delete-attribute";
-import { useEditAttribute } from "../api/attribute/use-edit-attribute";
-import useCreateAttributeValue from "../api/attribute/use-create-attribute-value";
-import { useGetAttributeValues } from "../api/attribute/use-get-attribute-values";
-import useDeleteAttributeValue from "../api/attribute/use-delete-attribute-value";
+import { useDeleteAttribute } from "../../api/attribute/use-delete-attribute";
+import { useEditAttribute } from "../../api/attribute/use-edit-attribute";
+import useCreateAttributeValue from "../../api/attribute/use-create-attribute-value";
+import { useGetAttributeValues } from "../../api/attribute/use-get-attribute-values";
+import useDeleteAttributeValue from "../../api/attribute/use-delete-attribute-value";
 
 import AttributesOptions from "./attributes-options";
 import { Button } from "@/components/ui/button";
@@ -21,7 +21,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import SimpleInputDrawerDialog from "./simple-input-drawer-dialog";
+import SimpleInputDrawerDialog from "../simple-input-drawer-dialog";
 import { Loader } from "@/components/loader";
 
 type Props = { attribute: Attribute };

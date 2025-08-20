@@ -2,9 +2,9 @@ import React from "react";
 import { useSearchParams } from "next/navigation";
 
 import { Loader } from "@/components/loader";
-import { useGetProductVariants } from "../api/variant/use-get-product-variants";
-import { ProdutctDataTable } from "./products-data-table";
-import { useVariantColumn } from "../hooks/use-variant-column";
+import { useGetProductVariants } from "../../api/variant/use-get-product-variants";
+import { ProdutctDataTable } from "../products-data-table";
+import { useVariantColumn } from "../../hooks/use-variant-column";
 import ProductEditVariantForm from "./product-edit-variant-form";
 
 export default function ProductVariantsData() {

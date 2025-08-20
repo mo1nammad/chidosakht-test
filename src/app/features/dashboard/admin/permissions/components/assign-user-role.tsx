@@ -32,7 +32,6 @@ export default function AssignUserRole({ roleId }: AppProps) {
   const debouncedValue = useDebounce({
     milliSeconds: 400,
     value,
-    onUpdate: () => {},
   });
 
   const [assignedUser, setAssignedUser] = useState<User | null>(null);

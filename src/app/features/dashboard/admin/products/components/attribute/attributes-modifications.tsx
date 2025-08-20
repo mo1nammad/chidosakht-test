@@ -3,8 +3,8 @@ import { AnimatePresence } from "framer-motion";
 
 import AttributesModificationsSelect from "./attributes-modifications-select";
 import AttributesModificationsColor from "./attributes-modifications-color";
-import { useGetAttributes } from "../api/attribute/use-get-attributes";
-import { selectAttribute } from "../types";
+import { useGetAttributes } from "../../api/attribute/use-get-attributes";
+import { selectAttribute } from "../../types";
 
 export default function AttributeModifications() {
   const { data: productAttributes, status } = useGetAttributes();

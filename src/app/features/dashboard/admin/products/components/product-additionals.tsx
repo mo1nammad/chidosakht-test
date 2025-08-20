@@ -1,5 +1,5 @@
-import React, { PropsWithChildren } from "react";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import React, { PropsWithChildren, useEffect } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { Product } from "../types";
@@ -32,19 +32,28 @@ type AppProps = {
   product: Product;
 };
 
-export default function ProductAdditionals({}: AppProps) {
-  const { productId } = useParams();
+export default function ProductAdditionals({ product }: AppProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const formSearchParam = useSearchParams().get("form");
+
+  useEffect(() => {
+    for (const form of additionalsList) {
+      if (form.productType.includes(product.productType)) {
+        router.push(`${pathname}?form=${form.query}`);
+        break;
+      }
+    }
+  }, []);
 
   return (
     <>
       <ScrollArea className="pb-1.5">
         <div className="flex flex-row-reverse gap-x-4 p-1 min-w-110">
           {additionalsList.map((form) => {
-            const isActive = formSearchParam
-              ? form.query === formSearchParam
-              : form.default;
+            const isActive = form.query === formSearchParam;
+
+            if (!form.productType.includes(product.productType)) return null;
 
             return (
               <Button
@@ -57,7 +66,7 @@ export default function ProductAdditionals({}: AppProps) {
                 size="sm"
                 onClick={() =>
                   router.push(
-                    `/dashboard/admin/products/${productId}?form=${form.query}`,
+                    `/dashboard/admin/products/${product.id}?form=${form.query}`,
                     { scroll: false }
                   )
                 }
@@ -72,9 +81,7 @@ export default function ProductAdditionals({}: AppProps) {
 
       <AnimatePresence mode="wait">
         {additionalsList.map((form) => {
-          const showComponent = formSearchParam
-            ? form.query === formSearchParam
-            : form.default;
+          const showComponent = form.query === formSearchParam;
 
           if (showComponent) {
             return (

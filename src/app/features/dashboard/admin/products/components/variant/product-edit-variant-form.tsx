@@ -1,15 +1,18 @@
 import React from "react";
-import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { productVariantScheme } from "../scheme";
+import {
+  editProductVariantScheme,
+  EditProductVariantScheme,
+} from "../../scheme";
 
 import { convertRialToTuman } from "@/lib/utils";
-import { useCreateVariant } from "../api/variant/use-create-variant";
-import { useGetAttributesAndValues } from "../api/attribute/use-get-both-attribute-value";
+import { useEditVariant } from "../../hooks/use-edit-variant";
 
+import { MoveRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,58 +24,49 @@ import {
   FormMessage,
   FormDescription,
 } from "@/components/ui/form";
+import { useUpdateProductVariant } from "../../api/variant/use-update-variant";
 
-import PricingAttributeField from "./pricing-attribute-field";
+export default function ProductEditVariantForm() {
+  const router = useRouter();
+  const { variant } = useEditVariant();
 
-export default function ProductVariantForm() {
-  const { productId } = useParams();
-  const { data: attributesAndValues, status } = useGetAttributesAndValues(
-    productId as string
-  );
-  const { mutate: createVariant, status: createVariantStatus } =
-    useCreateVariant();
+  const { mutate: updateVariant, isPending } = useUpdateProductVariant();
 
-  const form = useForm<z.infer<typeof productVariantScheme>>({
-    resolver: zodResolver(productVariantScheme),
+  const form = useForm<z.infer<typeof editProductVariantScheme>>({
+    resolver: zodResolver(editProductVariantScheme),
     defaultValues: {
-      productId: Number(productId),
-      price: 0,
-      specialPrice: 0,
-      productAttributeValueIds: [],
-      stock: 1,
-      weight: 0,
-      width: 0,
-      height: 0,
-      length: 0,
+      productVariantId: variant?.productVariantId,
+      price: variant?.price,
+      specialPrice: variant?.specialPrice,
+
+      stock: variant?.stock,
+      weight: variant?.weight,
+      width: variant?.width,
+      height: variant?.height,
+      length: variant?.length,
     },
   });
 
-  const handleSubmitForm = (value: z.infer<typeof productVariantScheme>) =>
-    createVariant(value);
+  const handleSubmitForm = (value: EditProductVariantScheme) =>
+    updateVariant(value);
+
+  if (!variant) return null;
 
   return (
     <Form {...form}>
+      <Button
+        onClick={() => router.back()}
+        variant="link"
+        className="absolute right-0"
+      >
+        <p className="text-sm">بازگشت به جدول</p>
+        <MoveRight className="size-4" />
+      </Button>
       <form
         dir="rtl"
-        className="my-6 flex flex-col w-full"
+        className="my-6 flex flex-col w-full pt-5"
         onSubmit={form.handleSubmit(handleSubmitForm)}
       >
-        {/* attribute and values selection */}
-        {status === "success" &&
-          attributesAndValues.map((attribute) => (
-            <PricingAttributeField
-              key={attribute.productAttributeId}
-              attributeAndValues={attribute}
-              setAttrValuesList={(id) => {
-                // update the list of valueIds
-                //
-                const newList = form.getValues("productAttributeValueIds");
-                newList[attributesAndValues.indexOf(attribute)] = id;
-                form.setValue("productAttributeValueIds", newList);
-              }}
-            />
-          ))}
-
         {/* input group */}
         <div className="flex flex-col md:flex-row gap-12 items-center justify-between">
           <div className="flex w-full flex-col gap-y-3 mt-6 md:basis-150">
@@ -229,10 +223,7 @@ export default function ProductVariantForm() {
             />
           </div>
         </div>
-        <Button
-          disabled={createVariantStatus === "pending"}
-          className="w-full sm:w-16 mt-3"
-        >
+        <Button disabled={isPending} className="w-full sm:w-16 mt-3">
           ثبت
         </Button>
       </form>

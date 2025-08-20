@@ -1,5 +1,3 @@
-import Link from "next/link";
-import Image from "next/image";
 import { Headset, Smartphone } from "lucide-react";
 
 import { Button } from "./ui/button";
@@ -7,6 +5,7 @@ import NavigationMenu from "./navigaion-menu";
 import HamburgerMenu from "./hamburger-menu";
 
 import ProfileButton from "./profile-dropdown";
+import NavbarLogo from "./navbar-logo";
 
 const Navbar = async () => {
   return (
@@ -44,14 +43,7 @@ const Navbar = async () => {
 
         <div className="flex items-center gap-x-16">
           <NavigationMenu className="hidden xl:flex xl:items-center" />
-          <Link
-            href="/"
-            id="logo"
-            className="md:flex items-center gap-x-3 hidden"
-          >
-            <span className="text-2xl font-yekan-semibold">Chidosakht</span>
-            <Image src="/logo.svg" width={71} height={56} alt="logo" />
-          </Link>
+          <NavbarLogo />
         </div>
       </nav>
     </div>

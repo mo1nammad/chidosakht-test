@@ -10,6 +10,7 @@ import ProductBodyForm from "./product-body-form";
 import ProductGalleryContainer from "./product-gallery-container";
 import ProductAdditionals from "./product-additionals";
 import ProductCategory from "./product-category";
+import ProductPublish from "./product-publish";
 
 // component
 export default function ProductForm() {
@@ -30,7 +31,11 @@ export default function ProductForm() {
   if (status === "success" && product.id) {
     return (
       <div className="text-right">
-        <h3 className="font-semibold text-xl mb-4">فرم بدنه محصول</h3>
+        <div className="flex justify-between items-center  mb-8">
+          <ProductPublish isPublished={product.isPublished} />
+          <h3 className="font-semibold text-xl">فرم بدنه محصول</h3>
+        </div>
+
         <div className="text-right flex flex-col gap-1">
           <ProductBodyForm
             label="نام محصول"

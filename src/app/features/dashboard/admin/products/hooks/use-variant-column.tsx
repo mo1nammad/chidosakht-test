@@ -1,5 +1,5 @@
 import React from "react";
-import { columns } from "../components/variants-column";
+import { columns } from "../components/variant/variants-column";
 
 import { useGetAttributesAndValues } from "../api/attribute/use-get-both-attribute-value";
 import { useParams } from "next/navigation";
