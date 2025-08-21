@@ -57,6 +57,7 @@ export default function Navbar() {
             {navigations.map((nav) => (
               <Link
                 key={nav.href}
+                scroll={false}
                 href={nav.href}
                 className={cn(
                   "flex items-center gap-x-0.5 flex-row-reverse font-medium hover:text-primary max-[900px]:text-xs",

@@ -26,14 +26,16 @@ const NavigationMenu = ({ className }: Props) => {
         return (
           <li
             className={cn(
-              "hover:text-blue-900 font-semibold",
+              "hover:text-blue-900 font-medium",
               pathname === item.route && !searchParams.get("modal")
                 ? "text-primary"
                 : "text-accent-foreground"
             )}
             key={index}
           >
-            <Link href={item.route}>{item.title}</Link>
+            <Link scroll={false} href={item.route}>
+              {item.title}
+            </Link>
           </li>
         );
       })}
