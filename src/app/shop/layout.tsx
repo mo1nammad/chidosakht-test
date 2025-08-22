@@ -19,9 +19,7 @@ export default function RootLayout({
       }
     >
       <Navbar />
-      <main className="min-h-screen pt-(--navbar-height) bg-muted">
-        {children}
-      </main>
+      <main className="min-h-screen pt-(--navbar-height)">{children}</main>
       <Footer />
       <ContactUsModal className="mt-20 md:mt-[110px]" />
     </div>

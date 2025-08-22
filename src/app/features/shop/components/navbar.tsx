@@ -34,7 +34,7 @@ const navigations = [
 
 export default function Navbar() {
   return (
-    <nav className="fixed top-0 inset-x-0 z-50 h-(--navbar-height) bg-white">
+    <nav className="fixed top-0 inset-x-0 z-50 h-(--navbar-height) bg-white drop-shadow-[0px_4px_58px_#00000007]">
       <div className="max-w-7xl mx-auto px-6 h-full">
         {" "}
         <div className="flex justify-between gap-x-8 items-center h-full">

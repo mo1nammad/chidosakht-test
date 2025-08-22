@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import HeroFeatures from "$/shop/components/hero-features";
 import CustomHeader from "$/shop/components/custom-header";
 import CategoryCards from "$/shop/components/category-cards";
+import DiscountedProducts from "$/shop/components/discounted-products";
 
 export default function ShopHome() {
   return (
@@ -68,6 +69,56 @@ export default function ShopHome() {
         </CustomHeader>
 
         <CategoryCards />
+      </section>
+
+      {/* discounted products sections*/}
+
+      <section
+        dir="rtl"
+        className="flex relative w-full min-h-86.5 mt-8 mb-20 gap-6"
+      >
+        {/* timer card */}
+        <div className="bg-[#F4F6F8] min-w-61 absolute inset-y-0 flex flex-col items-center pt-8.5 rounded-xl overflow-hidden">
+          <Image
+            src="/shop/discount-text.png"
+            alt="discount text"
+            width={228}
+            height={82}
+            className="mr-11"
+          />
+
+          {/* timer */}
+          <div className="flex flex-row-reverse gap-x-2 w-46 h-12 mt-8">
+            <div className="w-10 h-12 flex flex-col items-center justify-center gap-y-0.5 bg-primary rounded-sm text-white">
+              <span className="font-bold text-sm">2</span>
+              <span className="font-medium text-xs">روز</span>
+            </div>
+            <div className="w-10 h-12 flex flex-col items-center justify-center gap-y-0.5 bg-primary rounded-sm text-white">
+              <span className="font-bold text-sm">14</span>
+              <span className="font-medium text-xs">ساعت</span>
+            </div>
+            <div className="w-10 h-12 flex flex-col items-center justify-center gap-y-0.5 bg-primary rounded-sm text-white">
+              <span className="font-bold text-sm">32</span>
+              <span className="font-medium text-xs">دقیقه</span>
+            </div>
+            <div className="w-10 h-12 flex flex-col items-center justify-center gap-y-0.5 bg-primary rounded-sm text-white">
+              <span className="font-bold text-sm">08</span>
+              <span className="font-medium text-xs">ثانیه</span>
+            </div>
+          </div>
+
+          {/* images */}
+          <div className="size-78 bg-primary rounded-full absolute -bottom-63" />
+          <Image
+            src="/shop/Happy_Construction_Worker.png"
+            alt="happy constructor worker image"
+            width={140}
+            height={140}
+            className="absolute bottom-0"
+          />
+        </div>
+
+        <DiscountedProducts className="w-[calc(100%-272px)] mr-[272px] pr-6" />
       </section>
     </div>
   );
