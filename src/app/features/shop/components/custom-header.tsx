@@ -22,7 +22,7 @@ export default function CustomHeader({
 
       <div
         className={cn(
-          "relative flex items-center justify-center font-medium text-2xl",
+          "relative flex items-center justify-center font-medium text-lg sm:text-2xl",
           className
         )}
       >

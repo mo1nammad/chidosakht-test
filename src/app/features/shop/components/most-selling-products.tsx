@@ -14,7 +14,7 @@ import { CarouselBullets } from "@/components/carousel-bullets";
 type AppProps = {
   className?: string;
 };
-export default function DiscountedProducts({ className }: AppProps) {
+export default function MostSellingProducts({ className }: AppProps) {
   const [isClient, setIsClient] = useState(false);
   const isTablet = useMediaQuery({ query: "(max-width: 768px)" });
   const [api, setApi] = useState<CarouselApi>();
@@ -55,13 +55,13 @@ export default function DiscountedProducts({ className }: AppProps) {
       opts={{
         align: "start",
         loop: false,
-        startIndex: isTablet ? 0 : count, // 👈 start at last item
+        startIndex: isTablet ? 0 : items.length - 1, // 👈 start at last item
       }}
     >
       <CarouselContent className="h-105 md:h-auto">
         {items.map((item, i) => (
           <CarouselItem key={i} className="basis-36 md:basis-69">
-            <ProductCard showDiscount />
+            <ProductCard />
           </CarouselItem>
         ))}
       </CarouselContent>

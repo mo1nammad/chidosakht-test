@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Loader2, LogIn } from "lucide-react";
+import { LogIn } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useSession } from "@/hooks/use-session";
@@ -26,7 +26,7 @@ type AppProps = {
 export default function ProfileDropdown({ className }: AppProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const { session, isLoading } = useSession();
+  const { session } = useSession();
   const queryClient = useQueryClient();
 
   const { removeToken } = useAuthToken();
@@ -45,14 +45,6 @@ export default function ProfileDropdown({ className }: AppProps) {
         queryKey: ["user-session"],
       }),
   });
-
-  if (isLoading) {
-    return (
-      <Loader2
-        className={cn("animate-spin text-muted-foreground/60", className)}
-      />
-    );
-  }
 
   if (!session)
     return (

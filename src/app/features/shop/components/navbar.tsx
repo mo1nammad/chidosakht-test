@@ -48,7 +48,7 @@ export default function Navbar() {
 
             <ProfileDropdown className="hidden md:flex" />
 
-            <Button variant="ghost" size="icon" className="hidden md:block">
+            <Button variant="ghost" size="icon" className="hidden md:flex">
               <Search className="size-6!" />
             </Button>
           </div>
