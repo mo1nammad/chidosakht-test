@@ -10,7 +10,7 @@ import {
   SendToBack,
 } from "lucide-react";
 
-import { simpleProduct, variantProduct } from "./admin/products/types";
+import { Product, simpleProduct, variantProduct } from "./admin/products/types";
 
 import ProductAttributes from "./admin/products/components/attribute/product-attributes";
 import ProductVariantForm from "./admin/products/components/variant/product-variant-form";
@@ -18,6 +18,7 @@ import ProductVariantsData from "./admin/products/components/variant/product-var
 import ProductSpecifications from "./admin/products/components/specification/product-specifications";
 import RelatedProducts from "./admin/products/components/related-products/related-products";
 import React from "react";
+import ProductSimplePricingForm from "./admin/products/components/product-simple-pricing-form";
 
 type Route = {
   title: string;
@@ -142,7 +143,9 @@ export const generateNavigateUrlList = ({
 export const createProductAdditonalFormsList: {
   title: string;
   query: string;
-  component: () => React.ReactNode;
+  component:
+    | ((props: { product: Product }) => React.ReactNode)
+    | (() => React.ReactNode);
   productType: (1 | 2)[];
 }[] = [
   {
@@ -153,9 +156,15 @@ export const createProductAdditonalFormsList: {
   },
   {
     title: "قیمت گذاری",
-    query: "pricing",
+    query: "pricing-variant",
     component: ProductVariantForm,
     productType: [variantProduct],
+  },
+  {
+    title: "قیمت گذاری",
+    query: "pricing-simple",
+    component: ProductSimplePricingForm,
+    productType: [simpleProduct],
   },
   {
     title: "جدول واریانت ها",

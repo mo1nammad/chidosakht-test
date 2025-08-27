@@ -8,17 +8,16 @@ import { toast } from "@/lib/toast";
 
 type RequestBody = ProductSimpleSchemeType;
 
-export function useUpdateProductVariant() {
-  // TODO :edit
+export function useUpdateSimpleProductPricing() {
   const { productId } = useParams();
   const queryClient = useQueryClient();
 
   const mutation = useMutation<AxiosResponse, AxiosError<string>, RequestBody>({
-    mutationFn: async (req) =>
-      await axiosInstance.put("/Admin/ProductVariant", req),
+    mutationFn: async (req) => await axiosInstance.put(`/Admin/Product`, req),
     onSuccess: () => {
+      toast.success("اطلاعات جدید برای محصول ثبت شد");
       queryClient.invalidateQueries({
-        queryKey: ["admin-product-variants", Number(productId)],
+        queryKey: ["admin-product", Number(productId)],
       });
     },
     onError: (err) => toast.error(err.response?.data || "مشکلی پیش آمد"),

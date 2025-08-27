@@ -23,7 +23,7 @@ const navigations = [
   },
   {
     title: "دسته بندی",
-    href: "/shop?modal=categories",
+    href: "./?modal=categories",
     icon: ChevronDown,
   },
   {

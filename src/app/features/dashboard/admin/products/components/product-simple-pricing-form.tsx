@@ -4,7 +4,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { productSimpleScheme, ProductSimpleSchemeType } from "../scheme";
 
+import { Product } from "../types";
 import { convertRialToTuman } from "@/lib/utils";
+import { useUpdateSimpleProductPricing } from "../api/use-update-simple-product-pricing";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,33 +19,33 @@ import {
   FormMessage,
   FormDescription,
 } from "@/components/ui/form";
-import { Product } from "../types";
 
 type AppProps = {
   product: Product;
 };
 
 export default function ProductSimplePricingForm({ product }: AppProps) {
-  //   const { mutate: createVariant, status: createVariantStatus } =
-  //     useCreateVariant();
+  const { mutate: updateForm, status: UpdateStatus } =
+    useUpdateSimpleProductPricing();
+
+  const productInfo = product.infoForSampleProduct!;
 
   const form = useForm<ProductSimpleSchemeType>({
     resolver: zodResolver(productSimpleScheme),
     defaultValues: {
       productId: product.id,
-      price: 0,
-      specialPrice: 0,
-      stock: 1,
-      weight: 0,
-      width: 0,
-      height: 0,
-      length: 0,
+      price: productInfo.price,
+      specialPrice: productInfo.specialPrice,
+      stock: productInfo.stock,
+      weight: productInfo.weight,
+      width: productInfo.width,
+      height: productInfo.height,
+      length: productInfo.length,
     },
   });
 
-  const handleSubmitForm = (value: ProductSimpleSchemeType) => {
-    console.log(value);
-  };
+  const handleSubmitForm = (value: ProductSimpleSchemeType) =>
+    updateForm(value);
 
   return (
     <Form {...form}>
@@ -209,7 +211,7 @@ export default function ProductSimplePricingForm({ product }: AppProps) {
           </div>
         </div>
         <Button
-          //   disabled={createVariantStatus === "pending"}
+          disabled={UpdateStatus === "pending"}
           className="w-full sm:w-16 mt-3"
         >
           ثبت

@@ -17,7 +17,7 @@ import HeroFeatures from "$/shop/components/hero-features";
 import CustomHeader from "$/shop/components/custom-header";
 import CategoryCards from "$/shop/components/category-cards";
 import DiscountedProducts from "$/shop/components/discounted-products";
-import MostSellingProducts from "../features/shop/components/most-selling-products";
+import MostSellingProducts from "$/shop/components/most-selling-products";
 
 export default function ShopHome() {
   return (
@@ -44,7 +44,7 @@ export default function ShopHome() {
         <p className="text-muted-foreground mt-6 md:mt-2 font-normal text-center">
           رویاهای مسکونی شما را با مهارت و اشتیاق به واقعیت تبدیل می کنیم
         </p>
-        <Link href="#" className="relative z-40 mt-5">
+        <Link href="/shop/search" className="relative z-40 mt-5">
           <Button>
             <ChevronLeft />
             <span>مشاهده محصولات</span>

@@ -13,7 +13,18 @@ export interface Product {
   categoryId: number | undefined;
   categoryName: string | undefined;
   isPublished: boolean;
-  infoForSampleProduct: undefined;
+  viewCount: number;
+  infoForSampleProduct:
+    | undefined
+    | {
+        price: number;
+        specialPrice: number;
+        stock: number;
+        length: number;
+        width: number;
+        height: number;
+        weight: number;
+      };
   createTime: Date | string | number;
   lastUpdateTime: Date | string | number | null;
 }

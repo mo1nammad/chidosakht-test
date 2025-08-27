@@ -86,7 +86,7 @@ export default function ProductAdditionals({ product }: AppProps) {
           if (showComponent) {
             return (
               <MotionWrapper key={form.query}>
-                <form.component />
+                <form.component product={product} />
               </MotionWrapper>
             );
           }

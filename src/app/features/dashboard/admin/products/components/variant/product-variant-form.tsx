@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { productVariantScheme } from "../../scheme";
 
-import { convertRialToTuman } from "@/lib/utils";
 import { useCreateVariant } from "../../api/variant/use-create-variant";
 import { useGetAttributesAndValues } from "../../api/attribute/use-get-both-attribute-value";
 
@@ -23,6 +22,7 @@ import {
 } from "@/components/ui/form";
 
 import PricingAttributeField from "../pricing-attribute-field";
+import RialToTuman from "@/components/rial-to-tuman";
 
 export default function ProductVariantForm() {
   const { productId } = useParams();
@@ -79,59 +79,48 @@ export default function ProductVariantForm() {
             <FormField
               control={form.control}
               name="price"
-              render={({ field }) => {
-                const tuman = convertRialToTuman(field.value);
-                return (
-                  <FormItem>
-                    <FormLabel>قیمت</FormLabel>
-                    <FormControl>
-                      <Input
-                        className="bg-background"
-                        placeholder="قیمت"
-                        {...field}
-                      />
-                    </FormControl>
-                    {tuman.length > 0 && (
-                      <FormDescription className="flex gap-x-1.5">
-                        {tuman.reverse().map((value, index) => (
-                          <span key={value + index}>{value}</span>
-                        ))}{" "}
-                        <span>تومن</span>
-                      </FormDescription>
-                    )}
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>قیمت</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="bg-background"
+                      placeholder="قیمت"
+                      {...field}
+                    />
+                  </FormControl>
+
+                  {field.value > 10 && (
+                    <FormDescription className="flex gap-x-1.5">
+                      <RialToTuman price={field.value} />
+                    </FormDescription>
+                  )}
+
+                  <FormMessage />
+                </FormItem>
+              )}
             />
             <FormField
               control={form.control}
               name="specialPrice"
-              render={({ field }) => {
-                const tuman = convertRialToTuman(field.value);
-
-                return (
-                  <FormItem>
-                    <FormLabel>قیمت ویژه</FormLabel>
-                    <FormControl>
-                      <Input
-                        className="bg-background"
-                        placeholder="قیمت تخفیف خورده"
-                        {...field}
-                      />
-                    </FormControl>
-                    {tuman.length > 0 && (
-                      <FormDescription className="flex gap-x-1.5">
-                        {tuman.reverse().map((value, index) => (
-                          <span key={value + index}>{value}</span>
-                        ))}{" "}
-                        <span>تومن</span>
-                      </FormDescription>
-                    )}
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>قیمت ویژه</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="bg-background"
+                      placeholder="قیمت تخفیف خورده"
+                      {...field}
+                    />
+                  </FormControl>
+                  {field.value > 10 && (
+                    <FormDescription className="flex gap-x-1.5">
+                      <RialToTuman price={field.value} />
+                    </FormDescription>
+                  )}
+                  <FormMessage />
+                </FormItem>
+              )}
             />
 
             <p className="bg-amber-300 w-fit px-2 text-sm">

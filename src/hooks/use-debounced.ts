@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 
-type HookProps = {
-  value: string;
+type HookProps<Type> = {
+  value: Type;
   milliSeconds?: number;
   onUpdate?: () => void;
 };
 
-export const useDebounce = ({
+export function useDebounce<T>({
   milliSeconds = 400,
   value,
   onUpdate,
-}: HookProps) => {
+}: HookProps<T>): T {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
@@ -25,4 +25,4 @@ export const useDebounce = ({
   }, [value, milliSeconds, onUpdate]);
 
   return debouncedValue;
-};
+}
