@@ -97,9 +97,13 @@ const removeZeroBehind = (data: string) => {
   return data.slice(index);
 };
 
-export const formatRIAL = (amount: number) => {
+export const formatRIAL = (
+  amount: number,
+  options?: Intl.NumberFormatOptions
+) => {
   return new Intl.NumberFormat("fa-IR", {
     style: "currency",
     currency: "IRR",
+    ...options,
   }).format(amount);
 };

@@ -5,12 +5,13 @@ import { cn } from "@/lib/utils";
 
 type AppProps = {
   className?: string;
+  href?: string;
 };
 
-export default function NavbarLogo({ className }: AppProps) {
+export default function NavbarLogo({ className, href = "/" }: AppProps) {
   return (
     <Link
-      href="/"
+      href={href}
       id="logo"
       className={cn("md:flex text-2xl items-center gap-x-3 hidden", className)}
     >

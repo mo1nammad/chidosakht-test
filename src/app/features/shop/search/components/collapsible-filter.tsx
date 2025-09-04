@@ -8,9 +8,14 @@ import { cn } from "@/lib/utils";
 type AppProps = {
   title: string;
   children: React.ReactNode;
+  defaultOpen?: boolean;
 };
-export default function CollapsableFilter({ children, title }: AppProps) {
-  const [isCollapsed, setIsCollpased] = React.useState(true);
+export default function CollapsableFilter({
+  children,
+  title,
+  defaultOpen = false,
+}: AppProps) {
+  const [isCollapsed, setIsCollpased] = React.useState(defaultOpen);
   return (
     <motion.div
       initial={{

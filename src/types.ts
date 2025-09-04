@@ -42,3 +42,15 @@ export type Category = {
   name: string;
   childCategories: Category[];
 };
+
+export type ProductCard = {
+  id: number;
+  name: string;
+  uniqeLink: string;
+  imageAltText: string | null;
+  nameIndexImage: string;
+  urlNameIndexImage: string;
+  price: number;
+  specialPrice: number;
+  percentDiscount: number;
+};

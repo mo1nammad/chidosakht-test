@@ -1,14 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@/lib/axios";
-import { ProductToPick } from "../../types";
+
 import { useParams } from "next/navigation";
+import { ProductCard } from "@/types";
 
 type ApiResponse = {
   page: number;
   countInPage: number;
   countAllPages: number;
   countAllItems: number;
-  products: ProductToPick[];
+  products: ProductCard[];
 };
 
 type HookProps = {

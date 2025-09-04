@@ -7,6 +7,7 @@ import { Filter, X } from "lucide-react";
 // filters
 import PriceFilter from "./price-filter";
 import AvailablityFilter from "./availablity-filter";
+import CategoryFilter from "./category-filter";
 
 type AppProps = {
   className?: string;
@@ -29,6 +30,7 @@ export default function FilterAside({ className }: AppProps) {
       {/* all filters */}
       <PriceFilter />
       <AvailablityFilter />
+      <CategoryFilter />
     </aside>
   );
 }

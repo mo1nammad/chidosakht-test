@@ -29,7 +29,7 @@ export default function PriceFilter() {
   });
 
   return (
-    <CollapsableFilter title="بازه قیمتی">
+    <CollapsableFilter title="بازه قیمتی" defaultOpen={true}>
       <div className="flex flex-col gap-y-4">
         <Slider
           min={minValue}
