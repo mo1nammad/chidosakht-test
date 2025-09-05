@@ -50,20 +50,22 @@ const placeValueMap: { [index: number]: string } = {
   2: "میلیون",
   3: "میلیارد",
 };
-export function convertRialToTuman(rial: number) {
-  const rialStringified = rial.toString().slice(0, -1);
+export function convertRialToTuman(price: number, skipSlice?: boolean) {
+  const priceStringified = skipSlice
+    ? price.toString()
+    : price.toString().slice(0, -1);
   const tumanArray = [];
   const placeValueSeperator = 3;
 
-  if (rialStringified && rialStringified.length < placeValueSeperator) {
-    tumanArray.push(rialStringified);
+  if (priceStringified && priceStringified.length < placeValueSeperator) {
+    tumanArray.push(priceStringified);
   }
 
-  for (let i = 1; i <= rialStringified.length; i++) {
+  for (let i = 1; i <= priceStringified.length; i++) {
     if (i % placeValueSeperator === 0) {
-      let value = `${rialStringified.at(-i)}${rialStringified.at(
+      let value = `${priceStringified.at(-i)}${priceStringified.at(
         -i + 1
-      )}${rialStringified.at(-i + 2)}`;
+      )}${priceStringified.at(-i + 2)}`;
 
       value = removeZeroBehind(value);
 
@@ -72,10 +74,10 @@ export function convertRialToTuman(rial: number) {
       tumanArray.push(value);
 
       if (
-        rialStringified.length - i < placeValueSeperator &&
-        rialStringified.length - i > 0
+        priceStringified.length - i < placeValueSeperator &&
+        priceStringified.length - i > 0
       ) {
-        const rest = rialStringified.slice(0, rialStringified.length - i);
+        const rest = priceStringified.slice(0, priceStringified.length - i);
         tumanArray.push(placeValueMap[i / placeValueSeperator]);
         tumanArray.push(rest);
       }
@@ -99,11 +101,14 @@ const removeZeroBehind = (data: string) => {
 
 export const formatRIAL = (
   amount: number,
+  isTuman?: boolean,
   options?: Intl.NumberFormatOptions
 ) => {
+  const price = isTuman ? amount.toString().slice(0, -1) : amount.toString();
+
   return new Intl.NumberFormat("fa-IR", {
     style: "currency",
     currency: "IRR",
     ...options,
-  }).format(amount);
+  }).format(Number(price));
 };

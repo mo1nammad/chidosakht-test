@@ -8,6 +8,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { cn } from "@/lib/utils";
 
 type Props = {
   currentPage: number;
@@ -35,6 +36,11 @@ export default function SmartPagination({
       <PaginationItem key="prev">
         <PaginationPrevious
           href="#"
+          className={cn(
+            "rounded-full",
+            currentPage === 1 &&
+              "text-muted-foreground bg-muted pointer-events-none cursor-auto"
+          )}
           onClick={(e) => {
             e.preventDefault();
             goToPage(currentPage - 1);
@@ -62,6 +68,7 @@ export default function SmartPagination({
         <PaginationItem key={p}>
           <PaginationLink
             href="#"
+            className="rounded-full"
             isActive={p === currentPage}
             onClick={(e) => {
               e.preventDefault();
@@ -93,6 +100,11 @@ export default function SmartPagination({
       <PaginationItem key="next">
         <PaginationNext
           href="#"
+          className={cn(
+            "rounded-full",
+            currentPage === totalPages &&
+              "text-muted-foreground bg-muted pointer-events-none cursor-auto"
+          )}
           onClick={(e) => {
             e.preventDefault();
             goToPage(currentPage + 1);

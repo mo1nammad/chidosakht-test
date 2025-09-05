@@ -2,13 +2,13 @@ import React from "react";
 import Image from "next/image";
 
 import { cn, formatRIAL } from "@/lib/utils";
-import { ProductToPick } from "../../types";
+import { ProductCard as ProductCardType } from "@/types";
 
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 
 type AppProps = {
-  product: ProductToPick;
+  product: ProductCardType;
   onChange?: (productId: number, action: "select" | "unselect") => void;
   selected?: boolean;
 };

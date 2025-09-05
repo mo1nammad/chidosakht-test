@@ -58,11 +58,11 @@ export default function FilterToolbar() {
         <div className="flex flex-row-reverse w-max gap-x-4 lg:gap-x-8 h-full">
           {filters.map((filter) => (
             <button
-              key={filter.key}
+              key={filter.id}
               onClick={() => handleFilterClick(filter.queryObject)}
               className={cn(
                 "h-14 text-xs lg:text-sm font-medium flex items-center justify-center relative cursor-pointer",
-                selectedFilterId === filter.id &&
+                selectedFilterId === filter.queryObject.TypeOrderByForProduct &&
                   ascendingBoolean === filter.queryObject.Ascending &&
                   "text-primary font-semibold after:absolute after:bottom-0 after:w-[calc(100%-15px)] after:h-1 after:rounded-t-xl after:bg-primary "
               )}

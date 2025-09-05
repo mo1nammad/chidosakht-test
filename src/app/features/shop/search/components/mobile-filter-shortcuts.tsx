@@ -28,11 +28,12 @@ import queryString from "query-string";
 import { cn } from "@/lib/utils";
 
 export default function MobileFilterShortcuts() {
-  const selectedFilterId = Number(
-    useSearchParams().get("TypeOrderByForProduct") ?? 1
-  );
+  const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+
+  const sortingId = Number(searchParams.get("TypeOrderByForProduct") ?? 1);
+  const ascendingBoolean = searchParams.get("Ascending");
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const isTablet = useMediaQuery({
@@ -83,7 +84,13 @@ export default function MobileFilterShortcuts() {
         <DrawerTrigger asChild>
           <Button variant="accent" className="bg-muted">
             <span>
-              {sorts.find((sort) => sort.id === selectedFilterId)?.title}
+              {
+                sorts.find(
+                  (sort) =>
+                    sort.queryObject.TypeOrderByForProduct === sortingId &&
+                    ascendingBoolean === sort.queryObject.Ascending
+                )?.title
+              }
             </span>
             <ArrowDownWideNarrow className="size-4" />
           </Button>
@@ -102,11 +109,13 @@ export default function MobileFilterShortcuts() {
                 key={sort.id}
                 className={cn(
                   "flex-row-reverse justify-between",
-                  sort.id === selectedFilterId && "font-semibold"
+                  sort.queryObject.TypeOrderByForProduct === sortingId &&
+                    ascendingBoolean === sort.queryObject.Ascending &&
+                    "font-semibold"
                 )}
               >
                 {sort.title}
-                {sort.id === selectedFilterId && <Check />}
+                {sort.id === sortingId && <Check />}
               </Button>
             ))}
           </div>

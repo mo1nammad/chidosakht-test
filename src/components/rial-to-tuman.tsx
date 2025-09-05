@@ -4,9 +4,10 @@ import React from "react";
 type AppProps = {
   price: number;
   className?: string;
+  skipSlice?: boolean;
 };
-export default function RialToTuman({ price, className }: AppProps) {
-  const tuman = convertRialToTuman(price);
+export default function RialToTuman({ price, className, skipSlice }: AppProps) {
+  const tuman = convertRialToTuman(price, skipSlice);
 
   return (
     <div className={className}>

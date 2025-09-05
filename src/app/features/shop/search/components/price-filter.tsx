@@ -9,13 +9,20 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import RialToTuman from "@/components/rial-to-tuman";
 import { useFilterQuery } from "../hooks/use-filter-query";
+import { useSearchParams } from "next/navigation";
 
 export default function PriceFilter() {
   const minValue = 0;
-  const maxValue = 10000000; // 10 milion rial | 1 milion tuman
+  const maxValue = 10000000; //  10 milion tuman
+
+  const searchParams = useSearchParams();
+
+  const fromPrice = searchParams.get("FromPrice");
+  const toPrice = searchParams.get("ToPrice");
+
   const [minMaxValues, setMinMaxValues] = React.useState<number[]>([
-    minValue,
-    maxValue,
+    fromPrice ? Number(fromPrice) : minValue,
+    toPrice ? Number(toPrice) : maxValue,
   ]);
 
   // to only call api on drag end
@@ -54,6 +61,7 @@ export default function PriceFilter() {
           </div>
           {minMaxValues[0] > 10 && (
             <RialToTuman
+              skipSlice
               price={minMaxValues[0]}
               className="flex flex-row-reverse gap-x-1.5 text-muted-foreground text-xs mr-auto ml-1 mt-1.5 max-w-[250px] truncate"
             />
@@ -76,6 +84,7 @@ export default function PriceFilter() {
           </div>
 
           <RialToTuman
+            skipSlice
             price={minMaxValues[1]}
             className="flex flex-row-reverse gap-x-1.5 text-muted-foreground text-xs mr-auto ml-1 mt-1.5 max-w-[250px] truncate"
           />

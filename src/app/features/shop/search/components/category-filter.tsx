@@ -73,7 +73,7 @@ export default function CategoryFilter() {
               {!!categoryId && (
                 <button
                   onClick={handleRemoveCategoryId}
-                  className="flex justify-end p-2 hover:bg-gray-200 cursor-pointer rounded-lg"
+                  className="flex justify-end p-1.5 hover:bg-gray-200 cursor-pointer rounded-lg text-sm"
                 >
                   همه دسته بندی ها
                 </button>
@@ -83,7 +83,7 @@ export default function CategoryFilter() {
                 <button
                   onClick={() => handleSelectCategory(category.id)}
                   key={category.id}
-                  className="flex justify-end p-2 hover:bg-gray-200 cursor-pointer rounded-lg"
+                  className="flex justify-end p-1.5 hover:bg-gray-200 cursor-pointer rounded-lg text-sm"
                 >
                   {category.name}
                 </button>

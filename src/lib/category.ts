@@ -32,3 +32,33 @@ export function extractAllCategories(categories: Category[]): Category[] {
   traverse(categories);
   return result;
 }
+
+/**
+ * Find the path from root to a target category ID
+ * Works with multiple root categories
+ */
+export function findCategoryPath(
+  allCategories: Category[],
+  targetId: number
+): Category[] | null {
+  for (const root of allCategories) {
+    const path = findPathFromNode(root, targetId);
+    if (path) return path;
+  }
+  return null;
+}
+
+function findPathFromNode(node: Category, targetId: number): Category[] | null {
+  if (node.id === targetId) {
+    return [node];
+  }
+
+  for (const child of node.childCategories) {
+    const path = findPathFromNode(child, targetId);
+    if (path) {
+      return [node, ...path];
+    }
+  }
+
+  return null;
+}

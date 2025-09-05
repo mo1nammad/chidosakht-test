@@ -1,26 +1,14 @@
 import { useSearchParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import axiosInstance from "@/lib/axios";
 
 import { extractAllCategories, findCategory } from "@/lib/category";
 import { Category } from "@/types";
 import { useEffect, useState } from "react";
-
-type ApiResponse = {
-  allCategories: Category[] | null;
-};
+import { useTreeCategories } from "./use-tree-categories";
 
 export const useCategories = () => {
   const categoryId = useSearchParams().get("CategoryId");
   const [categories, setCategories] = useState<Category[]>([]);
-
-  const query = useQuery({
-    queryKey: ["shop-search-categories"],
-    queryFn: async () => {
-      const response = await axiosInstance.get<ApiResponse>("/Category");
-      return response.data.allCategories;
-    },
-  });
+  const query = useTreeCategories();
 
   useEffect(() => {
     if (query.status !== "success" || !query?.data) setCategories([]);

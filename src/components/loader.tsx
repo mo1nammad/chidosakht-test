@@ -4,9 +4,10 @@ import { cn } from "@/lib/utils";
 
 type AppProps = {
   size?: "default" | "lg";
+  className?: string;
 };
-export const Loader = ({ size = "default" }: AppProps) => (
-  <div className="flex items-center justify-center">
+export const Loader = ({ size = "default", className }: AppProps) => (
+  <div className={cn("flex items-center justify-center", className)}>
     <Loader2
       className={cn("animate-spin", {
         "size-8": size === "lg",
