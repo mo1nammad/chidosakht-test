@@ -44,7 +44,20 @@ export default function ProductGrid() {
   if (status === "success")
     return (
       <>
-        <div className="w-full grid gap-7 md:grid-cols-2 lg:grid-cols-3 grid-flow-row">
+        {!data.products.length && (
+          <div className="w-full h-1/2">
+            <div className="w-full h-1/2 flex flex-col gap-1.5 items-center justify-center">
+              <Ghost className="size-8 text-muted-foreground" />
+              <h6 className="text-lg text-muted-foreground">
+                هیچ محصولی وجود ندارد
+              </h6>
+              <Link href="/shop/search">
+                <Button size="sm">بازگشت</Button>
+              </Link>
+            </div>
+          </div>
+        )}
+        <div className="w-full grid gap-3 md:gap-7 md:grid-cols-2 lg:grid-cols-3 grid-flow-row">
           {data.products.map((product) => (
             <ProductCard
               key={product.id}

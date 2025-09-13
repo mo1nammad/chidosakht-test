@@ -5,16 +5,22 @@ type AppProps = {
   price: number;
   className?: string;
   skipSlice?: boolean;
+  as?: React.ElementType;
 };
-export default function RialToTuman({ price, className, skipSlice }: AppProps) {
+export default function RialToTuman({
+  price,
+  className,
+  skipSlice,
+  as = "div",
+}: AppProps) {
   const tuman = convertRialToTuman(price, skipSlice);
-
+  const Component = as;
   return (
-    <div className={className}>
+    <Component className={className}>
       {tuman.reverse().map((value, index) => (
         <span key={value + index}>{value}</span>
       ))}{" "}
       <span>تومان</span>
-    </div>
+    </Component>
   );
 }

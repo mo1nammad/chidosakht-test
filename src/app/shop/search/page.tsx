@@ -1,10 +1,10 @@
 import React, { Suspense } from "react";
 
-import FilterAside from "$/shop/search/components/filter-aside";
-import FilterToolbar from "$/shop/search/components/filter-toolbar";
-import MobileFilterShortcuts from "$/shop/search/components/mobile-filter-shortcuts";
-import ProductGrid from "$/shop/search/components/product-grid";
-import CategoryBreadcrumb from "$/shop/search/components/category-breadcrumb";
+import FilterAside from "@/app/features/shop/search/components/filter-aside";
+import FilterToolbar from "@/app/features/shop/search/components/filter-toolbar";
+import MobileFilterShortcuts from "@/app/features/shop/search/components/mobile-filter-shortcuts";
+import ProductGrid from "@/app/features/shop/search/components/product-grid";
+import CategoryBreadcrumb from "@/app/features/shop/components/category-breadcrumb";
 
 export default function SearchPage() {
   return (

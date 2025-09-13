@@ -18,7 +18,6 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-  FormDescription,
 } from "@/components/ui/form";
 
 import PricingAttributeField from "../pricing-attribute-field";
@@ -91,9 +90,11 @@ export default function ProductVariantForm() {
                   </FormControl>
 
                   {field.value > 10 && (
-                    <FormDescription className="flex gap-x-1.5">
-                      <RialToTuman price={field.value} />
-                    </FormDescription>
+                    <RialToTuman
+                      className="flex gap-x-1.5 text-muted-foreground text-xs"
+                      as={"p"}
+                      price={field.value}
+                    />
                   )}
 
                   <FormMessage />
@@ -114,9 +115,11 @@ export default function ProductVariantForm() {
                     />
                   </FormControl>
                   {field.value > 10 && (
-                    <FormDescription className="flex gap-x-1.5">
-                      <RialToTuman price={field.value} />
-                    </FormDescription>
+                    <RialToTuman
+                      className="flex gap-x-1.5 text-muted-foreground text-xs"
+                      as={"p"}
+                      price={field.value}
+                    />
                   )}
                   <FormMessage />
                 </FormItem>

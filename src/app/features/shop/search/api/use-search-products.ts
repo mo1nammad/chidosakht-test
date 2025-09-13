@@ -13,12 +13,17 @@ type ApiResponse = {
 };
 
 export function useSearchProducts() {
-  const searchParams = useSearchParams().toString();
+  const searchParams = useSearchParams();
+  const searchParamsStringified = searchParams.toString();
 
-  const url = `/Product?${searchParams}`;
+  const hasTypeOrder = searchParams.get("TypeOrderByForProduct");
+
+  const url = hasTypeOrder
+    ? `/Product?${searchParamsStringified}`
+    : `/Product?${searchParamsStringified}&TypeOrderByForProduct=1`;
 
   const query = useQuery<ApiResponse>({
-    queryKey: ["search-products", searchParams],
+    queryKey: ["search-products", url],
     queryFn: async () => {
       const request = await axiosInstance.get(url);
       const response = await request.data;

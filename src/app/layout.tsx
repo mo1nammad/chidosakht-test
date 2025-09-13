@@ -20,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${mapedFonts.join(" ")} antialiased font-yekan-regular`}
+        className={`${mapedFonts.join(
+          " "
+        )} antialiased font-yekan-regular overflow-x-hidden`}
       >
         <Providers>{children}</Providers>
         <Toaster

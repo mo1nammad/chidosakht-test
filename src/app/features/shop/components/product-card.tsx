@@ -15,6 +15,8 @@ export default function ProductCard({
   showDiscount,
   className,
 }: AppProps) {
+  const productUrl = `/shop/${product?.id}/${product?.uniqeLink}`;
+
   return !product ? (
     <div className="w-full h-29.5 md:w-62 md:h-86.5 bg-[#F4F6F8] flex justify-center md:justify-start flex-row-reverse md:flex-col gap-3 md:gap-0 p-3 md:p-0 md:pt-4 rounded-xl">
       {/* image */}
@@ -76,7 +78,7 @@ export default function ProductCard({
     >
       {/* image */}
       <div className="w-full h-full basis-2/5 md:basis-auto md:h-54.5 md:px-4">
-        <Link href={`/shop/${product.id}`}>
+        <Link target="_blank" href={`/shop/${product.id}/${product.uniqeLink}`}>
           <Image
             src={product.urlNameIndexImage}
             alt={product.imageAltText ?? "تصویر محصول"}
@@ -101,7 +103,8 @@ export default function ProductCard({
           <div className="flex justify-between items-end md:items-start h-full md:h-15 w-full md:px-2">
             {product.specialPrice ? (
               <Link
-                href={`/shop/${product.id}`}
+                href={productUrl}
+                target="_blank"
                 className="bg-secondary text-primary grid place-content-center size-10 md:self-center rounded-[8px] relative"
               >
                 <span className="absolute group-hover:opacity-0 top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 transition">
@@ -111,7 +114,8 @@ export default function ProductCard({
               </Link>
             ) : (
               <Link
-                href={`/shop/${product.id}`}
+                href={productUrl}
+                target="_blank"
                 className="bg-secondary text-primary grid place-content-center size-10 md:self-center rounded-[8px]"
               >
                 <ShoppingBag />
@@ -120,7 +124,7 @@ export default function ProductCard({
 
             <div
               className={cn(
-                "flex flex-col justify-end md:justify-center h-full text-right pt-2",
+                "flex flex-col-reverse justify-start md:justify-center h-full text-right pt-2",
                 !product.specialPrice && "md:justify-center"
               )}
             >
@@ -128,7 +132,7 @@ export default function ProductCard({
                 <p className="text-[10px] font-medium text-primary">تومان</p>
                 <p
                   className={cn(
-                    "text-xs md:text-sm font-medium",
+                    "text-sm md:text-base font-medium leading-3.5",
                     !product.specialPrice && "md:text-base"
                   )}
                 >
@@ -142,7 +146,7 @@ export default function ProductCard({
                 </p>
               </div>
               {product.specialPrice ? (
-                <p className="font-medium text-[10px] md:text-xs text-muted-foreground line-through">
+                <p className="font-medium text-xs md:text-sm text-muted-foreground line-through leading-3.5">
                   {formatRIAL(product.price, true, {
                     style: "decimal",
                   })}

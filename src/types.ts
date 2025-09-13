@@ -1,4 +1,8 @@
 import { InternalAxiosRequestConfig } from "axios";
+import {
+  colorAttribute,
+  selectAttribute,
+} from "$/dashboard/admin/products/types";
 
 export type RefreshTokenApiResponse = {
   token: string;
@@ -53,4 +57,57 @@ export type ProductCard = {
   price: number;
   specialPrice: number;
   percentDiscount: number;
+};
+
+export type Product = {
+  id: number;
+  name: string;
+  productType: number;
+  productTypeName: string;
+  description: string;
+  uniqeLink: string;
+  imageAltText: string | null;
+  nameIndexImage: string;
+  urlNameIndexImage: string;
+  uniCode: string;
+  categoryId: number;
+  categoryName: string;
+
+  // attribute & value
+  attributeAndValues: {
+    productAttributeId: number;
+    name: string;
+    attributeType: typeof selectAttribute | typeof colorAttribute;
+    useForVariant: true;
+    values: {
+      productAttributeValueId: number;
+      value: string;
+    }[];
+  }[];
+
+  price: number;
+  specialPrice: number;
+  stock: number;
+  hasDiscount: boolean;
+  percentDiscount: number;
+  viewCount: number;
+
+  // specifications section
+  specificationGroups: {
+    groupId: number;
+    title: string;
+    specifications: {
+      specId: number;
+      key: string;
+      value: string;
+    }[];
+  }[];
+
+  // galary
+  productImages: {
+    id: number;
+    name: string;
+    isIndex: boolean;
+    url: string;
+  }[];
 };
