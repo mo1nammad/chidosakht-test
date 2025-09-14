@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import { cn } from "@/lib/utils";
@@ -17,13 +19,13 @@ export default function FilterAside({ className }: AppProps) {
   return (
     <aside className={cn("flex flex-col gap-y-4", className)}>
       <div className="bg-muted w-full flex justify-between pl-4 pr-4.5 py-4 rounded-xl">
-        <a
-          href="/shop/search"
+        <button
+          onClick={() => location.assign("/shop/search")}
           className="text-primary flex items-center justify-center gap-x-2 text-sm font-normal [&>svg]:size-4 cursor-pointer"
         >
           حذف فیلتر
           <X />
-        </a>
+        </button>
         <div className="flex items-center justify-center gap-x-2.5 font-medium">
           <h6>فیلتر</h6>
           <Filter className="size-4" />
