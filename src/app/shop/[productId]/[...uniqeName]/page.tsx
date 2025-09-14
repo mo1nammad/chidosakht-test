@@ -3,6 +3,8 @@ import Link from "next/link";
 import { BadgeCheck, CircleUser } from "lucide-react";
 import { FaRegCommentDots } from "react-icons/fa";
 
+import { SERVER_API_URL } from "@/constant";
+
 import { Product } from "@/types";
 
 import CategoryBreadcrumb from "$/shop/components/category-breadcrumb";
@@ -15,8 +17,6 @@ import RelatedProducts from "$/shop/product/components/related-products";
 import CommentForm from "@/app/features/shop/product/components/comment-form";
 import { Card } from "@/components/ui/card";
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL;
-
 type ProductPageProps = {
   params: Promise<{
     productId: string;
@@ -26,7 +26,7 @@ type ProductPageProps = {
 
 // server side api fetching
 async function fetchProductData<T>(productId: string): Promise<T> {
-  const request = await fetch(`${apiBaseUrl}/Product/${productId}`);
+  const request = await fetch(`${SERVER_API_URL}/Product/${productId}`);
   const data = await request.json();
   return data;
 }

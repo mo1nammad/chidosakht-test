@@ -1,7 +1,7 @@
 import { Product } from "@/types";
 
 import { redirect } from "next/navigation";
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL;
+import { SERVER_API_URL } from "@/constant";
 
 type ProductPageProps = {
   params: Promise<{
@@ -12,7 +12,7 @@ type ProductPageProps = {
 
 // server side api fetching
 async function fetchProductData<T>(productId: string): Promise<T> {
-  const request = await fetch(`${apiBaseUrl}/Product/${productId}`);
+  const request = await fetch(`${SERVER_API_URL}/Product/${productId}`);
   const data = await request.json();
   return data;
 }
