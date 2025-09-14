@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import Link from "next/link";
-import { BadgeCheck } from "lucide-react";
+import { BadgeCheck, CircleUser } from "lucide-react";
+import { FaRegCommentDots } from "react-icons/fa";
 
 import { Product } from "@/types";
 
@@ -9,6 +10,10 @@ import Gallery from "$/shop/product/components/gallery";
 import AttributeValues from "$/shop/product/components/attribute-values";
 import AddToShoppingBag from "$/shop/product/components/add-to-shopping-bag";
 import ProductTabs from "$/shop/product/components/product-tabs";
+import CustomHeader from "@/app/features/shop/components/custom-header";
+import RelatedProducts from "$/shop/product/components/related-products";
+import CommentForm from "@/app/features/shop/product/components/comment-form";
+import { Card } from "@/components/ui/card";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -109,7 +114,48 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </section>
       </div>
       {/* tabs */}
-      <ProductTabs description={productData.description} />
+      <ProductTabs
+        description={productData.description}
+        details={productData.specificationGroups}
+      />
+
+      <CustomHeader className="px-12 pb-2.5 mb-11">محصولات مرتبط</CustomHeader>
+      <RelatedProducts className="pb-10 md:border-b border-gray-200" />
+      {/* comment sections */}
+
+      <section className="my-10 md:mt-3">
+        <CommentForm />
+        <div className="flex items-center justify-end gap-x-2 mb-6 mt-10 md:my-6">
+          <h6 className="font-medium">نظرات کاربران</h6>
+          <FaRegCommentDots size={20} className="text-primary" />
+        </div>
+        <Card className="w-full px-6 py-5 text-right border-gray-200">
+          <div className="flex items-center justify-end gap-x-2">
+            <p>محمد رضایی</p>
+            <CircleUser />
+          </div>
+          <p className="text-xs md:text-sm text-muted-foreground mt-1">
+            24 خرداد 1403
+          </p>
+          <p className="mt-4 text-sm md:text-base">
+            جنسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم بخرینسش
+            عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی
+            بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ،
+            توصیه میکنم بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه
+            میکنم بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
+            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
+            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
+            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
+            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
+            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
+            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
+            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
+            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
+            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
+            بخرینسش عالی بود ، توصیه میکنم بخرید
+          </p>
+        </Card>
+      </section>
     </div>
   );
 }
