@@ -13,10 +13,10 @@ import ProductTabs from "$/shop/product/components/product-tabs";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL;
 
 type ProductPageProps = {
-  params: {
+  params: Promise<{
     productId: string;
     uniqeName: string[];
-  };
+  }>;
 };
 
 // server side api fetching
@@ -26,9 +26,9 @@ async function fetchProductData<T>(productId: string): Promise<T> {
   return data;
 }
 
-export default async function ProductPage({
-  params: { productId },
-}: ProductPageProps) {
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { productId } = await params;
+
   const productData = await fetchProductData<Product>(productId);
 
   return (
