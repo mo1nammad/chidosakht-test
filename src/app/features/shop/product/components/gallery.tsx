@@ -40,7 +40,7 @@ export default function ProductGallery({
   }, []);
 
   return render ? (
-    <div className="flex flex-col md:flex-row w-full md:w-3/6 md:items-center md: max-h-106">
+    <div className="flex flex-col md:flex-row w-full md:w-3/6 md:items-center md:max-h-106">
       <div className="w-full h-87.5 md:size-full ">
         <Image
           src={imageUrl?.url ?? ""}

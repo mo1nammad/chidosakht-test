@@ -43,7 +43,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </Suspense>
       </div>
       {/* gallery and shopping section */}
-      <div className="flex flex-col md:flex-row-reverse">
+      <div className="flex flex-col md:flex-row-reverse gap-x-6">
         <Gallery
           alt={productData.imageAltText}
           images={productData.productImages}
