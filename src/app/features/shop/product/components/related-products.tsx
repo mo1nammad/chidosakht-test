@@ -10,6 +10,8 @@ import {
 import ProductCard from "$/shop/components/product-card";
 import { useEffect, useState } from "react";
 import { CarouselBullets } from "@/components/carousel-bullets";
+import { useRelatedProducts } from "../api/use-related-products";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type AppProps = {
   className?: string;
@@ -17,11 +19,13 @@ type AppProps = {
 export default function RelatedProducts({ className }: AppProps) {
   const [isClient, setIsClient] = useState(false);
   const isTablet = useMediaQuery({ query: "(max-width: 768px)" });
+
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
 
-  const items = [1, 2, 3, 4, 5]; // example array
+  const { data: relatedProducts, status } = useRelatedProducts();
+  const pendingArray = new Array(5).fill(null);
 
   useEffect(() => {
     setIsClient(true);
@@ -49,21 +53,29 @@ export default function RelatedProducts({ className }: AppProps) {
   return (
     <Carousel
       setApi={setApi}
-      dir="ltr"
+      dir="rtl"
       className={className}
       orientation={isTablet ? "vertical" : "horizontal"}
       opts={{
-        align: "start",
-        loop: false,
-        startIndex: isTablet ? 0 : items.length - 1, // 👈 start at last item
+        direction: "rtl",
       }}
     >
       <CarouselContent className="h-105 md:h-auto">
-        {items.map((item, i) => (
-          <CarouselItem key={i} className="basis-36 md:basis-69">
-            <ProductCard />
-          </CarouselItem>
-        ))}
+        {status === "success"
+          ? // success
+            relatedProducts.map((product) => (
+              <CarouselItem key={product.id} className="basis-36 md:basis-69">
+                <ProductCard product={product} />
+              </CarouselItem>
+            ))
+          : status === "pending"
+          ? // pending
+            pendingArray.map((_item, i) => (
+              <CarouselItem key={i} className="basis-36 md:basis-78">
+                <Skeleton className="size-full md:w-69 md:h-86" />
+              </CarouselItem>
+            ))
+          : null}
       </CarouselContent>
       <CarouselBullets
         count={count}

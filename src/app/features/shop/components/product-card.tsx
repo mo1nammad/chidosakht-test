@@ -1,9 +1,10 @@
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { ShoppingBag } from "lucide-react";
+
 import { cn, formatRIAL } from "@/lib/utils";
 import { ProductCard as ProductCardType } from "@/types";
-import { ShoppingBag } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
 
 type AppProps = {
   showDiscount?: boolean;
@@ -71,6 +72,7 @@ export default function ProductCard({
     </div>
   ) : (
     <div
+      dir="ltr"
       className={cn(
         "w-full h-29.5 md:w-62 md:h-86.5 bg-[#F4F6F8] flex justify-center md:justify-start flex-row-reverse md:flex-col gap-3 md:gap-0 p-3 md:p-0 md:pt-4 rounded-xl group",
         className

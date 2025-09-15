@@ -1,5 +1,5 @@
 import { AxiosError, AxiosResponse } from "axios";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import axiosInstance from "@/lib/axios";
 import { toast } from "@/lib/toast";
@@ -11,13 +11,20 @@ type RequestBody = {
 
 export function usePostProductRelations() {
   const { productId } = useParams();
+  const queryClient = useQueryClient();
+
   const mutation = useMutation<AxiosResponse, AxiosError<string>, RequestBody>({
     mutationFn: async (req) =>
       await axiosInstance.post("/Admin/RelatedProduct", {
         productId: Number(productId),
         ...req,
       }),
-    onSuccess: () => toast.success("محصولات مرتبط با موفقیت اضافه شدند"),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["admin-related-products", Number(productId)],
+      });
+      toast.success("محصولات مرتبط با موفقیت اضافه شدند");
+    },
     onError: (err) => toast.error(err.response?.data ?? "مشکلی پیش آمد"),
   });
 

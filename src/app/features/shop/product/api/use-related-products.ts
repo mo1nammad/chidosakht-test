@@ -1,21 +1,20 @@
-import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@/lib/axios";
-import { useParams } from "next/navigation";
 import { ProductCard } from "@/types";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 
 type ApiResponse = ProductCard[];
 
-export function useGetRelatedProducts() {
+export const useRelatedProducts = () => {
   const { productId } = useParams();
 
   const query = useQuery<ApiResponse>({
-    queryKey: ["admin-related-products", Number(productId)],
+    queryKey: ["related-products"],
     queryFn: async () => {
       const response = await axiosInstance.get(`/RelatedProduct/${productId}`);
-
       return response.data;
     },
   });
 
   return query;
-}
+};
