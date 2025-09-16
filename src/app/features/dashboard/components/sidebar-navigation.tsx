@@ -64,14 +64,14 @@ const SidebarNavigation = ({ className }: Props) => {
                 href={route.url}
                 key={route.title}
                 className={cn(
-                  "flex justify-end items-center gap-x-3 px-2 py-2 text-base font-medium rounded-md hover:bg-muted",
+                  "flex justify-end items-center gap-x-3 px-2 py-2 text-base font-medium rounded-md hover:bg-muted group",
                   activeRoute ? "text-primary bg-accent/60" : "text-slate-950"
                 )}
               >
-                <li>{route.title}</li>
+                <li className="group-hover:text-indigo-600">{route.title}</li>
                 <route.icon
                   className={cn(
-                    "size-5 ",
+                    "size-5 group-hover:text-indigo-600",
                     activeRoute ? "text-primary" : "text-muted-foreground/80"
                   )}
                 />

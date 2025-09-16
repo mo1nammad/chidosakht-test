@@ -1,13 +1,14 @@
 import {
   Home,
   Files,
-  Megaphone,
   ShoppingBag,
   BookText,
   LucideIcon,
   PackageOpen,
   UserLock,
   SendToBack,
+  MessageSquareText,
+  ShoppingBasket,
 } from "lucide-react";
 
 import { Product, simpleProduct, variantProduct } from "./admin/products/types";
@@ -39,14 +40,14 @@ export const navigationData: Route[] = [
     url: "/dashboard",
   },
   {
+    title: "سبد خرید",
+    icon: ShoppingBasket,
+    url: "/dashboard/checkout",
+  },
+  {
     title: "پروژه ها",
     icon: Files,
     url: "/dashboard/projects",
-  },
-  {
-    title: "گزارشات",
-    icon: Megaphone,
-    url: "/dashboard/reports",
   },
   {
     title: "خرید های قبلی",
@@ -86,6 +87,11 @@ export const adminNavData: Route[] = [
     title: "مدیریت دسته بندی ها",
     icon: SendToBack,
     url: "/dashboard/admin/categories",
+  },
+  {
+    title: "مدیریت نظرات",
+    icon: MessageSquareText,
+    url: "/dashboard/admin/comments",
   },
 ];
 

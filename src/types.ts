@@ -111,3 +111,14 @@ export type Product = {
     url: string;
   }[];
 };
+
+export type Comment = {
+  id: number;
+  text: string;
+  star: number;
+  fullNameUser: string;
+  countVoteHelpfuls: number;
+  countVoteUnHelpfuls: number;
+  userVoteHelpful: null;
+  createTime: string;
+};

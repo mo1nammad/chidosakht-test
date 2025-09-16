@@ -112,3 +112,11 @@ export const formatRIAL = (
     ...options,
   }).format(Number(price));
 };
+
+// Format for Persian calendar in Iran time zone
+export const DateFormatter = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "Asia/Tehran",
+});

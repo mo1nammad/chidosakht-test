@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import Link from "next/link";
-import { BadgeCheck, CircleUser } from "lucide-react";
+import { notFound, redirect } from "next/navigation";
+import { BadgeCheck } from "lucide-react";
 import { FaRegCommentDots } from "react-icons/fa";
 
 import { SERVER_API_URL } from "@/constant";
@@ -14,27 +15,42 @@ import AddToShoppingBag from "$/shop/product/components/add-to-shopping-bag";
 import ProductTabs from "$/shop/product/components/product-tabs";
 import CustomHeader from "@/app/features/shop/components/custom-header";
 import RelatedProducts from "$/shop/product/components/related-products";
-import CommentForm from "@/app/features/shop/product/components/comment-form";
-import { Card } from "@/components/ui/card";
+import CommentForm from "$/shop/product/components/comment-form";
+import Comments from "$/shop/product/components/comments";
 
 type ProductPageProps = {
   params: Promise<{
     productId: string;
-    uniqeName: string[];
+    slug: string;
   }>;
 };
 
 // server side api fetching
-async function fetchProductData<T>(productId: string): Promise<T> {
-  const request = await fetch(`${SERVER_API_URL}/Product/${productId}`);
-  const data = await request.json();
-  return data;
+async function fetchProductData<T>(productId: string): Promise<T | null> {
+  try {
+    const request = await fetch(`${SERVER_API_URL}/Product/${productId}`, {
+      next: {
+        revalidate: 60,
+      },
+    });
+    if (!request.ok) return null;
+
+    const data = await request.json();
+    return data;
+  } catch {
+    return null;
+  }
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const { productId } = await params;
+  const { productId, slug } = await params;
 
   const productData = await fetchProductData<Product>(productId);
+
+  if (!productData) notFound();
+
+  if (slug !== productData.uniqeLink)
+    redirect(`/shop/${productId}/${productData.uniqeLink}`);
 
   return (
     <div className="max-w-7xl px-6 mx-auto relative">
@@ -129,32 +145,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <h6 className="font-medium">نظرات کاربران</h6>
           <FaRegCommentDots size={20} className="text-primary" />
         </div>
-        <Card className="w-full px-6 py-5 text-right border-gray-200">
-          <div className="flex items-center justify-end gap-x-2">
-            <p>محمد رضایی</p>
-            <CircleUser />
-          </div>
-          <p className="text-xs md:text-sm text-muted-foreground mt-1">
-            24 خرداد 1403
-          </p>
-          <p className="mt-4 text-sm md:text-base">
-            جنسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم بخرینسش
-            عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی
-            بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ،
-            توصیه میکنم بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه
-            میکنم بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
-            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
-            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
-            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
-            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
-            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
-            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
-            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
-            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
-            بخرینسش عالی بود ، توصیه میکنم بخرینسش عالی بود ، توصیه میکنم
-            بخرینسش عالی بود ، توصیه میکنم بخرید
-          </p>
-        </Card>
+
+        <Comments />
       </section>
     </div>
   );

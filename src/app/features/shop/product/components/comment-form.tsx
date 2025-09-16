@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import { Star } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -10,8 +11,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 const formSchema = z.object({
-  rating: z.number().min(1).max(5),
-  comment: z.string().min(1).max(128),
+  star: z.number().min(1).max(5),
+  text: z.string().min(1).max(200),
 });
 type FormSchemaType = z.infer<typeof formSchema>;
 
@@ -24,19 +25,41 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { usePostComment } from "../api/use-post-comment";
+import { useSession } from "@/hooks/use-session";
+import { toast } from "sonner";
+import Link from "next/link";
 
 export default function CommentForm() {
+  const router = useRouter();
+
+  const { session } = useSession();
+  const { mutate: postComment } = usePostComment();
+
   const stars = [1, 2, 3, 4, 5];
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      comment: "",
-      rating: 1,
+      text: "",
+      star: 1,
     },
   });
 
   const handleSubmit = (value: FormSchemaType) => {
-    console.log(value);
+    if (!session) {
+      toast.error("برای ثبت نظر ابتدا باید وارد شوید", {
+        action: {
+          label: "ورود",
+          onClick: () => router.push("/login"),
+          actionButtonStyle: {
+            backgroundColor: "white",
+          },
+        },
+      });
+      return;
+    }
+
+    postComment(value);
   };
 
   return (
@@ -55,12 +78,12 @@ export default function CommentForm() {
                 <button
                   type="button"
                   key={star}
-                  onClick={() => form.setValue("rating", star)}
+                  onClick={() => form.setValue("star", star)}
                 >
                   <Star
                     className={cn(
                       "text-transparent cursor-pointer",
-                      star > form.watch("rating")
+                      star > form.watch("star")
                         ? "fill-gray-200"
                         : "fill-[#FF9F0E]"
                     )}
@@ -76,7 +99,7 @@ export default function CommentForm() {
 
         <FormField
           control={form.control}
-          name="comment"
+          name="text"
           render={({ field }) => (
             <FormItem>
               <FormControl>
@@ -92,7 +115,17 @@ export default function CommentForm() {
             </FormItem>
           )}
         />
-        <Button className="md:w-fit mt-7">ثبت دیدگاه</Button>
+        {session ? (
+          <Button disabled={!session} className="md:w-fit mt-7">
+            ثبت دیدگاه
+          </Button>
+        ) : (
+          <Link href="/login" target="_blank">
+            <Button type="button" className="md:w-fit mt-7">
+              ابتدا وارد شوید
+            </Button>
+          </Link>
+        )}
       </form>
     </Form>
   );
