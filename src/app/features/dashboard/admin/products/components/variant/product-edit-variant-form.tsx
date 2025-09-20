@@ -38,7 +38,6 @@ export default function ProductEditVariantForm() {
       productVariantId: variant?.productVariantId,
       price: variant?.price,
       specialPrice: variant?.specialPrice,
-
       stock: variant?.stock,
       weight: variant?.weight,
       width: variant?.width,
@@ -102,16 +101,25 @@ export default function ProductEditVariantForm() {
               control={form.control}
               name="specialPrice"
               render={({ field }) => {
-                const tuman = convertRialToTuman(field.value);
+                const tuman = convertRialToTuman(field.value ? field.value : 0);
 
                 return (
                   <FormItem>
                     <FormLabel>قیمت ویژه</FormLabel>
                     <FormControl>
                       <Input
+                        type="number"
                         className="bg-background"
                         placeholder="قیمت تخفیف خورده"
                         {...field}
+                        value={field.value ?? ""}
+                        onChange={(ev) => {
+                          console.log(ev.target.value ? ev.target.value : null);
+
+                          field.onChange(
+                            ev.target.value ? ev.target.value : null
+                          );
+                        }}
                       />
                     </FormControl>
                     {tuman.length > 0 && (

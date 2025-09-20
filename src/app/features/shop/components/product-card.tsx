@@ -103,7 +103,7 @@ export default function ProductCard({
           </h6>
 
           <div className="flex justify-between items-end md:items-start h-full md:h-15 w-full md:px-2">
-            {product.specialPrice ? (
+            {product.percentDiscount ? (
               <Link
                 href={productUrl}
                 target="_blank"

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import { Phone } from "lucide-react";
 import {
@@ -6,12 +7,15 @@ import {
   FaInstagram,
   FaLinkedin,
 } from "react-icons/fa";
-import Link from "next/link";
-export const Footer = () => {
+
+type Props = {
+  className?: string;
+};
+
+export const Footer = ({ className }: Props) => {
   return (
-    <>
-      {" "}
-      <footer className="bg-black text-white py-8">
+    <footer className={className}>
+      <div className="bg-black text-white py-8">
         <div className="grid grid-cols-6 grid-flow-row xl:gap-x-[90px] gap-y-8 max-w-(--breakpoint-xl) mx-auto px-8 xl:px-4">
           <article className="order-last col-span-6 md:col-span-3 text-center md:text-right max-w-[530px] mx-auto md:ml-auto">
             <h2 className="text-3xl text-primary font-yekan-black">
@@ -125,7 +129,7 @@ export const Footer = () => {
             />
           </div>
         </div>
-      </footer>
+      </div>
       <div className="bg-[#333333] text-white">
         <div className="flex flex-col md:flex-row items-center justify-between  max-w-(--breakpoint-xl) mx-auto px-8 py-4 gap-4">
           <a href="">
@@ -137,6 +141,6 @@ export const Footer = () => {
           </p>
         </div>
       </div>
-    </>
+    </footer>
   );
 };

@@ -36,7 +36,7 @@ export default function ProductVariantForm() {
     defaultValues: {
       productId: Number(productId),
       price: 0,
-      specialPrice: 0,
+      specialPrice: undefined,
       productAttributeValueIds: [],
       stock: 1,
       weight: 0,
@@ -112,9 +112,17 @@ export default function ProductVariantForm() {
                       className="bg-background"
                       placeholder="قیمت تخفیف خورده"
                       {...field}
+                      value={field.value ?? ""}
+                      onChange={(ev) => {
+                        console.log(ev.target.value ? ev.target.value : null);
+
+                        field.onChange(
+                          ev.target.value ? ev.target.value : null
+                        );
+                      }}
                     />
                   </FormControl>
-                  {field.value > 10 && (
+                  {field.value && field.value > 10 && (
                     <RialToTuman
                       className="flex gap-x-1.5 text-muted-foreground text-xs"
                       as={"p"}

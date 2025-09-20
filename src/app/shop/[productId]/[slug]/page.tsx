@@ -17,6 +17,7 @@ import CustomHeader from "@/app/features/shop/components/custom-header";
 import RelatedProducts from "$/shop/product/components/related-products";
 import CommentForm from "$/shop/product/components/comment-form";
 import Comments from "$/shop/product/components/comments";
+import Image from "next/image";
 
 type ProductPageProps = {
   params: Promise<{
@@ -78,6 +79,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <h1 className="text-lg md:text-3xl font-bold truncate">
                 {productData.name}
               </h1>
+              {/* seo index image */}
+              <div className="sr-only relative">
+                <Image
+                  width={100}
+                  height={100}
+                  src={productData.urlNameIndexImage}
+                  alt={productData.imageAltText ?? "تصویر محصول"}
+                />
+              </div>
               {/* <div className="hidden md:flex text-xs lg:text-sm items-center gap-2 h-4 -ml-1.5">
                 <Star
                   fill="#FF9F0E"

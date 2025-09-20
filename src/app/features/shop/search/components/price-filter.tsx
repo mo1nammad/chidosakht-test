@@ -13,7 +13,7 @@ import { useSearchParams } from "next/navigation";
 
 export default function PriceFilter() {
   const minValue = 0;
-  const maxValue = 10000000; //  10 milion tuman
+  const maxValue = 100000000; //  10 milion tuman | 100 milion rial
 
   const searchParams = useSearchParams();
 
@@ -61,7 +61,6 @@ export default function PriceFilter() {
           </div>
           {minMaxValues[0] > 10 && (
             <RialToTuman
-              skipSlice
               price={minMaxValues[0]}
               className="flex flex-row-reverse gap-x-1.5 text-muted-foreground text-xs mr-auto ml-1 mt-1.5 max-w-[250px] truncate"
             />
@@ -84,7 +83,6 @@ export default function PriceFilter() {
           </div>
 
           <RialToTuman
-            skipSlice
             price={minMaxValues[1]}
             className="flex flex-row-reverse gap-x-1.5 text-muted-foreground text-xs mr-auto ml-1 mt-1.5 max-w-[250px] truncate"
           />

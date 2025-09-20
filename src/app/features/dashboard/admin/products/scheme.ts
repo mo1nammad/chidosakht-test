@@ -3,7 +3,7 @@ import * as z from "zod";
 export const productVariantScheme = z.object({
   productId: z.coerce.number().min(0),
   price: z.coerce.number().min(0),
-  specialPrice: z.coerce.number(),
+  specialPrice: z.number().min(0).nullable(),
   stock: z.coerce.number().min(1).max(2147483647),
   productAttributeValueIds: z.array(z.number()),
   length: z.coerce.number(),
@@ -17,7 +17,7 @@ export type ProductVariantScheme = z.infer<typeof productVariantScheme>;
 export const editProductVariantScheme = z.object({
   productVariantId: z.coerce.number().min(0),
   price: z.coerce.number().min(0),
-  specialPrice: z.coerce.number(),
+  specialPrice: z.number().min(0).nullable(),
   stock: z.coerce.number().min(0).max(2147483647),
   length: z.coerce.number(),
   width: z.coerce.number(),
@@ -48,7 +48,7 @@ export type EditSpecificationSchemeType = z.infer<
 export const productSimpleScheme = z.object({
   productId: z.coerce.number().min(0),
   price: z.coerce.number().min(0),
-  specialPrice: z.coerce.number(),
+  specialPrice: z.number().min(0).nullable(),
   stock: z.coerce.number().min(0).max(2147483647),
   length: z.coerce.number(),
   width: z.coerce.number(),

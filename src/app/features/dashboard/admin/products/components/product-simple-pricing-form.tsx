@@ -89,7 +89,7 @@ export default function ProductSimplePricingForm({ product }: AppProps) {
               control={form.control}
               name="specialPrice"
               render={({ field }) => {
-                const tuman = convertRialToTuman(field.value);
+                const tuman = convertRialToTuman(field.value ?? 0);
 
                 return (
                   <FormItem>
@@ -99,6 +99,14 @@ export default function ProductSimplePricingForm({ product }: AppProps) {
                         className="bg-background"
                         placeholder="قیمت تخفیف خورده"
                         {...field}
+                        value={field.value ?? ""}
+                        onChange={(ev) => {
+                          console.log(ev.target.value ? ev.target.value : null);
+
+                          field.onChange(
+                            ev.target.value ? ev.target.value : null
+                          );
+                        }}
                       />
                     </FormControl>
                     {tuman.length > 0 && (
