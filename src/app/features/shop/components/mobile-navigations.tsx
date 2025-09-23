@@ -36,10 +36,9 @@ type AppProps = {
   className?: string;
 };
 
-export default function MobileNavigations({ className }: AppProps) {
+export default function MobileSearchProduct({ className }: AppProps) {
   const [openSheet, setOpenSheet] = useState(false);
   const [debouncedValue, setValue, value] = useDebounce("");
-  console.log(debouncedValue);
 
   const { data: categoryData } = useTreeCategories();
   const categories = findCategoryByName(categoryData ?? [], debouncedValue);

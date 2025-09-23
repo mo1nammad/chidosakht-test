@@ -1,12 +1,13 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import { ChevronDown, Search, ShoppingBasket } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import ProfileDropdown from "@/components/profile-dropdown";
 import NavbarLogo from "@/components/navbar-logo";
-import MobileNavigations from "./mobile-navigations";
-import { cn } from "@/lib/utils";
+import MobileSearchProduct from "./mobile-navigations";
 
 const navigations = [
   {
@@ -74,7 +75,9 @@ export default function Navbar() {
             href="/shop"
             className="flex [&>img]:size-10 lg:[&>img]:size-auto"
           />
-          <MobileNavigations className="md:hidden" />
+          <Suspense>
+            <MobileSearchProduct className="md:hidden" />
+          </Suspense>
         </div>
       </div>
     </nav>
