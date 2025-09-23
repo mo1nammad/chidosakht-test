@@ -48,7 +48,7 @@ export type EditSpecificationSchemeType = z.infer<
 export const productSimpleScheme = z.object({
   productId: z.coerce.number().min(0),
   price: z.coerce.number().min(0),
-  specialPrice: z.number().min(0).nullable(),
+  specialPrice: z.number().nullable(),
   stock: z.coerce.number().min(0).max(2147483647),
   length: z.coerce.number(),
   width: z.coerce.number(),

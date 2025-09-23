@@ -48,8 +48,8 @@ export default function ProductAdditionals({ product }: AppProps) {
 
   return (
     <>
-      <ScrollArea className="pb-1.5">
-        <div className="flex flex-row-reverse gap-x-4 p-1 min-w-110">
+      <ScrollArea dir="rtl" className="pb-1.5">
+        <div className="flex gap-x-4 p-1 min-w-110">
           {additionalsList.map((form) => {
             const isActive = form.query === formSearchParam;
 

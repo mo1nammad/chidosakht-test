@@ -1,28 +1,21 @@
 import { useState, useEffect } from "react";
 
-type HookProps<Type> = {
-  value: Type;
-  milliSeconds?: number;
-  onUpdate?: () => void;
-};
-
-export function useDebounce<T>({
-  milliSeconds = 400,
-  value,
-  onUpdate,
-}: HookProps<T>): T {
-  const [debouncedValue, setDebouncedValue] = useState(value);
+export function useDebounce<T>(
+  defaultValue: T,
+  milliSeconds?: number
+): [T, React.Dispatch<React.SetStateAction<T>>, T] {
+  const [hookValue, setHookValue] = useState(defaultValue);
+  const [debouncedValue, setDebouncedValue] = useState<T>(defaultValue);
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedValue(value);
-      onUpdate?.();
-    }, milliSeconds);
+      setDebouncedValue(hookValue);
+    }, milliSeconds ?? 400);
 
     return () => {
       clearTimeout(handler);
     };
-  }, [value, milliSeconds, onUpdate]);
+  }, [hookValue, milliSeconds]);
 
-  return debouncedValue;
+  return [debouncedValue, setHookValue, hookValue];
 }

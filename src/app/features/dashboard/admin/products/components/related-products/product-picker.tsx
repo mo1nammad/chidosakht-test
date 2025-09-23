@@ -22,10 +22,7 @@ import { usePostProductRelations } from "../../api/related-product/use-post-prod
 export default function ProductPicker() {
   const [relatedProductList, setRelatedProductList] = useState<number[]>([]);
 
-  const [searchValue, setSearchValue] = useState("");
-  const debouncedSearchValue = useDebounce({
-    value: searchValue,
-  });
+  const [debouncedSearchValue, setSearchValue] = useDebounce("");
 
   const [openModal, setOpenModal] = useState(false);
   // apis
@@ -62,7 +59,6 @@ export default function ProductPicker() {
               <div className="relative">
                 <Input
                   onChange={(ev) => setSearchValue(ev.target.value)}
-                  value={searchValue}
                   className="text-xs sm:text-sm md:text-base text-right pl-6.5"
                   placeholder="نام محصول"
                 />

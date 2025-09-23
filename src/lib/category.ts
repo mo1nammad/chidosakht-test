@@ -1,5 +1,8 @@
 import { Category } from "@/types";
 
+/**
+ * find category and its children by id
+ */
 export function findCategory(
   categories: Category[],
   targetId: number
@@ -16,7 +19,8 @@ export function findCategory(
   return null;
 }
 
-// extract tree structred categories into single array
+/**
+ * extract tree structred categories into single array */
 export function extractAllCategories(categories: Category[]): Category[] {
   const result: Category[] = [];
 
@@ -61,4 +65,17 @@ function findPathFromNode(node: Category, targetId: number): Category[] | null {
   }
 
   return null;
+}
+
+/**
+ * find a category by given name
+ */
+
+export function findCategoryByName(data: Category[], name: string) {
+  const extractedList = extractAllCategories(data);
+
+  const categories = extractedList?.filter((category) =>
+    category.name.includes(name)
+  );
+  return categories;
 }

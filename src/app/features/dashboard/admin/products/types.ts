@@ -17,13 +17,13 @@ export interface Product {
   infoForSampleProduct:
     | undefined
     | {
-        price: number;
-        specialPrice: number;
-        stock: number;
-        length: number;
-        width: number;
-        height: number;
-        weight: number;
+        price: number | null;
+        specialPrice: number | null;
+        stock: number | null;
+        length: number | null;
+        width: number | null;
+        height: number | null;
+        weight: number | null;
       };
   createTime: Date | string | number;
   lastUpdateTime: Date | string | number | null;

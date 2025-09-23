@@ -110,12 +110,11 @@ export default function ProductVariantForm() {
                   <FormControl>
                     <Input
                       className="bg-background"
+                      type="number"
                       placeholder="قیمت تخفیف خورده"
                       {...field}
                       value={field.value ?? ""}
                       onChange={(ev) => {
-                        console.log(ev.target.value ? ev.target.value : null);
-
                         field.onChange(
                           ev.target.value ? ev.target.value : null
                         );

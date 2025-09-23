@@ -40,8 +40,8 @@ export default function AttributeValues({ data }: AppProps) {
           </h4>
 
           {/* values selection section */}
-          <ScrollArea className="w-full py-2">
-            <div className="flex flex-row-reverse gap-x-2 p-2">
+          <ScrollArea dir="rtl" className="w-full py-2">
+            <div className="flex gap-x-2 p-2">
               {att.values.map(({ value, productAttributeValueId }) => (
                 <Button
                   variant="accent"

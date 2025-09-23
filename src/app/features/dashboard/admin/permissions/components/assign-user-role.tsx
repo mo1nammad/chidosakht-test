@@ -28,11 +28,7 @@ export default function AssignUserRole({ roleId }: AppProps) {
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const [value, setValue] = useState<string>("");
-  const debouncedValue = useDebounce({
-    milliSeconds: 400,
-    value,
-  });
+  const [debouncedValue, setValue] = useDebounce("");
 
   const [assignedUser, setAssignedUser] = useState<User | null>(null);
 
@@ -85,7 +81,6 @@ export default function AssignUserRole({ roleId }: AppProps) {
                 dir="rtl"
                 className="grow bg-background relative z-20 text-xs sm:text-base"
                 placeholder="شماره موبایل را وارد کنید"
-                value={value}
                 onChange={(ev) => setValue(ev.target.value)}
                 onFocus={() => setShowList(true)}
               />

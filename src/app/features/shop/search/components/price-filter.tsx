@@ -20,19 +20,15 @@ export default function PriceFilter() {
   const fromPrice = searchParams.get("FromPrice");
   const toPrice = searchParams.get("ToPrice");
 
-  const [minMaxValues, setMinMaxValues] = React.useState<number[]>([
+  // to only call api on drag end
+  const [debouncedMinMaxValues, setMinMaxValues, minMaxValue] = useDebounce([
     fromPrice ? Number(fromPrice) : minValue,
     toPrice ? Number(toPrice) : maxValue,
   ]);
 
-  // to only call api on drag end
-  const debouncedMinMaxValue = useDebounce({
-    value: minMaxValues,
-  });
-
   useFilterQuery({
-    FromPrice: debouncedMinMaxValue[0],
-    ToPrice: debouncedMinMaxValue[1],
+    FromPrice: debouncedMinMaxValues[0],
+    ToPrice: debouncedMinMaxValues[1],
   });
 
   return (
@@ -41,7 +37,7 @@ export default function PriceFilter() {
         <Slider
           min={minValue}
           max={maxValue}
-          value={minMaxValues}
+          value={minMaxValue}
           onValueChange={(values) => setMinMaxValues(values)}
         />
 
@@ -52,16 +48,16 @@ export default function PriceFilter() {
             </Label>
             <Input
               id="fromPrice"
-              value={minMaxValues[0]}
+              value={minMaxValue[0]}
               onChange={(ev) =>
                 setMinMaxValues((prev) => [Number(ev.target.value), prev[1]])
               }
               className="focus-visible:ring-primary bg-white"
             />
           </div>
-          {minMaxValues[0] > 10 && (
+          {minMaxValue[0] > 10 && (
             <RialToTuman
-              price={minMaxValues[0]}
+              price={minMaxValue[0]}
               className="flex flex-row-reverse gap-x-1.5 text-muted-foreground text-xs mr-auto ml-1 mt-1.5 max-w-[250px] truncate"
             />
           )}
@@ -74,7 +70,7 @@ export default function PriceFilter() {
             </Label>
             <Input
               id="fromPrice"
-              value={minMaxValues[1]}
+              value={minMaxValue[1]}
               onChange={(ev) =>
                 setMinMaxValues((prev) => [prev[0], Number(ev.target.value)])
               }
@@ -83,7 +79,7 @@ export default function PriceFilter() {
           </div>
 
           <RialToTuman
-            price={minMaxValues[1]}
+            price={minMaxValue[1]}
             className="flex flex-row-reverse gap-x-1.5 text-muted-foreground text-xs mr-auto ml-1 mt-1.5 max-w-[250px] truncate"
           />
         </div>

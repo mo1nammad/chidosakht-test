@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/navigation";
 
 import { customErrorMap } from "@/lib/utils";
 
@@ -36,7 +35,6 @@ type Props = {
 // component
 export default function CreateProduct({ setOpenDialog }: Props) {
   const { mutate: createProductInstance, status } = useCreateInstance();
-  const router = useRouter();
 
   const form = useForm<FormValuesSchema>({
     resolver: zodResolver(createProductInstanceSchema),
@@ -47,13 +45,7 @@ export default function CreateProduct({ setOpenDialog }: Props) {
   });
   const handleSubmit = (val: FormValuesSchema) => {
     createProductInstance(val, {
-      onSuccess: (res) => {
-        const location = res.headers.location as string;
-        const productId = location.split("/Product/")[1];
-        router.push(`/dashboard/admin/products/${productId}`);
-
-        setOpenDialog(false);
-      },
+      onSuccess: () => setOpenDialog(false),
     });
   };
 

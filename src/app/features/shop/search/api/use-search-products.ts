@@ -1,5 +1,6 @@
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import queryString from "query-string";
 
 import { ProductCard } from "@/types";
 import axiosInstance from "@/lib/axios";
@@ -12,15 +13,28 @@ type ApiResponse = {
   products: ProductCard[];
 };
 
-export function useSearchProducts() {
+type HookProps = {
+  queryObj?: Record<string, string>;
+};
+
+export function useSearchProducts(props?: HookProps) {
   const searchParams = useSearchParams();
   const searchParamsStringified = searchParams.toString();
 
-  const hasTypeOrder = searchParams.get("TypeOrderByForProduct");
+  let parsed = queryString.parse(searchParamsStringified);
 
-  const url = hasTypeOrder
-    ? `/Product?${searchParamsStringified}`
-    : `/Product?${searchParamsStringified}&TypeOrderByForProduct=1`;
+  parsed = {
+    TypeOrderByForProduct: "1", // required
+    ...parsed,
+    ...props?.queryObj,
+  };
+
+  const resultQueriesStringified = queryString.stringify(parsed, {
+    skipNull: true,
+    skipEmptyString: true,
+  });
+
+  const url = `/Product?${resultQueriesStringified}`;
 
   const query = useQuery<ApiResponse>({
     queryKey: ["search-products", url],

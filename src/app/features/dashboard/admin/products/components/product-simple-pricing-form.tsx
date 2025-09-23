@@ -34,13 +34,13 @@ export default function ProductSimplePricingForm({ product }: AppProps) {
     resolver: zodResolver(productSimpleScheme),
     defaultValues: {
       productId: product.id,
-      price: productInfo.price,
-      specialPrice: productInfo.specialPrice,
-      stock: productInfo.stock,
-      weight: productInfo.weight,
-      width: productInfo.width,
-      height: productInfo.height,
-      length: productInfo.length,
+      price: productInfo?.price ?? 0,
+      specialPrice: productInfo?.specialPrice,
+      stock: productInfo?.stock ?? 0,
+      weight: productInfo?.weight ?? 0,
+      width: productInfo?.width ?? 0,
+      height: productInfo?.height ?? 0,
+      length: productInfo?.length ?? 0,
     },
   });
 
@@ -96,17 +96,16 @@ export default function ProductSimplePricingForm({ product }: AppProps) {
                     <FormLabel>قیمت ویژه</FormLabel>
                     <FormControl>
                       <Input
+                        type="number"
                         className="bg-background"
                         placeholder="قیمت تخفیف خورده"
                         {...field}
                         value={field.value ?? ""}
-                        onChange={(ev) => {
-                          console.log(ev.target.value ? ev.target.value : null);
-
+                        onChange={(ev) =>
                           field.onChange(
                             ev.target.value ? ev.target.value : null
-                          );
-                        }}
+                          )
+                        }
                       />
                     </FormControl>
                     {tuman.length > 0 && (
