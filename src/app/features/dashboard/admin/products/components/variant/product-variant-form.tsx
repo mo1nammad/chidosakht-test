@@ -36,7 +36,7 @@ export default function ProductVariantForm() {
     defaultValues: {
       productId: Number(productId),
       price: 0,
-      specialPrice: undefined,
+      specialPrice: null,
       productAttributeValueIds: [],
       stock: 1,
       weight: 0,
@@ -109,14 +109,14 @@ export default function ProductVariantForm() {
                   <FormLabel>قیمت ویژه</FormLabel>
                   <FormControl>
                     <Input
-                      className="bg-background"
                       type="number"
+                      className="bg-background"
                       placeholder="قیمت تخفیف خورده"
                       {...field}
                       value={field.value ?? ""}
                       onChange={(ev) => {
                         field.onChange(
-                          ev.target.value ? ev.target.value : null
+                          ev.target.value ? Number(ev.target.value) : null
                         );
                       }}
                     />

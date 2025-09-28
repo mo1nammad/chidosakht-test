@@ -39,9 +39,11 @@ export default function ProductCard({ product, onChange, selected }: AppProps) {
       >
         {formatRIAL(product.price)}
       </h6>
-      <h6 className="basis-20 hidden sm:block text-xs md:text-sm">
-        {formatRIAL(product.specialPrice)}
-      </h6>
+      {product.specialPrice ? (
+        <h6 className="basis-20 hidden sm:block text-xs md:text-sm">
+          {formatRIAL(product.specialPrice)}
+        </h6>
+      ) : null}
       <Checkbox checked={selected} className="mr-auto size-5 cursor-pointer" />
     </Card>
   );

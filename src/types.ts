@@ -55,7 +55,7 @@ export type ProductCard = {
   nameIndexImage: string;
   urlNameIndexImage: string;
   price: number;
-  specialPrice: number;
+  specialPrice: number | null;
   percentDiscount: number;
 };
 

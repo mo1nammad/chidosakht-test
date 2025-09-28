@@ -1,13 +1,14 @@
 import React, { Suspense } from "react";
 import Link from "next/link";
-import { ChevronDown, Search, ShoppingBasket } from "lucide-react";
+import { ChevronDown, ShoppingBasket } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import ProfileDropdown from "@/components/profile-dropdown";
 import NavbarLogo from "@/components/navbar-logo";
-import MobileSearchProduct from "./mobile-navigations";
+import MobileSearchProduct from "./mobile-search";
+import SearchButton from "./search-button";
 
 const navigations = [
   {
@@ -49,9 +50,7 @@ export default function Navbar() {
 
             <ProfileDropdown className="hidden md:flex" />
 
-            <Button variant="ghost" size="icon" className="hidden md:flex">
-              <Search className="size-6!" />
-            </Button>
+            <SearchButton />
           </div>
           {/* navgations*/}
           <div className="items-center text-right hidden md:flex flex-wrap-reverse justify-between gap-x-2 max-w-70 w-full min-[900px]:max-w-116">

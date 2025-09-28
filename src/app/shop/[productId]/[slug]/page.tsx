@@ -61,7 +61,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   return (
     <div className="max-w-7xl px-6 mx-auto relative">
       {/* breadcrumb */}
-      <div className="w-full h-5 my-4 mt-6">
+      <div className="w-full h-fit my-4 mt-6">
         <Suspense>
           <CategoryBreadcrumb
             categoryId={productData.categoryId.toString()}

@@ -13,8 +13,6 @@ export default function Comments() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useComments();
 
-  console.log(data);
-
   return (
     <div className="flex flex-col items-end gap-4">
       {data?.pages.map((group, i) => (

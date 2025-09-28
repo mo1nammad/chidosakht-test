@@ -31,9 +31,14 @@ export default function CategoryBreadcrumb({
   const searchParams = useSearchParams();
   const categoryId = categoryIdProp ?? searchParams.get("CategoryId");
 
-  const { data: categories, status } = useTreeCategories();
+  const { data: categories } = useTreeCategories();
 
+  const [mounted, setMounted] = useState(false);
   const [breadcrumbPaths, setBreadcrumbPaths] = useState<Category[]>([]);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (categories) {
@@ -50,9 +55,11 @@ export default function CategoryBreadcrumb({
     }
   }, [productName, categories, categoryId]);
 
-  return status === "pending" ? (
-    <Loader className="justify-end mr-3.5" />
-  ) : (
+  if (!mounted) {
+    return <Loader className="justify-end mr-3.5" />;
+  }
+
+  return (
     <Breadcrumb dir="rtl">
       <BreadcrumbList>
         <BreadcrumbItem>
