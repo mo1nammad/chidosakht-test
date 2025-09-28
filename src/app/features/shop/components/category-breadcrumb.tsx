@@ -35,8 +35,6 @@ export default function CategoryBreadcrumb({
 
   const [breadcrumbPaths, setBreadcrumbPaths] = useState<Category[]>([]);
 
-  console.log();
-
   useEffect(() => {
     if (categories) {
       setBreadcrumbPaths(

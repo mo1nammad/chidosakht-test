@@ -12,4 +12,14 @@ const axiosInstance = axios.create({
   },
 });
 
+export const axiosBetaInstance = axios.create({
+  baseURL: SERVER_API_URL,
+  timeout: 10000, // 10 seconds
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "Accept-Language": "fa",
+  },
+});
+
 export default axiosInstance;

@@ -13,7 +13,6 @@ import Gallery from "$/shop/product/components/gallery";
 import AttributeValues from "$/shop/product/components/attribute-values";
 import AddToShoppingBag from "$/shop/product/components/add-to-shopping-bag";
 import ProductTabs from "$/shop/product/components/product-tabs";
-import CustomHeader from "@/app/features/shop/components/custom-header";
 import RelatedProducts from "$/shop/product/components/related-products";
 import CommentForm from "$/shop/product/components/comment-form";
 import Comments from "$/shop/product/components/comments";
@@ -45,13 +44,19 @@ async function fetchProductData<T>(productId: string): Promise<T | null> {
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { productId, slug } = await params;
+  console.log(productId, slug);
 
   const productData = await fetchProductData<Product>(productId);
 
   if (!productData) notFound();
 
-  if (slug !== productData.uniqeLink)
-    redirect(`/shop/${productId}/${productData.uniqeLink}`);
+  const apiSlug = productData.uniqeLink.trim();
+  const safeSlug = encodeURIComponent(apiSlug);
+
+  // Compare decoded browser slug with raw API slug
+  if (decodeURIComponent(slug) !== apiSlug) {
+    redirect(`/shop/${productId}/${safeSlug}`);
+  }
 
   return (
     <div className="max-w-7xl px-6 mx-auto relative">
@@ -145,7 +150,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
         details={productData.specificationGroups}
       />
 
-      <CustomHeader className="px-12 pb-2.5 mb-11">محصولات مرتبط</CustomHeader>
       <RelatedProducts className="pb-10 md:border-b border-gray-200" />
       {/* comment sections */}
 

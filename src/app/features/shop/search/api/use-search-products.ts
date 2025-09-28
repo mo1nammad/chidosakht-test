@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import queryString from "query-string";
 
 import { ProductCard } from "@/types";
-import axiosInstance from "@/lib/axios";
+import { axiosBetaInstance } from "@/lib/axios";
 
 type ApiResponse = {
   page: number;
@@ -39,7 +39,7 @@ export function useSearchProducts(props?: HookProps) {
   const query = useQuery<ApiResponse>({
     queryKey: ["search-products", url],
     queryFn: async () => {
-      const request = await axiosInstance.get(url);
+      const request = await axiosBetaInstance.get(url);
       const response = await request.data;
 
       return response;
