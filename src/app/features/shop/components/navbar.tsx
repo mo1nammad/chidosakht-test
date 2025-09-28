@@ -50,7 +50,9 @@ export default function Navbar() {
 
             <ProfileDropdown className="hidden md:flex" />
 
-            <SearchButton />
+            <Suspense>
+              <SearchButton />
+            </Suspense>
           </div>
           {/* navgations*/}
           <div className="items-center text-right hidden md:flex flex-wrap-reverse justify-between gap-x-2 max-w-70 w-full min-[900px]:max-w-116">
