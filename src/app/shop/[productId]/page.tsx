@@ -20,5 +20,7 @@ async function fetchProductData<T>(productId: string): Promise<T> {
 export default async function ProductPage({ params }: ProductPageProps) {
   const { productId } = await params;
   const productData = await fetchProductData<Product>(productId);
-  redirect(`/shop/${productId}/${productData.uniqeLink}`);
+  const safeSlug = encodeURIComponent(productData.uniqeLink.trim());
+
+  redirect(`/shop/${productId}/${safeSlug}`);
 }

@@ -70,7 +70,7 @@ export default function RelatedProducts({ className }: AppProps) {
           direction: "rtl",
         }}
       >
-        <CarouselContent className="h-105 md:h-auto">
+        <CarouselContent className="h-fit max-h-105 md:h-auto">
           {status === "success"
             ? // success
               relatedProducts.map((product) => (

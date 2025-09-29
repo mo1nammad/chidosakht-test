@@ -1,12 +1,17 @@
 import React from "react";
 import SidebarLayout from "@/app/features/dashboard/components/sidebar-layout";
 import DashboardNavbar from "../features/dashboard/components/dashboard-navbar";
+import { redirect } from "next/navigation";
+import { getSession } from "@/lib/session";
 
 type Props = {
   children: React.ReactNode;
 };
 
-export default function DashboardLayout({ children }: Props) {
+export default async function DashboardLayout({ children }: Props) {
+  const session = await getSession();
+  if (!session?.id) redirect("/login");
+
   const SIDEBAR_WIDTH = "20rem";
   return (
     <div

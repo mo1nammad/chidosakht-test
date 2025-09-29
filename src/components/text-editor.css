@@ -79,6 +79,7 @@
 
 .tiptap h6 {
   font-size: 1.1rem !important;
+  line-height: 20px !important;
 }
 
 /* Code and preformatted text styles */
