@@ -33,16 +33,15 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
+Products page showcase--
 
-To learn more about Next.js, take a look at the following resources:
+<img width="1920" height="1080" alt="Screenshot from 2025-09-29 12-21-54" src="https://github.com/user-attachments/assets/a2ff8ee1-e3bf-4929-a826-a776eaf1ad1b" />
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<img width="1920" height="1080" alt="Screenshot from 2025-09-29 12-22-05" src="https://github.com/user-attachments/assets/eedd2098-2545-4a27-b5f0-e6ba81693f49" />
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Manage Products--
+<img width="1920" height="1080" alt="Screenshot from 2025-09-29 12-22-55" src="https://github.com/user-attachments/assets/89409424-9fe7-4009-88d7-665644fe8ce7" />
 
-## Deploy on Vercel
+<img width="1920" height="1080" alt="Screenshot from 2025-09-29 12-23-10" src="https://github.com/user-attachments/assets/5e45d4c7-6dd4-408f-b445-909e1ee95668" />
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<img width="1920" height="1080" alt="Screenshot from 2025-09-29 12-23-15" src="https://github.com/user-attachments/assets/53798474-f827-4bde-b127-9831ee5caa66" />
