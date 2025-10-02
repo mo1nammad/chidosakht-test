@@ -34,7 +34,6 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 <h3><strong>this project is still on progress</strong></h3>
 
-
 ## Products page showcase--
 
 <img width="1920" height="1080" alt="Screenshot from 2025-09-29 12-21-54" src="https://github.com/user-attachments/assets/a2ff8ee1-e3bf-4929-a826-a776eaf1ad1b" />
@@ -69,12 +68,8 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 <img width="1920" height="1080" alt="Screenshot from 2025-09-29 12-25-54" src="https://github.com/user-attachments/assets/2ceed5fa-676d-4ecd-a687-c704b3423a41" />
 
-## Manage Comments 
+## Manage Comments
 
 <img width="1920" height="1080" alt="Screenshot from 2025-09-29 12-26-01" src="https://github.com/user-attachments/assets/21cec56f-6863-4276-9b20-d9757561d0c2" />
 
 <img width="1920" height="1080" alt="Screenshot from 2025-09-29 12-26-09" src="https://github.com/user-attachments/assets/335b8678-8f22-43d7-afc9-e8e7cac50b60" />
-
-
-
-
