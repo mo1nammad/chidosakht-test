@@ -1,19 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
 import { formatRIAL } from "@/lib/utils";
 import { Minus, Plus } from "lucide-react";
+import { Context as variantContext } from "../context/variant-context";
 
-type AppProps = {
-  price: number;
-  stock: number;
-};
+export default function AddToShoppingBag() {
+  const { stock, price } = use(variantContext);
 
-export default function AddToShoppingBag({ price, stock }: AppProps) {
   const [shopCount, setShopCount] = useState(Math.min(stock, 1));
+
+  useEffect(() => {
+    setShopCount(Math.min(stock, 1));
+  }, [stock]);
 
   const increaseShopCount = () =>
     setShopCount((prev) => (prev >= stock ? stock : prev + 1));
@@ -26,15 +28,15 @@ export default function AddToShoppingBag({ price, stock }: AppProps) {
     <div className="mt-4 grid gap-y-5 gap-x-2 grid-cols-6 grid-rows-2">
       {stock === 0 ? (
         <p className="flex items-center gap-x-1.5 text-lg col-span-3 md:col-span-6">
-          {" "}
           محصول ناموجود است
         </p>
       ) : (
         <p className="flex items-center gap-x-1.5 text-lg col-span-3 md:col-span-6">
           <span className="text-muted-foreground">تومان</span>
-          {formatRIAL(price, true, {
-            style: "decimal",
-          })}
+          {!!price &&
+            formatRIAL(price, true, {
+              style: "decimal",
+            })}
         </p>
       )}
       <Button

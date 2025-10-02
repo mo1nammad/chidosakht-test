@@ -17,6 +17,7 @@ import RelatedProducts from "$/shop/product/components/related-products";
 import CommentForm from "$/shop/product/components/comment-form";
 import Comments from "$/shop/product/components/comments";
 import Image from "next/image";
+import VariantContext from "@/app/features/shop/product/context/variant-context";
 
 type ProductPageProps = {
   params: Promise<{
@@ -44,9 +45,9 @@ async function fetchProductData<T>(productId: string): Promise<T | null> {
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { productId, slug } = await params;
-  console.log(productId, slug);
 
   const productData = await fetchProductData<Product>(productId);
+  console.log(productData);
 
   if (!productData) notFound();
 
@@ -136,12 +137,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
 
           {/* add to purchase section */}
-
-          <AttributeValues data={productData.attributeAndValues} />
-          <AddToShoppingBag
-            stock={productData.stock}
-            price={productData.price}
-          />
+          <VariantContext product={productData}>
+            <AttributeValues data={productData.attributeAndValues} />
+            <AddToShoppingBag />
+          </VariantContext>
         </section>
       </div>
       {/* tabs */}

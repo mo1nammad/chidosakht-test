@@ -59,10 +59,13 @@ export type ProductCard = {
   percentDiscount: number;
 };
 
+type SimpleProduct = 1;
+type VariantProduct = 2;
+
 export type Product = {
   id: number;
   name: string;
-  productType: number;
+  productType: SimpleProduct | VariantProduct;
   productTypeName: string;
   description: string;
   uniqeLink: string;
@@ -84,13 +87,22 @@ export type Product = {
       value: string;
     }[];
   }[];
-
-  price: number;
-  specialPrice: number;
-  stock: number;
-  hasDiscount: boolean;
-  percentDiscount: number;
   viewCount: number;
+
+  productVariants:
+    | {
+        productVariantId: number;
+        productAttributeValues: {
+          productAttributeValueId: number;
+          value: string;
+        }[];
+        price: number;
+        specialPrice: null | number;
+        stock: number;
+        percentDiscount: null | number;
+        hasDiscount: boolean;
+      }[]
+    | undefined;
 
   // specifications section
   specificationGroups: {
@@ -110,6 +122,14 @@ export type Product = {
     isIndex: boolean;
     url: string;
   }[];
+
+  infoForSimpleProduct: {
+    price: number;
+    specialPrice: null | number;
+    stock: number;
+    percentDiscount: null | number;
+    hasDiscount: boolean;
+  } | null;
 };
 
 export type Comment = {

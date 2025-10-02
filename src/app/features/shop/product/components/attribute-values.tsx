@@ -1,35 +1,22 @@
 "use client";
 
-import { Product } from "@/types";
-import React, { useState } from "react";
+import React, { use } from "react";
 
 import { colorAttribute } from "$/dashboard/admin/products/types";
+import { cn } from "@/lib/utils";
+
+import { Context as variantcontext } from "../context/variant-context";
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Product } from "@/types";
 
 type AppProps = {
   data: Product["attributeAndValues"];
 };
 
-const extractDefaultAttValue = (attributes: AppProps["data"]) => {
-  const obj: Record<number, number> = {};
-
-  for (const attr of attributes) {
-    obj[attr.productAttributeId] = attr.values[0].productAttributeValueId;
-  }
-
-  return obj;
-};
-
 export default function AttributeValues({ data }: AppProps) {
-  const [attValueObj, setAttValueObj] = useState<Record<number, number>>(
-    extractDefaultAttValue(data)
-  );
-
-  const setAttrValue = (attrId: number, valueId: number) =>
-    setAttValueObj((prev) => ({ ...prev, [attrId]: valueId }));
+  const { attributeValuesObj, setAttributeValueObj } = use(variantcontext);
 
   return (
     <div className="flex flex-col text-right gap-y-1 mt-8">
@@ -48,7 +35,7 @@ export default function AttributeValues({ data }: AppProps) {
                   size={"sm"}
                   key={productAttributeValueId}
                   onClick={() =>
-                    setAttrValue(
+                    setAttributeValueObj(
                       att.productAttributeId,
                       productAttributeValueId
                     )
@@ -56,7 +43,7 @@ export default function AttributeValues({ data }: AppProps) {
                   className={cn(
                     "rounded-full transition",
                     att.attributeType === colorAttribute && "px-6",
-                    attValueObj[att.productAttributeId] ===
+                    attributeValuesObj[att.productAttributeId] ===
                       productAttributeValueId && "ring-1 ring-primary"
                   )}
                 >
