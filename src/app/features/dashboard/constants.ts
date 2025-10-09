@@ -42,7 +42,7 @@ export const navigationData: Route[] = [
   {
     title: "سبد خرید",
     icon: ShoppingBasket,
-    url: "/dashboard/checkout",
+    url: "/dashboard/cart",
   },
   {
     title: "پروژه ها",

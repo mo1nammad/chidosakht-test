@@ -11,7 +11,7 @@ import { Product } from "@/types";
 import CategoryBreadcrumb from "$/shop/components/category-breadcrumb";
 import Gallery from "$/shop/product/components/gallery";
 import AttributeValues from "$/shop/product/components/attribute-values";
-import AddToShoppingBag from "$/shop/product/components/add-to-shopping-bag";
+import AddToCart from "@/app/features/shop/product/components/add-to-cart";
 import ProductTabs from "$/shop/product/components/product-tabs";
 import RelatedProducts from "$/shop/product/components/related-products";
 import CommentForm from "$/shop/product/components/comment-form";
@@ -47,7 +47,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const { productId, slug } = await params;
 
   const productData = await fetchProductData<Product>(productId);
-  console.log(productData);
 
   if (!productData) notFound();
 
@@ -79,7 +78,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         />
 
         {/* ceo important */}
-        <section className="flex flex-col md:w-3/6 h-fit">
+        <section className="flex flex-col md:w-3/6 h-fit mr-auto">
           <div className="text-right border-t md:border-none border-gray-200 pt-4">
             <div className="flex flex-col gap-y-2 lg:flex-row-reverse lg:justify-between items-end lg:items-center">
               <h1 className="text-lg md:text-3xl font-bold truncate">
@@ -139,7 +138,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           {/* add to purchase section */}
           <VariantContext product={productData}>
             <AttributeValues data={productData.attributeAndValues} />
-            <AddToShoppingBag />
+            <AddToCart />
           </VariantContext>
         </section>
       </div>

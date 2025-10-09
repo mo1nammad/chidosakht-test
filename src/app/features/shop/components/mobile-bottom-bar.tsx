@@ -23,7 +23,7 @@ const items = [
   },
   {
     title: "سبد خرید",
-    href: "/dashboard/checkout",
+    href: "/dashboard/cart",
     icon: ShoppingCart,
   },
   {

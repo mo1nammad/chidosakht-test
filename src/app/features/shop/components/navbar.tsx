@@ -42,9 +42,11 @@ export default function Navbar() {
         <div className="flex justify-between gap-x-8 items-center h-full">
           {/* user actions */}
           <div className="flex items-center gap-x-2.5">
-            <Button variant="ghost" size="icon">
-              <ShoppingBasket className="size-6!" />
-            </Button>
+            <Link href={"/dashboard/cart"}>
+              <Button variant="ghost" size="icon">
+                <ShoppingBasket className="size-6!" />
+              </Button>
+            </Link>
 
             <div className="h-6 w-px mr-1.5 bg-gray-200 hidden md:block" />
 

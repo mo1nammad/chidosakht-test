@@ -20,7 +20,7 @@ type ContextType = {
 
   price: number | null;
   specialPrice: number | null;
-  stock: number;
+  stock: number | null;
 };
 export const Context = createContext<ContextType>({
   price: 0,
@@ -72,7 +72,7 @@ export default function VariantContext({
 
     if (targetVariant) {
       setVariant(targetVariant);
-    }
+    } else setVariant(null);
   }, [attValueObj, product.productVariants]);
 
   const setAttrValue = (attrId: number, valueId: number) =>
@@ -95,10 +95,11 @@ export default function VariantContext({
     return [price, specialPrice];
   };
 
-  const stock =
-    product.productType === simpleProduct
-      ? product.infoForSimpleProduct?.stock
-      : variant?.stock;
+  const stock = product.infoForSimpleProduct
+    ? product.infoForSimpleProduct.stock
+    : variant
+    ? variant.stock
+    : null;
 
   return (
     <Context
@@ -111,7 +112,7 @@ export default function VariantContext({
 
         price: priceFn()[0],
         specialPrice: priceFn()[1],
-        stock: stock ?? 0,
+        stock: stock ?? null,
       }}
     >
       {children}

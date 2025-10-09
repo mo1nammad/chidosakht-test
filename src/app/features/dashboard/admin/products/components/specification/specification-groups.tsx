@@ -6,7 +6,6 @@ import SpecGroupHeader from "./spec-group-header";
 
 export default function SpecificationGroups() {
   const { data, status } = useGetGroupAndSpec();
-  console.log(data);
 
   if (status === "success")
     return (
