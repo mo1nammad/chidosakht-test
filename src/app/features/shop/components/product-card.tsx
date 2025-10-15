@@ -74,7 +74,7 @@ export default function ProductCard({
     <div
       dir="ltr"
       className={cn(
-        "w-full h-29.5 md:w-62 md:h-86.5 bg-[#F4F6F8] flex justify-center md:justify-start flex-row-reverse md:flex-col gap-3 md:gap-0 p-3 md:p-0 md:pt-4 rounded-xl group",
+        "w-full h-31 md:w-62 md:h-86.5 bg-[#F4F6F8] flex justify-center md:justify-start flex-row-reverse md:flex-col gap-3 md:gap-0 p-3 md:p-0 md:pt-4 rounded-xl group",
         className
       )}
     >
@@ -98,7 +98,7 @@ export default function ProductCard({
       {/* price */}
       <div className="w-full md:px-[6.5px] md:pb-[10px]">
         <div className="flex flex-col h-full bg-white rounded-[7px] p-2 md:p-0">
-          <h6 className="md:hidden block text-sm font-medium text-right truncate">
+          <h6 className="md:hidden block text-sm font-medium text-right truncate self-end text-wrap h-full">
             {product.name}
           </h6>
 
