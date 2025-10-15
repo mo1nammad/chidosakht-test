@@ -46,7 +46,7 @@ export default function AddToCart() {
   return (
     <div className="mt-4 grid gap-y-5 gap-x-2 grid-cols-6 grid-rows-2">
       {!stock || stock === 0 ? (
-        <p className="flex items-center justify-center bg-gray-100 p-2 border border-red-300 text-red-500 rounded-xl opacity-60 gap-x-1.5 text-lg col-span-3 md:col-span-6">
+        <p className="flex col-span-6 items-center justify-center bg-gray-100 p-2 border border-red-300 text-red-500 rounded-xl opacity-60 gap-x-1.5 text-lg md:col-span-6">
           محصول ناموجود است
         </p>
       ) : (
