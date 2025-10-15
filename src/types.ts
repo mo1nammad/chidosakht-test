@@ -22,6 +22,8 @@ export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
 }
 
+// global
+
 export type Role = {
   id: string;
   name: string;
@@ -141,4 +143,31 @@ export type Comment = {
   countVoteUnHelpfuls: number;
   userVoteHelpful: null;
   createTime: string;
+};
+
+export type Cart = {
+  cartId: number;
+  userId: string;
+  cartType: number;
+  cartItems: {
+    cartItemId: number;
+    productId: number;
+    productType: 1 | 2;
+    productVariantId: number;
+    productName: string;
+    nameIndexImage: string;
+    quantity: number;
+    stock: number;
+
+    price_Now: number;
+    specialPrice_Now: number | null;
+    percentDiscount_Now: number | null;
+    discountAmount_Now: number;
+    // amount_Now: 2020000000;
+    // finalAmout_Now: 2020000000;
+  }[];
+
+  totalAmount_Now: number;
+  totalDiscountAmount_Now: number;
+  finalTotalAmout_Now: number;
 };

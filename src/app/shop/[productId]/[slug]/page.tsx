@@ -81,7 +81,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <section className="flex flex-col md:w-3/6 h-fit mr-auto">
           <div className="text-right border-t md:border-none border-gray-200 pt-4">
             <div className="flex flex-col gap-y-2 lg:flex-row-reverse lg:justify-between items-end lg:items-center">
-              <h1 className="text-lg md:text-3xl font-bold truncate">
+              <h1 dir="rtl" className="text-lg md:text-3xl font-bold truncate">
                 {productData.name}
               </h1>
               {/* seo index image */}

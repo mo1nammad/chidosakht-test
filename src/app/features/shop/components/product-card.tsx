@@ -91,14 +91,20 @@ export default function ProductCard({
         </Link>
       </div>
 
-      <h6 className="hidden md:block text-sm font-medium px-4 py-3 text-right truncate">
+      <h6
+        dir="rtl"
+        className="hidden md:block text-sm font-medium px-4 py-3 text-right truncate"
+      >
         {product.name}
       </h6>
 
       {/* price */}
       <div className="w-full md:px-[6.5px] md:pb-[10px]">
         <div className="flex flex-col h-full bg-white rounded-[7px] p-2 md:p-0">
-          <h6 className="md:hidden block text-sm font-medium text-right truncate self-end text-wrap h-full">
+          <h6
+            dir="rtl"
+            className="md:hidden block text-sm font-medium text-right truncate self-end text-wrap h-full"
+          >
             {product.name}
           </h6>
 
