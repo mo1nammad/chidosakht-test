@@ -9,14 +9,19 @@ import Checkout from "./checkout";
 
 export default function UserCart() {
   const { data, isSuccess } = useCartProducts();
+
+  const totalQuantity = data?.cartItems
+    .map((item) => item.quantity)
+    .reduce((total, curr) => total + curr);
+
   return (
     <section className="mt-6">
       <div dir="rtl" className="flex gap-x-1 items-center">
         <h3 className="font-semibold">سبد خرید شما</h3>
-        <p className="text-xs">.{data?.cartItems.length} مرسوله</p>
+        <p className="text-xs">.{totalQuantity ?? 0} مرسوله</p>
       </div>
 
-      {!isSuccess || data.cartItems.length === 0 ? (
+      {!isSuccess || !data || data.cartItems.length === 0 ? (
         <div
           dir="rtl"
           className="w-full min-h-120 flex flex-col items-center justify-center"
@@ -37,7 +42,7 @@ export default function UserCart() {
           <Checkout
             cartId={data.cartId}
             finalTotalAmout={data.finalTotalAmout_Now}
-            itemsLength={data.cartItems.length}
+            itemsLength={totalQuantity ?? 0}
             totalAmount={data.totalAmount_Now}
             totalDiscountAmount={data.totalDiscountAmount_Now}
           />

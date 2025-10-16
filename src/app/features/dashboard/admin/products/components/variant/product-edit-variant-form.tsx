@@ -115,7 +115,7 @@ export default function ProductEditVariantForm() {
                         value={field.value ?? ""}
                         onChange={(ev) => {
                           field.onChange(
-                            ev.target.value ? ev.target.value : null
+                            ev.target.value ? Number(ev.target.value) : null
                           );
                         }}
                       />

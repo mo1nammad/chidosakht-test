@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@/lib/axios";
 import { Cart } from "@/types";
 
-type ApiResponse = Cart;
+type ApiResponse = Cart | undefined;
 
 export const useCartProducts = () => {
   const query = useQuery<ApiResponse>({

@@ -3,8 +3,10 @@ import { Minus, Plus, Trash } from "lucide-react";
 import React, { useEffect } from "react";
 import { useDeleteCartItem } from "../api/use-delete-cart-item";
 import { useUpdateCartItemQuantity } from "../api/use-update-cart-item-quantity";
+import { cn } from "@/lib/utils";
 
 type AppProps = {
+  className?: string;
   cartItemId: number;
   quantity: number;
   stock: number;
@@ -14,6 +16,7 @@ export default function CartItemQuantity({
   quantity,
   stock,
   cartItemId,
+  className,
 }: AppProps) {
   const [amountDebounced, setAmount, amount] = useDebounce(quantity);
 
@@ -36,7 +39,12 @@ export default function CartItemQuantity({
   }, [amountDebounced, cartItemId, updateQuantity, quantity]);
 
   return (
-    <div className="border border-gray-200 rounded-md flex w-full h-8 justify-between items-center px-1">
+    <div
+      className={cn(
+        "border border-gray-200 rounded-md flex w-full h-8 justify-between items-center px-1",
+        className
+      )}
+    >
       {amount === 1 ? (
         <button
           onClick={() => deleteCartItem(cartItemId)}

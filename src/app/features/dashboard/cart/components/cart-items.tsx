@@ -5,6 +5,7 @@ import { Cart } from "@/types";
 
 import CartItemQuantity from "./cart-item-quantity";
 import { formatRIAL } from "@/lib/utils";
+import Link from "next/link";
 
 type AppProps = {
   items: Cart["cartItems"];
@@ -14,15 +15,17 @@ export default function CartItems({ items }: AppProps) {
   return (
     <div className="min-h-120 grow flex flex-col mt-10 gap-y-18">
       {items.map((item) => (
-        <div
-          key={item.cartItemId}
-          className="flex w-full h-26 gap-x-5 justify-end"
-        >
+        <div key={item.cartItemId} className="flex w-full gap-x-5 justify-end">
           <div className="flex flex-col items-end justify-between">
             {/* name */}
-            <h6 dir="rtl" className="font-bold text-sm sm:text-lg">
+            <Link
+              href={`/shop/${item.productId}`}
+              dir="rtl"
+              target="_blank"
+              className="font-bold text-sm sm:text-lg hover:underline"
+            >
               {item.productName}
-            </h6>
+            </Link>
             {/* variant */}
 
             {/* post */}
@@ -40,11 +43,11 @@ export default function CartItems({ items }: AppProps) {
             {/* discount */}
             <div dir="rtl" className="flex flex-col mt-5">
               {item.discountAmount_Now ? (
-                <p className="text-xs text-red-500">
+                <p className="text-xs text-red-500 mb-px">
                   {formatRIAL(item.discountAmount_Now, true, {
                     style: "decimal",
                   })}
-                  تومان تخفیف
+                  <span className="mr-1">تومان تخفیف</span>
                 </p>
               ) : null}
 
@@ -61,9 +64,10 @@ export default function CartItems({ items }: AppProps) {
               </p>
             </div>
           </div>
-          <div className="basis-22 h-full text-xs flex flex-col justify-between items-center">
+          <div className="min-w-22 min-h-full text-xs flex flex-col items-center">
             <p>تصویر محصول</p>
             <CartItemQuantity
+              className="mt-auto h-8"
               cartItemId={item.cartItemId}
               quantity={item.quantity}
               stock={item.stock}
