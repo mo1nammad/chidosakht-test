@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import Link from "next/link";
-import { ChevronDown, ShoppingBasket } from "lucide-react";
+import { ShoppingBasket } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -69,7 +69,7 @@ export default function Navbar() {
                 )}
               >
                 {nav.title}
-                {nav.icon ? <nav.icon className="size-4" /> : null}
+                {/* {nav.icon ? <nav.icon className="size-4" /> : null} */}
               </Link>
             ))}
           </div>
