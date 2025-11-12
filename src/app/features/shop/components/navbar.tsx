@@ -25,8 +25,8 @@ const navigations = [
   },
   {
     title: "دسته بندی",
-    href: "./?modal=categories",
-    icon: ChevronDown,
+    href: "/shop/search",
+    // icon: ChevronDown,
   },
   {
     title: "صفحه اصلی",

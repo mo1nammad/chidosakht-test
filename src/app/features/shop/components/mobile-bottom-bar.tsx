@@ -18,7 +18,7 @@ const items = [
   },
   {
     title: "دسته بندی",
-    href: "/shop/categories",
+    href: "/shop/search",
     icon: LayoutGrid,
   },
   {
