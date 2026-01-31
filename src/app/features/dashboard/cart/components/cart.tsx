@@ -2,23 +2,28 @@
 
 import Image from "next/image";
 import React from "react";
-import SuggestedProducts from "./suggested-products";
+
 import { useCartProducts } from "../api/use-cart-products";
+
+import SuggestedProducts from "./suggested-products";
 import CartItems from "./cart-items";
 import Checkout from "./checkout";
 
 export default function UserCart() {
   const { data, isSuccess } = useCartProducts();
 
-  const totalQuantity = data?.cartItems
-    .map((item) => item.quantity)
-    .reduce((total, curr) => total + curr);
+  const totalQuantity =
+    data && data.cartItems.length > 0
+      ? data.cartItems
+          .map((item) => item.quantity)
+          .reduce((total, curr) => total + curr)
+      : 0;
 
   return (
     <section className="mt-6">
       <div dir="rtl" className="flex gap-x-1 items-center">
         <h3 className="font-semibold">سبد خرید شما</h3>
-        <p className="text-xs">.{totalQuantity ?? 0} مرسوله</p>
+        <p className="text-xs">.{totalQuantity} مرسوله</p>
       </div>
 
       {!isSuccess || !data || data.cartItems.length === 0 ? (

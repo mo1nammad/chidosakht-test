@@ -6,12 +6,15 @@ import { Cart } from "@/types";
 import CartItemQuantity from "./cart-item-quantity";
 import { formatRIAL } from "@/lib/utils";
 import Link from "next/link";
+import Image from "next/image";
 
 type AppProps = {
   items: Cart["cartItems"];
 };
 
 export default function CartItems({ items }: AppProps) {
+  console.log(items);
+
   return (
     <div className="min-h-120 grow flex flex-col mt-10 gap-y-18">
       {items.map((item) => (
@@ -65,7 +68,12 @@ export default function CartItems({ items }: AppProps) {
             </div>
           </div>
           <div className="min-w-22 min-h-full text-xs flex flex-col items-center">
-            <p>تصویر محصول</p>
+            <Image
+              src={`https://chidosakht.ir/Images/ProductImage/${item.nameIndexImage}`}
+              alt={item.productName}
+              width={87}
+              height={80}
+            />
             <CartItemQuantity
               className="mt-auto h-8"
               cartItemId={item.cartItemId}
