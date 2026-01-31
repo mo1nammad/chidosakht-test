@@ -7,7 +7,7 @@ import { useCartProducts } from "../api/use-cart-products";
 
 import SuggestedProducts from "./suggested-products";
 import CartItems from "./cart-items";
-import Checkout from "./checkout";
+import CheckoutBox from "./checkout";
 
 export default function UserCart() {
   const { data, isSuccess } = useCartProducts();
@@ -44,7 +44,7 @@ export default function UserCart() {
         </div>
       ) : (
         <div className="w-full flex flex-col-reverse md:flex-row">
-          <Checkout
+          <CheckoutBox
             cartId={data.cartId}
             finalTotalAmout={data.finalTotalAmout_Now}
             itemsLength={totalQuantity ?? 0}

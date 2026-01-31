@@ -4,6 +4,7 @@ import { formatRIAL } from "@/lib/utils";
 import { useUpdateCart } from "../api/use-update-cart";
 
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 type AppProps = {
   cartId: number;
@@ -55,7 +56,10 @@ export default function Checkout({
             تومان
           </p>
         </div>
-        <Button>تایید و تکمیل سفارش</Button>
+
+        <Button asChild>
+          <Link href={"/dashboard/cart/checkout"}>تایید و تکمیل سفارش</Link>
+        </Button>
       </div>
     </div>
   );
